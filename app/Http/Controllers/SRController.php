@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\SR;
+
 use Illuminate\Http\Request;
 
 class SRController extends Controller
