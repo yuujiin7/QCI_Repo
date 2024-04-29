@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ServiceReport;
 use App\Models\SR;
 
 use Illuminate\Http\Request;
 
-class SRController extends Controller
+class ServiceReportController extends Controller
 {
     public function index()
     {
@@ -19,16 +20,16 @@ class SRController extends Controller
         //         -> select(DB::raw('count(*) as gender_count, gender'
         //         )) -> groupBy('gender') -> get();
 
-        $data = SR::where('id', 10) -> firstOrFail() -> get();
+        $data = ServiceReport::where('id', 10) -> firstOrFail() -> get();
 
 
-        return view('sr.index', ['sr' => $data]);
+        return view('service_report.index', ['service_report' => $data]);
     }
 
     public function show($id)
     {
-        $data = SR::findOrFail($id);
+        $data = ServiceReport::findOrFail($id);
         dd($data);
-        return view('service_reports.show', ['sr' => $data]);
+        return view('service_report.show', ['service_report' => $data]);
     }
 }

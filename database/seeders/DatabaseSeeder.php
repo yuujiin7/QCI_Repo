@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ServiceReport;
 use App\Models\Tsg;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(10)->create();
         Tsg::factory(10)->create();
+        ServiceReport::factory(10)->create();
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
