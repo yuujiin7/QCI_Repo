@@ -4,7 +4,7 @@ use App\Http\Controllers\TsgController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\SRController;
+use App\Http\Controllers\ServiceReportController;
 
 
 
@@ -25,15 +25,19 @@ use App\Http\Controllers\SRController;
 //         ->header('Content-Type', 'text/plain');
 // });
 
+# Home
 Route::get('/', function () {
-    return view('Welcome');
+    return view('index');
 });
 
+# User
 Route::get('/users', [UserController::class, 'index']) ->name('login');
-
 Route::get('/user/{id}', [UserController::class, 'show']);
 
+# TSG
 Route::get('/tsg', [TsgController::class, 'index']);
 Route::get('/tsg/{id}', [TsgController::class, 'show']);
-Route::get('/service-report', [SRController::class, 'index']);
-Route::get('/service-report/{id}', [SRController::class, 'show']);
+
+# Service Report
+Route::get('/service-report', [ServiceReportController::class, 'index']);
+Route::get('/service-report/{id}', [ServiceReportController::class, 'show']);
