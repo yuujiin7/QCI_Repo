@@ -4,6 +4,7 @@ use App\Http\Controllers\TsgController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SRController;
 
 
 
@@ -34,3 +35,5 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 
 Route::get('/tsg', [TsgController::class, 'index']);
 Route::get('/tsg/{id}', [TsgController::class, 'show']);
+Route::get('/service-report', [SRController::class, 'index']);
+Route::get('/service-report/{id}', [SRController::class, 'show']);
