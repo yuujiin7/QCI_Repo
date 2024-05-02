@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ServiceReportController;
 
-
-
-
 // Route::post();
 // Route::put();
 // Route::patch();
@@ -28,7 +25,9 @@ use App\Http\Controllers\ServiceReportController;
 # Home
 Route::get('/', function () {
     return view('index');
+    
 });
+
 
 # User
 Route::get('/users', [UserController::class, 'index']) ->name('login');
@@ -39,5 +38,5 @@ Route::get('/tsg', [TsgController::class, 'index']);
 Route::get('/tsg/{id}', [TsgController::class, 'show']);
 
 # Service Report
-Route::get('/service-report', [ServiceReportController::class, 'index']);
-Route::get('/service-report/{id}', [ServiceReportController::class, 'show']);
+Route::get('/service-reports', [ServiceReportController::class, 'index']);
+Route::get('/service-reports/{id}', [ServiceReportController::class, 'show']);

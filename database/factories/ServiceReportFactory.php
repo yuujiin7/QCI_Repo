@@ -15,7 +15,7 @@ class ServiceReportFactory extends Factory
      *
      * @var int
      */
-    private static $currentSrNumber = 0;
+    private static $currentSrNumber = 6000;
     
     /**
      * Define the model's default state.
@@ -28,6 +28,7 @@ class ServiceReportFactory extends Factory
         $end_time = $this->faker->time();
         $total_hours = $this->calculateTotalHours($start_time, $end_time);
         $srNumber = str_pad(++self::$currentSrNumber, 6, '0', STR_PAD_LEFT);
+
         return [
             //make sr_number number increasing
             'sr_number' => $srNumber,
@@ -41,7 +42,7 @@ class ServiceReportFactory extends Factory
             'end_time' => $end_time,
             'total_hours' => $total_hours,
             'remarks' => $this->faker->sentence(),
-            'new_installation' => $this->faker->boolean(),
+            // make status_1 an array
             'status_1' => $this->faker->randomElement(["New Installation", "Under Warranty", "Demo/POC", "Billable", "Others","Corrective Maintenance","Under Maintenance Contract", "Add-On Value"]),
             'machine_model' => $this->faker->randomElement(["Xerox", "Canon", "Ricoh", "Konica Minolta", "Sharp", "Kyocera", "Toshiba", "Others", "HP", "Lenovo"]),
             'machine_serial_number' => $this->faker->unique()->uuid(),
@@ -57,6 +58,7 @@ class ServiceReportFactory extends Factory
             "tech_support" => $this->faker->name(),
             "hr_finance" => $this->faker->name(),
             "evp_coo" => $this->faker->name(),
+            "file_upload" => $this->faker->imageUrl(),
         ];
     }
     /**
