@@ -19,8 +19,6 @@ class ServiceReportFactory extends Factory
      * @var int
      */
     private static $currentSrNumber = 6000;
-    protected $model = ServiceReport::class;
-    
     /**
      * Define the model's default state.
      *
@@ -34,7 +32,6 @@ class ServiceReportFactory extends Factory
         $srNumber = str_pad(++self::$currentSrNumber, 6, '0', STR_PAD_LEFT);
 
         return [
-            //make sr_number number increasing
             'sr_number' => $srNumber,
             'event_id' => $this->faker->unique()->uuid(),
             'date' => $this->faker->date(),
@@ -46,7 +43,6 @@ class ServiceReportFactory extends Factory
             'end_time' => $end_time,
             'total_hours' => $total_hours,
             'remarks' => $this->faker->sentence(),
-            // make status_1 an array
             'status_1' => $this->faker->randomElement(["New Installation", "Under Warranty", "Demo/POC", "Billable", "Others","Corrective Maintenance","Under Maintenance Contract", "Add-On Value"]),
             'machine_model' => $this->faker->randomElement(["Xerox", "Canon", "Ricoh", "Konica Minolta", "Sharp", "Kyocera", "Toshiba", "Others", "HP", "Lenovo"]),
             'machine_serial_number' => $this->faker->unique()->uuid(),
@@ -62,11 +58,6 @@ class ServiceReportFactory extends Factory
             "tech_support" => $this->faker->name(),
             "hr_finance" => $this->faker->name(),
             "evp_coo" => $this->faker->name(),
-            // fake file upload to local storage in database
-            // 'sr_file' => $this->faker->image('public/storage/images', 640, 480, null, false),
-            // 'sr_file' => $this->faker->word . '.jpg',
-
-
             
         ];
     }
@@ -86,10 +77,4 @@ class ServiceReportFactory extends Factory
         return (float)$interval->format('%H') + ((float)$interval->format('%i') / 60);
     }
 
-    public function configure()
-    {
-        return $this->afterCreating(function (ServiceReport $serviceReport) {
-            $serviceReport->images()->save(SRImage::factory()->make());
-        });
-    }
 }
