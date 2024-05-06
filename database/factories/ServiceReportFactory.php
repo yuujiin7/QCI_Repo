@@ -3,6 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Storage;
+use App\Models\ServiceReport;
+use App\Models\SRImage;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SR>
@@ -16,6 +19,7 @@ class ServiceReportFactory extends Factory
      * @var int
      */
     private static $currentSrNumber = 6000;
+    protected $model = ServiceReport::class;
     
     /**
      * Define the model's default state.
@@ -58,9 +62,15 @@ class ServiceReportFactory extends Factory
             "tech_support" => $this->faker->name(),
             "hr_finance" => $this->faker->name(),
             "evp_coo" => $this->faker->name(),
-            "file_upload" => $this->faker->imageUrl(),
+            // fake file upload to local storage in database
+            // 'sr_file' => $this->faker->image('public/storage/images', 640, 480, null, false),
+            // 'sr_file' => $this->faker->word . '.jpg',
+
+
+            
         ];
     }
+
     /**
      * Calculate total hours between start and end time.
      *
@@ -74,5 +84,12 @@ class ServiceReportFactory extends Factory
         $end = \DateTime::createFromFormat('H:i:s', $end_time);
         $interval = $start->diff($end);
         return (float)$interval->format('%H') + ((float)$interval->format('%i') / 60);
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (ServiceReport $serviceReport) {
+            $serviceReport->images()->save(SRImage::factory()->make());
+        });
     }
 }

@@ -16,16 +16,19 @@
                 <th>Address</th>
                 <th>Contact Person</th>
                 <th>Technical Engineer Assigned</th>
+                <th>SR File</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($service_reports as $service_report)
+            @foreach ($service_report as $report)
                 <tr>
-                    <td>{{ $service_report->sr_number }}</td>
-                    <td>{{ $service_report->customer_name }}</td>
-                    <td>{{ $service_report->address }}</td>
-                    <td>{{ $service_report->contact_person }}</td>
-                    <td>{{ $service_report->engineer_assigned }}</td>
+                    <td>{{ $report->sr_number }}</td>
+                    <td>{{ $report->customer_name }}</td>
+                    <td>{{ $report->address }}</td>
+                    <td>{{ $report->contact_person }}</td>
+                    <td>{{ $report->engineer_assigned }}</td>
+                    <!-- <td><a href="{{ url("/storage/images/{$report->sr_file}") }}" download>Download</a></td> -->
+                    <td><a href="{{ asset("storage/images/{$report->image}") }}" download>Download</a></td> <!-- Updated to use $report->image -->
                 </tr>
             @endforeach
         </tbody>

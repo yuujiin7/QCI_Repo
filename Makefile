@@ -35,6 +35,14 @@ model:
 factory:
 	php artisan make:factory $(keyword)
 
+# Run php route clear
+route-clear:
+	php artisan route:clear
+
+# Run php route list
+route-list:
+	php artisan route:list
+
 #Run npm run dev
 npm-run:
 	npm run dev
@@ -42,3 +50,5 @@ npm-run:
 #Run npm build
 npm-build:
 	npm run build
+
+

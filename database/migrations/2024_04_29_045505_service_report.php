@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 return new class extends Migration
 {
@@ -24,8 +25,6 @@ return new class extends Migration
             $table->time('end_time');
             $table->decimal('total_hours', 8, 2); // Define total_hours as a decimal
             $table->string('remarks');
-            //array of status
-            // $table->array('status_1');
             $table->string('status_1');
             $table->string('machine_model');
             $table->string('machine_serial_number')->unique();
@@ -41,8 +40,6 @@ return new class extends Migration
             $table->string('tech_support');
             $table->string('hr_finance');
             $table->string('evp_coo');
-            // file upload
-            $table->string('file_upload');
             $table->timestamps();
         });
     }
