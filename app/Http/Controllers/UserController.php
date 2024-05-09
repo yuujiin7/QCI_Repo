@@ -13,6 +13,19 @@ class UserController extends Controller
         return 'Hello from User Controller';
     }
     
+    public function login(){
+        if(view()->exists('user.login')){
+            return view('user.login');
+        }else{
+            // return response()->view('errors.404', [], 404);
+            return abort(404);
+        }
+    }
+
+    public function register(){
+        return view('user.register');
+    }
+
     public function show($id){
         // $data = array(
         //     'id' => $id,

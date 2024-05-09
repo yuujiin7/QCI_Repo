@@ -23,14 +23,31 @@ use App\Http\Controllers\ServiceReportController;
 //         ->header('Content-Type', 'text/plain');
 // });
 
+#Common naming Routes
+//index - Show all data in the table
+//show - show a single data
+//create - show the form to create a new data
+//store - save the new data
+//edit - show the form to edit a data
+//update - save the edited data
+//destroy - delete a data
+
+
 # Home
 Route::get('/', function () {
     return view('index');
 });
 
+# login
+Route::get('/login', [UserController::class, 'login']);
+
+# Register
+Route::get('/register', [UserController::class, 'register']);
+
+
+
 
 # User
-Route::get('/users', [UserController::class, 'index']) ->name('login');
 Route::get('/user/{id}', [UserController::class, 'show']);
 
 # TSG

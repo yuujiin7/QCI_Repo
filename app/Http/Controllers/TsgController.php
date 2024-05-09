@@ -12,7 +12,7 @@ class TsgController extends Controller
     public function index()
     {
 
-        $data = Tsg::all();
+        // $data = Tsg::all();
         // $data = Tsg::where('age','>','20') -> orderBy('first_name', 'asc') -> get();
         // dd($data);
         // $data = DB::table('tsgs') 
@@ -22,7 +22,8 @@ class TsgController extends Controller
         // $data = Tsg::where('id', 10) -> firstOrFail() -> get();
 
 
-        return view('tsg.index', ['tsg' => $data]);
+        // return view('tsg.index', ['tsg' => $data]);
+        return view('tsg.index');
     }
 
     public function show($id)

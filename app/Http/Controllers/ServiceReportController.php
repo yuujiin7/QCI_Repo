@@ -30,7 +30,7 @@ class ServiceReportController extends Controller
     {
         $data = ServiceReport::findOrFail($id);
         
-        // dd($data);
+        dd($data);
         return view('service_report.show', ['service_report' => $data]);
     }
     
