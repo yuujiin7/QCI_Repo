@@ -26,6 +26,14 @@ class UserController extends Controller
         return view('user.register');
     }
 
+    public function store(Request $request){
+        dd($request);
+        // $name = $request->input('name');
+        // $email = $request->input('email');
+        // $phone = $request->input('phone');
+        // return 'Name: '.$name.' Email: '.$email.' Phone: '.$phone;
+    }
+
     public function show($id){
         // $data = array(
         //     'id' => $id,

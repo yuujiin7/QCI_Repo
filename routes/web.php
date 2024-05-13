@@ -44,6 +44,11 @@ Route::get('/login', [UserController::class, 'login']);
 # Register
 Route::get('/register', [UserController::class, 'register']);
 
+# Store
+Route::post('/store', [UserController::class, 'store']);
+
+
+
 
 
 
