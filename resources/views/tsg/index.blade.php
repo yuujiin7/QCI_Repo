@@ -31,7 +31,7 @@ $array = array('title' => "Questech");
                             Email
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            SR
+                            Phone Number
                         </th>
 
                     </tr>
@@ -41,7 +41,7 @@ $array = array('title' => "Questech");
                     @foreach ($tsg as $tsg_users)
                     <tr class="bg-gray-800 border-b text-white">
                         <td class="py-4 px-6">
-                            {{ $tsg_users->emp_id }}
+                            {{ $tsg_users->id }}
                         </td>
                         <td class="py-4 px-6">
                             {{ $tsg_users->first_name }}
@@ -53,7 +53,7 @@ $array = array('title' => "Questech");
                             {{ $tsg_users->email }}
                         </td>
                         <td class="py-4 px-6">
-                            {{ $tsg_users->gender }}
+                            {{ $tsg_users->phone_number }}
                         </td>
                     </tr>
                     @endforeach

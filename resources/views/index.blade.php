@@ -1,3 +1,4 @@
+@dd(auth()->user())
 <!doctype html>
 <html>
 <head>

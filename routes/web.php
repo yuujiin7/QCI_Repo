@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ServiceReportController;
-
+use App\Models\User;
 
 // Route::post();
 // Route::put();
@@ -47,7 +47,8 @@ Route::get('/register', [UserController::class, 'register']);
 # Store
 Route::post('/store', [UserController::class, 'store']);
 
-
+# Logout
+Route::get('/logout', [UserController::class, 'logout']);
 
 
 
