@@ -1,4 +1,4 @@
-@dd(auth()->user())
+{{-- @dd(auth()->user()) --}}
 <!doctype html>
 <html>
 <head>

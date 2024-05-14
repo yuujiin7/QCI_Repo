@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('emp_id')->unique();
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('middle_name') -> nullable();
+            $table->string('suffix')->nullable();
             $table->string('age');
             $table->string('phone_number')->unique();
             $table->string('email')->unique();

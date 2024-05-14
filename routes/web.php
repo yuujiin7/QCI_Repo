@@ -34,36 +34,43 @@ use App\Models\User;
 
 
 # Home
-Route::get('/', function () {
-    return view('index');
-});
-
-# login
-Route::get('/login', [UserController::class, 'login']);
+Route::get('/', [UserController::class, 'login']) ;
 
 # Register
 Route::get('/register', [UserController::class, 'register']);
 
-# Store
-Route::post('/store', [UserController::class, 'store']);
+# login
+Route::get('/login', [UserController::class, 'login']) -> name('login') -> middleware('guest');
+Route::post('/login/process', [UserController::class, 'process']);
 
 # Logout
-Route::get('/logout', [UserController::class, 'logout']);
+Route::post('/logout', [UserController::class, 'logout']);
 
-
+# Store
+Route::post('/store', [UserController::class, 'store']);
 
 
 # User
 Route::get('/user/{id}', [UserController::class, 'show']);
 
 # TSG
-Route::get('/tsg', [TsgController::class, 'index']);
-Route::get('/tsg/{id}', [TsgController::class, 'show']);
+// TSG - Protected Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/tsg', [TsgController::class, 'index']);
+
+    Route::get('/create/tsg', [TsgController::class, 'create']);
+    Route::post('/create/tsg', [TsgController::class, 'store']);
+    
+    Route::get('/tsg/{id}', [TsgController::class, 'show']);
+    Route::put('/tsg/{id}', [TsgController::class, 'update']);
+
+});
+
+
+
 
 # Service Report
 Route::get('/service-reports', [ServiceReportController::class, 'index']);
 Route::get('/service-report/{id}', [ServiceReportController::class, 'show']);
 
-# File
-Route::get('/storage/{folder}/{file}', 'FileController@show');
 

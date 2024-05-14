@@ -1,37 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Service Report</title>
-    @vite('resources/css/app.css')
-</head>
-<body>
-    <table>
-        <thead>
-            <tr>
-                <th>SR Number</th>
-                <th>Customer Name</th>
-                <th>Address</th>
-                <th>Contact Person</th>
-                <th>Technical Engineer Assigned</th>
-                <th>SR File</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($service_report as $report)
-                <tr>
-                    <td>{{ $report->sr_number }}</td>
-                    <td>{{ $report->customer_name }}</td>
-                    <td>{{ $report->address }}</td>
-                    <td>{{ $report->contact_person }}</td>
-                    <td>{{ $report->engineer_assigned }}</td>
-                    <!-- <td><a href="{{ url("/storage/images/{$report->sr_file}") }}" download>Download</a></td> -->
-                    <td><a href="{{ asset("storage/images/{$report->image}") }}" download>Download</a></td> <!-- Updated to use $report->image -->
-                </tr>
-            @endforeach
-        </tbody>
-    
-</body>
-</html>
+@include('partials.__header')
+<?php
+$array = array('title' => "Questech");
+;?>
+<x-nav :data="$array"/>
+
+    <header class="max-w-lg mx-auto mt-5">
+        <a href="#">
+            <h1 class="text-4xl font-bold text-white text-center pb-10 uppercase">{{$title}}</h1>
+        </a>
+
+    </header>
+    <section>
+        <div class="overflow-x-auto relative">
+            <table class="w-96 mx-auto text-sm text-left text-gray-500 display" id="TSGTable">
+                <thead class="text-xs text gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" class="py-3 px-6">
+                            SR Number
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            Customer Name
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            Address
+                        </th>
+                        
+                        <th scope="col" class="py-3 px-6">
+                            Contact Person
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            Engineer Assigned
+                        </th>
+
+
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach($service_report as $report)
+                    <tr class="bg-white border-b border-gray-200">
+                        <td class="py-3 px-6 text-left whitespace-nowrap">
+                            <div class="flex items center">
+                                <span class="font-medium">{{ $report->sr_number }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-left">
+                            <div class="flex items
+                            center">
+                                <span>{{ $report->customer_name }}</span>
+                            </div>
+                        </td>
+                        
+                        <td class="py-3 px-6 text-left">
+                            <div class="flex items
+                            center">
+                                <span>{{ $report->address }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-left">
+                            <div class="flex items
+                            center">
+                                <span>{{ $report->contact_person }}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-left">
+                            <div class="flex items
+                            center">
+                                <span>{{ $report->engineer_assigned }}</span>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+@include('partials.__footer')

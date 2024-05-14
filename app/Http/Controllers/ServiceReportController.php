@@ -23,7 +23,7 @@ class ServiceReportController extends Controller
         // $data = ServiceReport::where('id', 10) -> firstOrFail() -> get();
 
 
-        return view('service_report.index', ['service_report' => $data]);
+        return view('service_report.index', ['service_report' => $data]) -> with('title', 'Service Report List');
     }
 
     public function show($id)

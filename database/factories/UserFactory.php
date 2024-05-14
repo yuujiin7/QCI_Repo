@@ -25,9 +25,9 @@ class UserFactory extends Factory
     {
         return [
             'first_name' => fake()->firstName(),
-            'middle_name' => fake()->firstName(),
+            'middle_name' => fake()->optional()->lastName(), // 'optional' is a custom helper function that returns 'null' 50% of the time
             'last_name' => fake()->lastName(),
-            'suffix' => fake()->suffix(),
+            'suffix' => fake()->optional()->suffix(), // 'optional' is a custom helper function that returns 'null' 50% of the time
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'phone_number' => fake()->phoneNumber(),
@@ -45,7 +45,6 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
-
 
     
     

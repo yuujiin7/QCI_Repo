@@ -8,76 +8,129 @@ use Illuminate\Validation\Rule;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 
 class UserController extends Controller
 {
+
+    protected $auth;
+
+    public function __construct(\Illuminate\Contracts\Auth\Factory $auth)
+    {
+        $this->auth = $auth;
+    }
+    
     public function index(Request $request)
     {
         // dd($request);
         // $data = User::all();
         
         // return view('tsg.index', ['users' => $data]);
-
         return ('User Hello!');
-
-        
     }
     
+    # Login
     public function login(){
-        if(view()->exists('user.login')){
-            return view('user.login');
-        }else{
-            // return response()->view('errors.404', [], 404);
-            return abort(404);
+
+         // Check if the user is already authenticated
+        if (Auth::check()) {
+            return redirect('/tsg');  // Redirect to TSG page if authenticated
+        }
+
+        // Check if the login view exists
+        if (view()->exists('user.login')) {
+            return view('user.login');  // Show login view for guests
+        } else {
+            return abort(404);  // Return 404 error if login view does not exist
         }
     }
 
+    # Process
+    public function process(Request $request){
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if(auth()->attempt($validated)){
+            $request->session()->regenerate();
+            return redirect('tsg')->with('message', 'Logged in successfully');
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]) -> onlyInput('email');
+
+    }
+
+    # Register
     public function register(){
         return view('user.register');
     }
 
+    # Store
     public function store(Request $request){
         try {
             $validated = $request->validate([
-                'first_name' => ['required', 'min:2', 'max:255'],
-                'middle_name' => ['required', 'min:2', 'max:255'],
-                'last_name' => ['required', 'min:2', 'max:255'],
+                'first_name' => 'required|min:2|max:255',
+                'middle_name' => 'nullable|min:2|max:255',
+                'last_name' => 'required|min:2|max:255',
                 'suffix' => 'nullable|min:2|max:255',
-                'email' => ['required', 'email', Rule::unique('users', 'email')],
-                'phone_number' => ['required', 'min:10', 'max:255'],
-                'password' => 'required|confirmed|min:8',
+                'email' => 'required|email|unique:users,email',
+                'phone_number' => 'required|min:10|max:255',
+                'password' => 'required|confirmed|min:8|max:255',
+            ], [
+                'first_name.required' => 'First name is required.',
+                'first_name.min' => 'First name must be at least :min characters.',
+                'first_name.max' => 'First name may not be greater than :max characters.',
+                'last_name.required' => 'Last name is required.',
+                'last_name.min' => 'Last name must be at least :min characters.',
+                'last_name.max' => 'Last name may not be greater than :max characters.',
+                'email.required' => 'Email is required.',
+                'email.email' => 'Invalid email format.',
+                'email.unique' => 'Email is already taken.',
+                'phone_number.required' => 'Phone number is required.',
+                'phone_number.min' => 'Phone number must be at least :min characters.',
+                'phone_number.max' => 'Phone number may not be greater than :max characters.',
+                'password.required' => 'Password is required.',
+                'password.confirmed' => 'Passwords do not match.',
+                'password.min' => 'Password must be at least :min characters.',
+                'password.max' => 'Password may not be greater than :max characters.',
             ]);
     
             $validated['password'] = bcrypt($validated['password']);
-            
+    
             if (!isset($validated['suffix'])) {
                 $validated['suffix'] = null;
             }
+            
+            // Create the user
             $user = User::create($validated);
-            // dd($user);
-            // auth()->login($user);
+            
 
     
             // Optionally, redirect the user after successful registration
-            return redirect('/login') ->with('message', 'User created successfully');
-            
+            return redirect('/login')->with('message', 'User created successfully');
         } catch (\Exception $e) {
             // Log the error
             Log::error('Error creating user: ' . $e->getMessage());
     
             // Optionally, return a response indicating the error
             return back()->withInput()->withErrors(['error' => 'An error occurred while registering. Please try again later.']);
-        
         }
     }
-
+    
+    # Logout
     public function logout(Request $request){
         auth()->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login') ->with('message', 'User logged out successfully');
+        return redirect('/login') ->with('message', 'Logged out successfully');
     }
+
 
     public function show($id){
         // $data = User::find($id);
