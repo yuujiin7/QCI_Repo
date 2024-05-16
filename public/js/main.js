@@ -1,33 +1,29 @@
-
-
-
+// Toggle Password Visibility
 function togglePasswordVisibility(fieldId) {
-    var field = document.getElementById(fieldId);
-    if (field.type === "password") {
-        field.type = "text";
-    } else {
-        field.type = "password";
+    const field = document.getElementById(fieldId);
+    if (!field) {
+        console.error(`Element with id '${fieldId}' not found.`);
+        return;
     }
-};
+    field.type = (field.type === "password") ? "text" : "password";
+}
+document.ready(function () {
+    const selectAllCheckbox = $('#selectAll');
+    const checkboxes = $('.report-checkbox');
+    const deleteButton = $('#deleteButton');
 
-
-// DataTables CDN
-$(document).ready(function () {
-    $('#TSGTable').DataTable({
-        "order": [[0, "desc"]],
-        "pageLength": 25,
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: "/tsg/data", // Ensure the route is correctly set
-            type: 'GET'
-        },
-        columns: [
-            { data: 'id', name: 'id' },
-            { data: 'first_name', name: 'first_name' },
-            { data: 'last_name', name: 'last_name' },
-            { data: 'email', name: 'email' },
-            { data: 'phone_number', name: 'phone_number' }
-        ]
+    // Select/Deselect all checkboxes and toggle delete button visibility
+    selectAllCheckbox.change(function () {
+        checkboxes.prop('checked', this.checked);
+        toggleDeleteButton();
     });
+
+    // Toggle delete button visibility based on individual checkbox changes
+    checkboxes.change(toggleDeleteButton);
+
+    // Function to toggle the visibility of the delete button
+    function toggleDeleteButton() {
+        const anyChecked = checkboxes.is(':checked');
+        deleteButton.toggleClass('hidden', !anyChecked);
+    }
 });

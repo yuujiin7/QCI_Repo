@@ -64,13 +64,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/tsg/{id}', [TsgController::class, 'show']);
     Route::put('/tsg/{id}', [TsgController::class, 'update']);
 
+    //delete
+    Route::delete('/tsg/{id}', [TsgController::class, 'destroy']);
+
+
 });
 
 
+Route::middleware('auth') -> group(function () {
+    # Service Report
+    Route::get('/service-reports', [ServiceReportController::class, 'index']);
+    
 
+    Route::get('/service-report/create', [ServiceReportController::class, 'create']);
+    Route::post('/service-report/create', [ServiceReportController::class, 'store']);
 
-# Service Report
-Route::get('/service-reports', [ServiceReportController::class, 'index']);
-Route::get('/service-report/{id}', [ServiceReportController::class, 'show']);
+    Route::get('/service-report/{id}', [ServiceReportController::class, 'show']);
+    Route::put('/service-report/{id}', [ServiceReportController::class, 'update']);
 
-
+    Route::delete('/service-report/{id}', [ServiceReportController::class, 'destroy']);
+});

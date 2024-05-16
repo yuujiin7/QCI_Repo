@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('service_reports', function (Blueprint $table) {
             $table->id();
             $table->string('sr_number')->unique();
-            $table->string('event_id')->unique();
+            $table->string('event_id')->unique() -> nullable();
             $table->date('date');
             $table->string('customer_name');
             $table->string('address');
@@ -25,14 +25,14 @@ return new class extends Migration
             $table->time('end_time');
             $table->decimal('total_hours', 8, 2); // Define total_hours as a decimal
             $table->string('remarks');
-            $table->string('status_1');
-            $table->string('machine_model');
-            $table->string('machine_serial_number')->unique();
-            $table->string('product_number')->unique();
-            $table->string('part_number');
-            $table->string('part_quantity');
-            $table->string('part_description');
-            $table->string('part_usage');
+            $table->string('status_1') -> nullable();
+            $table->string('machine_model') -> unique() -> nullable();
+            $table->string('machine_serial_number')->unique() -> nullable();
+            $table->string('product_number')->unique() -> nullable();
+            $table->string('part_number') -> nullable();
+            $table->string('part_quantity') -> nullable();
+            $table->string('part_description') -> nullable();
+            $table->string('part_usage') -> nullable();
             $table->string('action_taken');
             $table->string('pending');
             $table->string('status_2');

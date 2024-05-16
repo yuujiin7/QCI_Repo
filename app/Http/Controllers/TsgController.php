@@ -95,10 +95,15 @@ class TsgController extends Controller
     $tsg->update($validated);
 
     return redirect('/tsg')->with('message', 'TSG updated successfully.');
-}
+    }
 
+    public function destroy($id)
+    {
+        $tsg = Tsg::findOrFail($id);
+        $tsg->delete();
+        return redirect('/tsg')->with('message', 'TSG deleted successfully.');
+    }
 
-        
 
     
 }

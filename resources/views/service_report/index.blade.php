@@ -31,14 +31,16 @@ $array = array('title' => "Questech");
                         <th scope="col" class="py-3 px-6">
                             Engineer Assigned
                         </th>
-
-
+                        <th scope="col" class="py-3 px-6">
+                            Actions
+                        </th>
                     </tr>
 
                 </thead>
                 <tbody>
                     @foreach($service_report as $report)
                     <tr class="bg-white border-b border-gray-200">
+                        <!-- checkbox -->
                         <td class="py-3 px-6 text-left whitespace-nowrap">
                             <div class="flex items center">
                                 <span class="font-medium">{{ $report->sr_number }}</span>
@@ -65,10 +67,15 @@ $array = array('title' => "Questech");
                         </td>
                         <td class="py-3 px-6 text-left">
                             <div class="flex items
-                            center">
+                            center">    
                                 <span>{{ $report->engineer_assigned }}</span>
                             </div>
                         </td>
+
+                        <td class="py-4 px-6">
+                            <a href="/service-report/{{$report->id}}" class="bg-sky-600 text-white px-4 py-1 rounded">view</a>
+                        </td>
+                        
                     </tr>
                     @endforeach
                     
@@ -76,5 +83,4 @@ $array = array('title' => "Questech");
             </table>
         </div>
     </section>
-
 @include('partials.__footer')

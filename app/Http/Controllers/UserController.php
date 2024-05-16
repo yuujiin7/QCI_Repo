@@ -109,8 +109,6 @@ class UserController extends Controller
             // Create the user
             $user = User::create($validated);
             
-
-    
             // Optionally, redirect the user after successful registration
             return redirect('/login')->with('message', 'User created successfully');
         } catch (\Exception $e) {
