@@ -111,7 +111,7 @@ $array = array('title' => "Questech");
            
             <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 text-center" type="submit">Create</button>
 
-            <button class="bg-red-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 text-center" type="submit">Cancel</button>
+            <button class="bg-red-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 text-center mt-2" type="submit">Cancel</button>
             
 
         </form>

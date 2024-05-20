@@ -28,7 +28,7 @@ class ServiceReportController extends Controller
     
 
     public function create(){
-        return view('service-report.create') -> with('title', 'Create Service Report');
+        return view('service_report.create') -> with('title', 'Create Service Report');
     }
 
    public function store(Request $request){

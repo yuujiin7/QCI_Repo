@@ -76,8 +76,8 @@ Route::middleware('auth') -> group(function () {
     Route::get('/service-reports', [ServiceReportController::class, 'index']);
     
 
-    Route::get('/service-report/create', [ServiceReportController::class, 'create']);
-    Route::post('/service-report/create', [ServiceReportController::class, 'store']);
+    Route::get('/create/service-report', [ServiceReportController::class, 'create']);
+    Route::post('/create/service-report', [ServiceReportController::class, 'store']);
 
     Route::get('/service-report/{id}', [ServiceReportController::class, 'show']);
     Route::put('/service-report/{id}', [ServiceReportController::class, 'update']);
