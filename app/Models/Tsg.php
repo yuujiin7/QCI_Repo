@@ -9,7 +9,7 @@ class Tsg extends Model
 {
 
     protected $guarded = [];
-
+    
     protected $fillable = [
         'first_name',
         'middle_name',

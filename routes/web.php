@@ -33,25 +33,25 @@ use App\Models\User;
 //destroy - delete a data
 
 
-# Home
-Route::get('/', [UserController::class, 'login']) ;
 
-# Register
-Route::get('/register', [UserController::class, 'register']);
+Route::controller(UserController::class) -> group(function () {
+    # Home
+    Route::get('/', [UserController::class, 'login']) ;
+    # Register
+    Route::get('/register', [UserController::class, 'register']) -> name('register') -> middleware('guest');
+    # login
+    Route::get('/login', [UserController::class, 'login']) -> name('login') -> middleware('guest');
+    Route::post('/login/process', [UserController::class, 'process']);
+    # Logout
+    Route::post('/logout', [UserController::class, 'logout']);
+    # Store
+    Route::post('/store', [UserController::class, 'store']);
+    # User
+    Route::get('/user/{id}', [UserController::class, 'show']);
+});
 
-# login
-Route::get('/login', [UserController::class, 'login']) -> name('login') -> middleware('guest');
-Route::post('/login/process', [UserController::class, 'process']);
-
-# Logout
-Route::post('/logout', [UserController::class, 'logout']);
-
-# Store
-Route::post('/store', [UserController::class, 'store']);
 
 
-# User
-Route::get('/user/{id}', [UserController::class, 'show']);
 
 # TSG
 // TSG - Protected Routes

@@ -21,7 +21,6 @@ class TsgController extends Controller
     public function show($id)
     {
         $data = Tsg::findOrfail($id);
-        // dd($data);
         return view('tsg.edit', ['tsg' => $data]);
     }
 
@@ -57,45 +56,29 @@ class TsgController extends Controller
     }
 
     // update
-    public function update(Request $request, Tsg $tsg)
+    public function update(Request $request, $id)
 {
-    // Extract the ID of the current record
-    $tsgId = $tsg->id;
-
     // Initial validation for non-unique fields
     $validated = $request->validate([
         'first_name' => 'required|min:2|max:255',
         'middle_name' => 'nullable|min:2|max:255',
         'last_name' => 'required|min:2|max:255',
         'suffix' => 'nullable|min:2|max:255',
+        'email' => 'required|email|min:2|max:255|unique:tsgs,email',
         'phone_number' => 'required|min:10|max:255',
         'age' => 'required|numeric|min:1|max:120',
         'gender' => 'required',
+        'emp_id' => 'required|min:2|max:255|unique:tsgs,emp_id',
     ]);
 
-    // Additional validation for email and emp_id if they are changed
-    $uniqueRules = [];
-    if ($request->input('email') !== $tsg->email) {
-        $uniqueRules['email'] = 'required|email|min:2|max:255|unique:tsgs,email,' . $tsgId;
-    }
-    if ($request->input('emp_id') !== $tsg->emp_id) {
-        $uniqueRules['emp_id'] = 'required|min:2|max:255|unique:tsgs,emp_id,' . $tsgId;
+    $post = Tsg::findOrFail($id);
+
+    $post -> update($validated);
+
+    return back()->with('message', 'TSG updated successfully.');
     }
 
-    // If there are unique fields to validate, merge the validations
-    if (!empty($uniqueRules)) {
-        $uniqueValidated = $request->validate($uniqueRules);
-        $validated = array_merge($validated, $uniqueValidated);
-    } else {
-        $validated['email'] = $tsg->email;
-        $validated['emp_id'] = $tsg->emp_id;
-    }
 
-    // Update the record with the validated data
-    $tsg->update($validated);
-
-    return redirect('/tsg')->with('message', 'TSG updated successfully.');
-    }
 
     public function destroy($id)
     {

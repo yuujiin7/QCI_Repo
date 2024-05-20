@@ -22,8 +22,8 @@ class ServiceReportController extends Controller
     {
         $data = ServiceReport::findOrFail($id);
         
-        dd($data);
-        // return view('service_report.show', ['service_report' => $data]);
+        // dd($data);
+        return view('service_report.edit', ['service_report' => $data]);  
     }
     
 

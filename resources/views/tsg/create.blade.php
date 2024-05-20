@@ -78,17 +78,14 @@ $array = array('title' => "Questech");
                         <label for="gender" class="block text-sm font-semibold text-gray-800 mb-2">Gender</label>
                         <select id="gender" name="gender" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300">
                             <option value="">Gender</option>
-                            <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
-                            <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
-                            <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
+                            <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
+                            <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
+                            <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>Other</option>
                         </select>
                         @error('gender')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
                     </div>
-
-
-
                     
                 </div>
             </div>
@@ -110,14 +107,13 @@ $array = array('title' => "Questech");
             </div>
            
             <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 text-center" type="submit">Create</button>
+
+            <a href="/tsg" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 text-center mt-2">Back</a>
             
 
         </form>
-        <div class="m-2 text-center">
-            <p class="inline">Need an account?</p>
-            <a href="/register" class="text-blue-400 hover:text-blue-600 inline">Register</a>
-        </div>
-        
+      
+
     </section>
     
 </main>

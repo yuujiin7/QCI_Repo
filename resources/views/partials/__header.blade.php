@@ -9,10 +9,14 @@
      
 
     <script src="//unpkg.com/alpinejs" defer></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <!-- <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.tailwindcss.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script> -->
     <script src="{{asset('js/main.js')}}"></script>
 
-    <script src="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css">
+    
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.tailwindcss.css"> -->
     
     
 </head>

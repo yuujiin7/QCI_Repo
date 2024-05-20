@@ -112,7 +112,6 @@ $array = array('title' => "Questech");
             
            
             <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 text-center" type="submit">Save</button>
-            <a href="/tsg" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 text-center mt-2">Back</a>
             
 
         </form>
