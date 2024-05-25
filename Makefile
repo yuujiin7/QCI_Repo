@@ -51,4 +51,6 @@ npm-run:
 npm-build:
 	npm run build
 
-
+#storage link
+storage-link:
+	php artisan storage:link

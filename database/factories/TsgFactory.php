@@ -25,7 +25,8 @@ class TsgFactory extends Factory
             'phone_number' => fake()->unique()->phoneNumber(),
             'age' => fake()->numberBetween($min = 18, $max = 60),
             'emp_id' => fake()->unique()->uuid(),
-            'gender' => fake()->randomElement(["Male", "Female", "Other"])
+            'gender' => fake()->randomElement(["Male", "Female", "Other"]),
+            // 'profile_image' => $this->faker->imageUrl($width = 640, $height = 480),
             
         ];
     }

@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('service_reports', function (Blueprint $table) {
-            $table->id();
+            $table->id() -> first();
             $table->string('sr_number')->unique();
             $table->string('event_id')->unique() -> nullable();
             $table->date('date');
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->decimal('total_hours', 8, 2); // Define total_hours as a decimal
             $table->string('remarks');
             $table->string('status_1') -> nullable();
-            $table->string('machine_model') -> unique() -> nullable();
+            $table->string('machine_model')-> nullable();
             $table->string('machine_serial_number')->unique() -> nullable();
             $table->string('product_number')->unique() -> nullable();
             $table->string('part_number') -> nullable();
@@ -50,6 +50,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('service_reports');
+        
     }
 
 };

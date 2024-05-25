@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('phone_number')->unique();
             $table->string('email')->unique();
             $table->string('gender');
+            $table->string('profile_image')->nullable();
             $table->timestamps();
         });
 

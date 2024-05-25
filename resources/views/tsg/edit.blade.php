@@ -20,9 +20,19 @@ $array = array('title' => "Questech");
                 </ul>
             </div>
         @endif
-        <form action="/tsg/{{$tsg->id}}" method="POST" class="flex flex-col">
+        <form action="/tsg/{{$tsg->id}}" method="POST" class="flex flex-col" enctype="multipart/form-data">
             @method('PUT')
             @csrf
+            <div class="mb-4 text-center">
+                <label for="profile_image" class="block text-sm font-semibold text-gray-800 mb-2">Profile Picture</label>
+                <div class="flex justify-center items-center mb-2">
+                    <img id="profileImagePreview" src="{{ $tsg->profile_image ? asset('storage/profile_images/thumbnail/small_' . $tsg->profile_image) : 'https://api.dicebear.com/8.x/bottts/svg?seed=Felix' }}" alt="Profile Image" class="w-20 h-20 rounded-full object-cover">
+                </div>
+                <input type="file" id="profile_image" name="profile_image" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" onchange="previewImage(event)">
+                @error('profile_image')
+                    <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+                @enderror
+            </div>
             <div class="mb-4">
                 <div class="flex justify-between">
                     <div class="w-1/4">
@@ -79,9 +89,9 @@ $array = array('title' => "Questech");
                         <label for="gender" class="block text-sm font-semibold text-gray-800 mb-2">Gender</label>
                         <select id="gender" name="gender" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300">
                             <option value="">Gender</option>
-                            <option value="male" {{ $tsg->gender == 'Male' ? 'selected' : '' }}>Male</option>
-                            <option value="female" {{ $tsg->gender == 'Female' ? 'selected' : '' }}>Female</option>
-                            <option value="other" {{ $tsg->gender == 'Other' ? 'selected' : '' }}>Other</option>
+                            <option value="Male" {{ $tsg->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                            <option value="Female" {{ $tsg->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                            <option value="Other" {{ $tsg->gender == 'Other' ? 'selected' : '' }}>Other</option>
                         </select>
                         @error('gender')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
@@ -105,6 +115,14 @@ $array = array('title' => "Questech");
                 <label for="phone_number" class="block text-sm font-semibold text-gray-800 mb-2">Phone Number</label>
                 <input type="tel" id="phone_number" name="phone_number" placeholder="e.g 09123456789" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$tsg->phone_number}}>
                 @error('phone_number')
+                    <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="profile_image" class="block text-sm font-semibold text-gray-800 mb-2">TSG Image</label>
+                <input type="file" id="profile_image" name="profile_image" placeholder="e.g 09123456789" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$tsg->profile_image}}>
+                @error('profile_image')
                     <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                 @enderror
             </div>

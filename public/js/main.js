@@ -7,3 +7,20 @@ function togglePasswordVisibility(fieldId) {
     }
     field.type = (field.type === "password") ? "text" : "password";
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    $('#TSGTable').DataTable({
+        responsive: true,
+        paging: true,
+        searching: true,
+        info: true,
+        ordering: true,
+        autoWidth: true,
+        lengthChange: true,
+        pageLength: 10,
+        order: [[0, "asc"]],
+        retrieve: true,
+        
+    });
+});

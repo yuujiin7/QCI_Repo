@@ -46,7 +46,7 @@ class ServiceReportController extends Controller
             'total_hours' => 'required',
             'remarks' => 'required|min:2|max:255',
             'status_1' => 'nullable|min:2|max:255',
-            'machine_model' => 'nullable|min:2|max:255|unique:service_reports,machine_model',
+            'machine_model' => 'nullable|min:2|max:255',
             'machine_serial_number' => 'nullable|min:2|max:255|unique:service_reports,machine_serial_number',
             'product_number' => 'nullable|min:2|max:255|unique:service_reports,product_number',
             'part_number' => 'nullable',

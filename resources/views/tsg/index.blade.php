@@ -1,83 +1,63 @@
-@include('partials.__header', [$title])
+@include('partials.__header', ['title' => 'Questech'])
+
 <?php
-$array = array('title' => "Questech");
+$array = ['title' => 'Questech'];
 ;?>
 <x-nav :data="$array"/>
 
 <header class="max-w-lg mx-auto mt-5">
     <a href="#">
-        <h1 class="text-4xl font-bold text-white text-center pb-10 uppercase">TSG user list</h1>
+        <h1 class="text-4xl font-bold text-center pb-10 text-gray-800 uppercase">TSG User List</h1>
     </a>
 </header>
-<section>
-    <div class="overflow-x-auto relative">
-        <table class="w-96 mx-auto text-sm text-left text-gray-500 display" id="TSGTable">
-            <thead class="text-xs text gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="py-3 px-6">
-                        Employee ID
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        First Name
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Last Name
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Email
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Phone Number
-                    </th>
-                    <th scope="col" class="py-3 px-6 text-center">
-                        Actions
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($tsg as $tsg_users)
-                <tr class="bg-white border-b border-gray-200">
-                    <td class="py-3 px-6 text-left whitespace-nowrap">
-                        <div class="flex items-center">
-                            <span class="font-medium">{{$tsg_users->id}}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-left">
-                        <div class="flex items-center">
-                            <span>{{$tsg_users->first_name}}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-left">
-                        <div class="flex items-center">
-                            <span>{{$tsg_users->last_name}}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-left">
-                        <div class="flex items-center">
-                            <span>{{$tsg_users->email}}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-6 text-left">
-                        <div class="flex items-center">
-                            <span>{{$tsg_users->phone_number}}</span>
-                        </div>
-                    </td>
-                    <td class="py-4 px-6">
-                        <div class="flex items-center space-x-2">
-                            <a href="/tsg/{{$tsg_users->id}}" class="bg-sky-600 text-white px-4 py-1 rounded">View</a>
-                            <form action="/tsg/{{$tsg_users->id}}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-red-600 text-white px-4 py-1 rounded">Delete</button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <div class="mx-auto max-w-lg pt-6 p-4">
-            {{$tsgs->links()}}
+<section class="py-6">
+    <div class="container mx-auto">
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden display" id="TSGTable">
+                <thead class="bg-gray-800 text-white text-xs uppercase">
+                    <tr>
+                        <th scope="col" class="py-3 px-6"></th>
+                        <th scope="col" class="py-3 px-6">Employee ID</th>
+                        <th scope="col" class="py-3 px-6">First Name</th>
+                        <th scope="col" class="py-3 px-6">Last Name</th>
+                        <th scope="col" class="py-3 px-6">Email</th>
+                        <th scope="col" class="py-3 px-6">Phone Number</th>
+                        <th scope="col" class="py-3 px-6 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($tsg as $tsg_user)
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                        @php 
+                            $default_profile = "https://api.dicebear.com/8.x/initials/svg?seed=".$tsg_user->first_name."%20".$tsg_user->last_name;
+                        @endphp
+                        <td class="pl-2">
+                            <img src="{{ $tsg_user->profile_image ? asset('storage/profile_images/thumbnail/' . $tsg_user->profile_image) : $default_profile }}" alt="{{ $tsg_user->first_name }} {{ $tsg_user->last_name }}" class="w-8 h-8 rounded-full" />
+                        </td>
+                        <td class="py-3 px-6">{{ $tsg_user->id }}</td>
+                        <td class="py-3 px-6">{{ $tsg_user->first_name }}</td>
+                        <td class="py-3 px-6">{{ $tsg_user->last_name }}</td>
+                        <td class="py-3 px-6">{{ $tsg_user->email }}</td>
+                        <td class="py-3 px-6">{{ $tsg_user->phone_number }}</td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="flex justify-center space-x-2">
+                                <a href="/tsg/{{ $tsg_user->id }}" class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">View</a>
+                                <form action="/tsg/{{ $tsg_user->id }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+            {{-- Pagination (uncomment if needed) --}}
+            {{-- <div class="mx-auto max-w-lg pt-6 p-4">
+                {{ $tsgs->links() }}
+            </div> --}}
         </div>
     </div>
 </section>

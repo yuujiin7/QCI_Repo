@@ -19,7 +19,8 @@ class Tsg extends Model
         'phone_number',
         'age',
         'gender',
-        'emp_id'
+        'emp_id',
+        'profile_image'
     ];
     
     use HasFactory;
