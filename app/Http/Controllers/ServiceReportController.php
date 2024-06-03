@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\ServiceReport;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Support\Facades\Log;
 
 
 use Illuminate\Http\Request;
@@ -62,6 +65,30 @@ class ServiceReportController extends Controller
             'evp_coo' => 'nullable|min:2|max:255',
         ]);
 
+        if ($request->hasFile('sr_image')) {
+            $request->validate([
+                'sr_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+            ]);
+    
+            $filenameWithExtension = $request->file('sr_image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExtension, PATHINFO_FILENAME);
+            $extension = $request->file('sr_image')->getClientOriginalExtension();
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            $thumbnailFileNameToStore =  $fileNameToStore;
+    
+            // Store original image
+            $request->file('sr_image')->storeAs('public/sr_images', $fileNameToStore);
+    
+            // Create and save thumbnail
+            $thumbnailPath = 'public/sr_images/thumbnail/' . $thumbnailFileNameToStore;
+            $request->file('profile_image')->storeAs('public/sr_images/thumbnail', $thumbnailFileNameToStore);
+    
+            $this->createThumbnail(storage_path('app/' . $thumbnailPath), 150, 93);
+    
+            // Update form fields with image paths
+            $validated['sr_image'] = $fileNameToStore;
+        }
+
         ServiceReport::create($validated);
         return redirect('/service-reports')->with('message', 'Service Report created successfully.');
     }
@@ -97,16 +124,59 @@ class ServiceReportController extends Controller
             'evp_coo' => 'nullable|min:2|max:255',
         ]);
 
+        if ($request->hasFile('sr_image')) {
+            $request->validate([
+                'sr_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+            ]);
+    
+            $filenameWithExtension = $request->file('sr_image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExtension, PATHINFO_FILENAME);
+            $extension = $request->file('sr_image')->getClientOriginalExtension();
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            $thumbnailFileNameToStore =  $fileNameToStore;
+    
+            // Store original image
+            $request->file('sr_image')->storeAs('public/sr_images', $fileNameToStore);
+    
+            // Create and save thumbnail
+            $thumbnailPath = 'public/sr_images/thumbnail/' . $thumbnailFileNameToStore;
+            $request->file('profile_image')->storeAs('public/sr_images/thumbnail', $thumbnailFileNameToStore);
+    
+            $this->createThumbnail(storage_path('app/' . $thumbnailPath), 150, 93);
+    
+            // Update form fields with image paths
+            $validated['sr_image'] = $fileNameToStore;
+        }
+
         $service_report->update($validated);
         return redirect('/service-reports')->with('message', 'Service Report updated successfully.');
     }
 
-    public function destroy(ServiceReport $service_report)
+    public function destroy($id)
     {
+        $service_report = ServiceReport::findOrFail($id);
         $service_report->delete();
         return redirect('/service-reports')->with('message', 'Service Report deleted successfully.');
 
    }
+
+
+   public function createThumbnail($path, $width, $height)
+    {
+        try {
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($path);
+            $image->scale($width, $height, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            // dd($image);
+            $image->save($path);
+        } catch (\Exception $e) {
+            // Log or handle the exception as needed
+            Log::error('Error creating thumbnail: ' . $e->getMessage());
+        }
+        
+    }
 
 
 }

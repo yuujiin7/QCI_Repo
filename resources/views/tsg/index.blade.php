@@ -3,14 +3,15 @@
 <?php
 $array = ['title' => 'Questech'];
 ;?>
-<x-nav :data="$array"/>
+<x-nav/>
 
-<header class="max-w-lg mx-auto mt-5">
-    <a href="#">
-        <h1 class="text-4xl font-bold text-center pb-10 text-gray-800 uppercase">TSG User List</h1>
-    </a>
-</header>
-<section class="py-6">
+<section>
+<div class="p-10 sm:ml-64">
+        <div class="breadcrumbs my-4">
+            <a href="/">Home</a> <!-- Link to home page -->
+            <span class="mx-2">&rsaquo;</span> <!-- Breadcrumb separator -->
+            <span>User List</span> <!-- Current page -->
+        </div>
     <div class="container mx-auto">
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden display" id="TSGTable">
@@ -54,12 +55,10 @@ $array = ['title' => 'Questech'];
                 </tbody>
             </table>
 
-            {{-- Pagination (uncomment if needed) --}}
-            {{-- <div class="mx-auto max-w-lg pt-6 p-4">
-                {{ $tsgs->links() }}
-            </div> --}}
+
         </div>
     </div>
+</div>
 </section>
 
 

@@ -58,6 +58,7 @@ class ServiceReportFactory extends Factory
             "tech_support" => $this->faker->name(),
             "hr_finance" => $this->faker->name(),
             "evp_coo" => $this->faker->name(),
+            // "sr_image" => $this->faker->image('public/storage/sr_images', 640, 480, null, false),
             
         ];
     }

@@ -66,8 +66,6 @@ Route::middleware('auth')->group(function () {
 
     //delete
     Route::delete('/tsg/{id}', [TsgController::class, 'destroy']);
-
-
 });
 
 

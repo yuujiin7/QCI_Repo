@@ -24,3 +24,21 @@ document.addEventListener('DOMContentLoaded', function() {
         
     });
 });
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    $('#SRTable').DataTable({
+        responsive: true,
+        paging: true,
+        searching: true,
+        info: true,
+        ordering: true,
+        autoWidth: true,
+        lengthChange: true,
+        pageLength: 10,
+        order: [[0, "asc"]],
+        retrieve: true,
+        
+    });
+});
