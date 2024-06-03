@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth') -> group(function () {
     # Service Report
-    Route::get('/service-reports', [ServiceReportController::class, 'index']);
+    Route::get('/service-reports', [ServiceReportController::class, 'index']) -> name('Service Reports List');
     
 
     Route::get('/create/service-report', [ServiceReportController::class, 'create']);

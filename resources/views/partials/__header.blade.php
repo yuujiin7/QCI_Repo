@@ -20,8 +20,12 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.tailwindcss.js"></script>
     <script src="//cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
+    
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
+    
+
     <x-messages/>
     

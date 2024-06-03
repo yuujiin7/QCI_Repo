@@ -39,6 +39,52 @@ document.addEventListener('DOMContentLoaded', function() {
         pageLength: 10,
         order: [[0, "asc"]],
         retrieve: true,
+        columnDefs: [
+            {
+                targets: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+                visible: false,        
+            }
+            
+
+        ],
         
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const mainCheckbox = document.getElementById('checkbox-all-search');
+    const checkboxes = document.querySelectorAll('.checkbox-table-search');
+
+    mainCheckbox.addEventListener('change', function () {
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = mainCheckbox.checked;
+        });
+    });
+});
+
+// Function to delete a user
+function deleteUser(userId) {
+    if (confirm("Are you sure you want to delete this user?")) {
+        fetch('/service-report/' + userId, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // User deleted successfully, perform any necessary UI update
+                console.log("User deleted successfully");
+            } else {
+                // An error occurred while deleting the user
+                console.error("Error deleting user");
+            }
+        })
+        .catch(error => {
+            console.error("Error deleting user:", error);
+        });
+    }
+}
+
+
+

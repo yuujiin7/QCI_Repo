@@ -161,6 +161,7 @@ class ServiceReportController extends Controller
    }
 
 
+
    public function createThumbnail($path, $width, $height)
     {
         try {

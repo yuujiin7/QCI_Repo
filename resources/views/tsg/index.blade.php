@@ -1,17 +1,13 @@
 @include('partials.__header', ['title' => 'Questech'])
 
 <?php
-$array = ['title' => 'Questech'];
+$array = array('name' => "TSG User List");
 ;?>
 <x-nav/>
 
 <section>
 <div class="p-10 sm:ml-64">
-        <div class="breadcrumbs my-4">
-            <a href="/">Home</a> <!-- Link to home page -->
-            <span class="mx-2">&rsaquo;</span> <!-- Breadcrumb separator -->
-            <span>User List</span> <!-- Current page -->
-        </div>
+    <x-breadcrumbs :title="$array['name']"/>
     <div class="container mx-auto">
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden display" id="TSGTable">
