@@ -1,4 +1,5 @@
 
+<div class="flex mb-4 px-4">
 <div class="breadcrumbs my-4">
     {{-- <a href="/">Home</a> <!-- Link to home page -->
     <span class="mx-2">&rsaquo;</span> <!-- Breadcrumb separator -->
@@ -26,3 +27,5 @@
         </ol>
       </nav>
 </div>
+</div>
+

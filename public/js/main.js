@@ -51,40 +51,57 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const mainCheckbox = document.getElementById('checkbox-all-search');
-    const checkboxes = document.querySelectorAll('.checkbox-table-search');
+// document.addEventListener("DOMContentLoaded", function () {
+//     const mainCheckbox = document.getElementById('checkbox-all-search');
+//     const checkboxes = document.querySelectorAll('.checkbox-table-search');
 
-    mainCheckbox.addEventListener('change', function () {
-        checkboxes.forEach(function (checkbox) {
-            checkbox.checked = mainCheckbox.checked;
-        });
+//     mainCheckbox.addEventListener('change', function () {
+//         checkboxes.forEach(function (checkbox) {
+//             checkbox.checked = mainCheckbox.checked;
+//         });
+//     });
+// });
+
+// // Function to delete a user
+// function deleteUser(userId) {
+//     if (confirm("Are you sure you want to delete this user?")) {
+//         fetch('/service-report/' + userId, {
+//             method: 'DELETE',
+//             headers: {
+//                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
+//             }
+//         })
+//         .then(response => {
+//             if (response.ok) {
+//                 // User deleted successfully, perform any necessary UI update
+//                 console.log("User deleted successfully");
+//             } else {
+//                 // An error occurred while deleting the user
+//                 console.error("Error deleting user");
+//             }
+//         })
+//         .catch(error => {
+//             console.error("Error deleting user:", error);
+//         });
+//     }
+// }
+
+document.getElementById('submitDelete').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default form submission
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Proceed with form submission
+            document.getElementById('deleteForm').submit(); // Replace 'yourFormId' with your form's ID
+        }
     });
 });
-
-// Function to delete a user
-function deleteUser(userId) {
-    if (confirm("Are you sure you want to delete this user?")) {
-        fetch('/service-report/' + userId, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                // User deleted successfully, perform any necessary UI update
-                console.log("User deleted successfully");
-            } else {
-                // An error occurred while deleting the user
-                console.error("Error deleting user");
-            }
-        })
-        .catch(error => {
-            console.error("Error deleting user:", error);
-        });
-    }
-}
-
 
 

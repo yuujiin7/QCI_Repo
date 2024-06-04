@@ -7,7 +7,7 @@ $array = array('name' => "TSG User List");
 
 <section>
 <div class="p-10 sm:ml-64">
-    <x-breadcrumbs :title="$array['name']"/>
+    <!-- <x-breadcrumbs :title="$array['name']"/> -->
     <div class="container mx-auto">
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden display" id="TSGTable">
