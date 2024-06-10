@@ -7,10 +7,11 @@ $array = array('name' => "TSG User List");
 
 <section>
 <div class="p-10 sm:ml-64">
+    <main class="bg-white max-w-full mx-auto p-8 my-10 rounded-lg shadow-2xl dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
     <!-- <x-breadcrumbs :title="$array['name']"/> -->
     <div class="container mx-auto">
         <div class="overflow-x-auto">
-            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden display" id="TSGTable">
+            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden display dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" id="TSGTable">
                 <thead class="bg-gray-800 text-white text-xs uppercase">
                     <tr>
                         <th scope="col" class="py-3 px-6"></th>
@@ -24,7 +25,7 @@ $array = array('name' => "TSG User List");
                 </thead>
                 <tbody>
                     @foreach($tsg as $tsg_user)
-                    <tr class="bg-white border-b hover:bg-gray-50">
+                    <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
                         @php 
                             $default_profile = "https://api.dicebear.com/8.x/initials/svg?seed=".$tsg_user->first_name."%20".$tsg_user->last_name;
                         @endphp
@@ -54,6 +55,7 @@ $array = array('name' => "TSG User List");
 
         </div>
     </div>
+    </main>
 </div>
 </section>
 

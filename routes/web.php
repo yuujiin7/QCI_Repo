@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ServiceReportController;
+use App\Http\Controllers\PdfController;
 use App\Models\User;
+use Illuminate\Support\Facades\App;
 
 // Route::post();
 // Route::put();
@@ -82,3 +84,6 @@ Route::middleware('auth') -> group(function () {
 
     Route::delete('/service-report/{id}', [ServiceReportController::class, 'destroy']);
 });
+
+
+Route::get('generate-pdf', [PdfController::class, 'generatePDF']) -> name('generatePDF');
