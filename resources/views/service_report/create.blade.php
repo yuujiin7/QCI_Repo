@@ -7,7 +7,7 @@
     </a>
 </header>
 <div class="p-10 sm:ml-64">
-    <main class="bg-white max-w-3xl mx-auto p-8 my-10 rounded-lg shadow-2xl">
+    <main class="bg-white max-w-3xl mx-auto p-8 my-10 rounded-lg shadow-2xl  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
         <section class="mt-10">
             @if ($errors->any()) <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
                 <ul> @foreach ($errors->all() as $error) <li class="text-red-500 text-xs mt-2 italic p-1">{{ $error }}</li> @endforeach </ul>
