@@ -140,9 +140,9 @@
                 </div>
                 
 
-                <div class="flex mb-4">
+                <div class="flex flex-wrap mb-4">
                     <div class="px-2 flex-1">
-                        <label for="machine_model" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Machine Model</label>
+                        <label for="machine_model" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Machine Model</label>
                         <input type="text" name="machine_model" id="machine_model" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required="">
                     </div>
                     <div class="px-2 flex-1">
@@ -178,10 +178,33 @@
                     
                 </div>
 
-                <div class="sm:col-span-2">
+                <div class="sm:col-span-2 px-2 mb-4">
                     <label for="action_taken" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Action Taken</label>
                     <textarea id="action_taken" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Your action taken here"></textarea>
                 </div>
+
+
+                <div class="flex flex-wrap mb-4">
+                    <div class="px-2 flex-1">
+                        <label for="machine_model" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Machine Model</label>
+                        <input type="text" name="machine_model" id="machine_model" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required="">
+                    </div>
+                    <div class="px-2 flex-1">
+                        <label for="serial_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Serial Number</label>
+                        <input type="text" name="serial_number" id="serial_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required="">
+                    </div>
+
+                    <div class="px-2 flex-1">
+                        <label for="product_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event ID</label>
+                        <input type="text" name="product_number" id="product_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required="">
+                    </div>
+                    
+                </div>
+
+
+
+
+
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload file</label>
                 <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file">
                 <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Upload the softcopy of the SR</div>

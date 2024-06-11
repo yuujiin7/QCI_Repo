@@ -10,6 +10,8 @@
     @vite(['resources/css/app.css','resources/js/app.js'])
      
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     
     
     

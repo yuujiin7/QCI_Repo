@@ -2,10 +2,7 @@
 <?php
 $array = array('name' => "Service Report List");; ?>
 
-
-
 <x-nav />
-
 
 <section>
     <div class="p-10 sm:ml-64">
@@ -77,6 +74,7 @@ $array = array('name' => "Service Report List");; ?>
                             <td class="py-3 px-6">{{ $sr->remarks }}</td>
                             <td class="py-3 px-6 text-center">
                                 <div class="flex justify-center space-x-2">
+                                    <a href="/generate-pdf/{{ $sr->id }}" class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700" target="_blank">View</a>
                                     <a href="/service-report/{{ $sr->id }}" class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">Edit</a>
                                     <form action="/service-report/{{ $sr->id }}" method="POST" class="inline" id="deleteForm">
                                         @csrf

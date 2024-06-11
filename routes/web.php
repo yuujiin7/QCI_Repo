@@ -83,7 +83,11 @@ Route::middleware('auth') -> group(function () {
     Route::put('/service-report/{id}', [ServiceReportController::class, 'update']);
 
     Route::delete('/service-report/{id}', [ServiceReportController::class, 'destroy']);
+
+    
 });
 
+Route::get('/generate-pdf/{id}', [PdfController::class, 'generatePDF']);
+Route::get('/generate-sr-form/{id}', [PdfController::class, 'index']);
 
-Route::get('generate-pdf', [PdfController::class, 'generatePDF']) -> name('generatePDF');
+
