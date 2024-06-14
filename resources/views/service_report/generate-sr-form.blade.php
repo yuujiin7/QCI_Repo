@@ -110,14 +110,14 @@
             <div class="col-md-6">
                 <img class="logo" src="{{ $base64Image }}" alt="Logo">
             </div>
+            <div class="d-flex justify-content-center">
+            <h1 class="title" style="text-align: center;">TSG Service Report</h1>
+        </div>
             <div class="col-md-6 text-right">
                 <p>No. {{ $serviceReportNumber }}</p>
             </div>
         </div>
 
-        <div class="d-flex justify-content-center">
-            <h1 class="title" style="text-align: center;">TSG Service Report</h1>
-        </div>
 
         <div class="container container-fluid">
             <table>

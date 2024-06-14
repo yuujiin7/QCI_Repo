@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "18481b4ee0197d99514a6a45d607e94e",
+    "content-hash": "d23477d29f8b17a02df14aaa0a9c2441",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -3603,6 +3603,73 @@
                 "source": "https://github.com/MyIntervals/PHP-CSS-Parser/tree/v8.5.1"
             },
             "time": "2024-02-15T16:41:13+00:00"
+        },
+        {
+            "name": "sofa/revisionable",
+            "version": "v5.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jarektkaczyk/revisionable.git",
+                "reference": "98078455bfd83fd2ddf7b972ac5e4d23bfc1c9df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jarektkaczyk/revisionable/zipball/98078455bfd83fd2ddf7b972ac5e4d23bfc1c9df",
+                "reference": "98078455bfd83fd2ddf7b972ac5e4d23bfc1c9df",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": ">=6.20.14",
+                "php": ">=7.2.5"
+            },
+            "require-dev": {
+                "cartalyst/sentinel": "~2.0",
+                "cartalyst/sentry": "~2.0",
+                "illuminate/auth": ">=6.20.14",
+                "squizlabs/php_codesniffer": "~2.0",
+                "tymon/jwt-auth": "^0.5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sofa\\Revisionable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jarek Tkaczyk",
+                    "email": "jarek@softonsofa.com",
+                    "homepage": "http://softonsofa.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Nice and easy way to handle revisions of your db.",
+            "keywords": [
+                "eloquent",
+                "history",
+                "laravel",
+                "revision",
+                "revisionable"
+            ],
+            "support": {
+                "issues": "https://github.com/jarektkaczyk/revisionable/issues",
+                "source": "https://github.com/jarektkaczyk/revisionable"
+            },
+            "funding": [
+                {
+                    "url": "https://softonsofa.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/jarektkaczyk",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-31T11:08:13+00:00"
         },
         {
             "name": "symfony/clock",

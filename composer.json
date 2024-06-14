@@ -9,7 +9,8 @@
         "barryvdh/laravel-dompdf": "^2.2",
         "intervention/image": "3.6",
         "laravel/framework": "^11.0",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "sofa/revisionable": "^5.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

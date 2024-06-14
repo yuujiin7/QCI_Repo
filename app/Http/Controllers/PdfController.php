@@ -78,34 +78,4 @@ class PdfController extends Controller
 
         
     }
-
-    public function index($id){
-        $serviceReport = ServiceReport::findOrFail($id);
-
-
-        // make data an array
-        $data = [
-            'serviceReport' => $serviceReport,
-            'serviceReportId' => $serviceReport->id,
-            'serviceReportNumber' => $serviceReport->sr_number,
-            'date' => $serviceReport->date,
-            'customer' => $serviceReport->customer,
-            'contact_person' => $serviceReport->contact_person,
-            'contact_number' => $serviceReport->contact_number,
-            'address' => $serviceReport->address,
-            'email' => $serviceReport->email,
-            'machine' => $serviceReport->machine,
-            'serial_number' => $serviceReport->serial_number,
-            'model' => $serviceReport->model,
-            'problem' => $serviceReport->problem,
-            'remarks' => $serviceReport->remarks,
-            'technician' => $serviceReport->technician,
-            'status' => $serviceReport->status,
-            'customer' => $serviceReport->customer_name,
-
-        ];
-
-    
-        return view('service_report.generate-sr-form', $data);
-    }
 }

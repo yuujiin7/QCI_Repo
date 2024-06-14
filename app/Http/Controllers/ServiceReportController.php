@@ -7,6 +7,8 @@ use App\Models\ServiceReport;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
+
 
 
 use Illuminate\Http\Request;
@@ -31,7 +33,10 @@ class ServiceReportController extends Controller
     
 
     public function create(){
-        return view('service_report.create') -> with('title', 'Create Service Report');
+
+        $users = User::all();
+
+        return view('service_report.create', ['user_data' => $users]) -> with('title', 'Create Service Report');
     }
 
    public function store(Request $request){

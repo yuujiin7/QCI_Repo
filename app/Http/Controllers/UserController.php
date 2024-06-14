@@ -36,7 +36,7 @@ class UserController extends Controller
 
          // Check if the user is already authenticated
         if (Auth::check()) {
-            return redirect('/tsg');  // Redirect to TSG page if authenticated
+            return redirect('/service-reports');  // Redirect to TSG page if authenticated
         }
 
         // Check if the login view exists
@@ -56,7 +56,7 @@ class UserController extends Controller
 
         if(auth()->attempt($validated)){
             $request->session()->regenerate();
-            return redirect('tsg')->with('message', 'Logged in successfully');
+            return redirect('service-reports')->with('message', 'Logged in successfully');
         }
 
         return back()->withErrors([

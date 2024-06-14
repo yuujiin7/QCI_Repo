@@ -25,7 +25,6 @@ return new class extends Migration
             $table->time('end_time');
             $table->decimal('total_hours', 8, 2); // Define total_hours as a decimal
             $table->string('remarks');
-            $table->string('status_1') -> nullable();
             $table->string('machine_model')-> nullable();
             $table->string('machine_serial_number')->unique() -> nullable();
             $table->string('product_number')->unique() -> nullable();

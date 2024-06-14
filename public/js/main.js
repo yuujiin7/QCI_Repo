@@ -50,42 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
     });
 });
-
-// document.addEventListener("DOMContentLoaded", function () {
-//     const mainCheckbox = document.getElementById('checkbox-all-search');
-//     const checkboxes = document.querySelectorAll('.checkbox-table-search');
-
-//     mainCheckbox.addEventListener('change', function () {
-//         checkboxes.forEach(function (checkbox) {
-//             checkbox.checked = mainCheckbox.checked;
-//         });
-//     });
-// });
-
-// // Function to delete a user
-// function deleteUser(userId) {
-//     if (confirm("Are you sure you want to delete this user?")) {
-//         fetch('/service-report/' + userId, {
-//             method: 'DELETE',
-//             headers: {
-//                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
-//             }
-//         })
-//         .then(response => {
-//             if (response.ok) {
-//                 // User deleted successfully, perform any necessary UI update
-//                 console.log("User deleted successfully");
-//             } else {
-//                 // An error occurred while deleting the user
-//                 console.error("Error deleting user");
-//             }
-//         })
-//         .catch(error => {
-//             console.error("Error deleting user:", error);
-//         });
-//     }
-// }
-
 document.getElementById('submitDelete').addEventListener('click', function(event) {
     event.preventDefault(); // Prevent default form submission
     Swal.fire({
@@ -105,3 +69,13 @@ document.getElementById('submitDelete').addEventListener('click', function(event
 });
 
 
+// change the "complete" to "incomplete" toggle
+function toggleCompleteStatus() {
+    var statusText = document.getElementById("status-text");
+    if (statusText.textContent === "Complete") {
+        statusText.textContent = "Incomplete";
+    } else {
+        statusText.textContent = "Complete";
+    }
+    
+}

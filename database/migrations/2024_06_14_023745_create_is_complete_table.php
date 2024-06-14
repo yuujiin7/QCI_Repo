@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('user_type')->default('user');
-            $table->string('role')->default('');
+        Schema::table('service_reports', function (Blueprint $table) {
+            
+            $table->dropColumn('isComplete');
         });
     }
 
@@ -22,9 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('user_type');
-            $table->dropColumn('role');
+        Schema::table('service_reports', function (Blueprint $table) {
+            $table->boolean('isComplete')->default(false);
         });
     }
 };
