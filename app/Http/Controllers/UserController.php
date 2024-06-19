@@ -72,7 +72,7 @@ class UserController extends Controller
 
     # Store
     public function store(Request $request){
-        try {
+        
             $validated = $request->validate([
                 'first_name' => 'required|min:2|max:255',
                 'middle_name' => 'nullable|min:2|max:255',
@@ -81,8 +81,8 @@ class UserController extends Controller
                 'email' => 'required|email|unique:users,email',
                 'phone_number' => 'required|min:10|max:255',
                 'password' => 'required|confirmed|min:8|max:255',
-                'user_type' => ['required', Rule::in(['admin', 'user'])],
-                'role' => 'nullable|in:engineer,manager,admin'
+                'user_type' => [Rule::in(['admin', 'user'])],
+                'role' => [Rule::in(['engineer','manager','admin'])],
             ], [
                 'first_name.required' => 'First name is required.',
                 'first_name.min' => 'First name must be at least :min characters.',
@@ -117,14 +117,8 @@ class UserController extends Controller
             
             // Optionally, redirect the user after successful registration
             return redirect('/login')->with('message', 'User created successfully');
-        } catch (\Exception $e) {
-            // Log the error
-            Log::error('Error creating user: ' . $e->getMessage());
-    
-            // Optionally, return a response indicating the error
-            return back()->withInput()->withErrors(['error' => 'An error occurred while registering. Please try again later.']);
         }
-    }
+    
     
     # Logout
     public function logout(Request $request){

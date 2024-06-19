@@ -14,7 +14,7 @@
         <p class="text-gray-700 text-center mt-4">Please fill in the form below</p>   
     </section>
     <section class="mt-8">
-        @if ($errors->any())
+        {{-- @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
@@ -22,7 +22,7 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+        @endif --}}
 
         <form action="/store" method="POST" class="flex flex-col">
             @csrf

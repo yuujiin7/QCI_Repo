@@ -20,11 +20,11 @@ return new class extends Migration
             $table->string('customer_name');
             $table->string('address');
             $table->string('contact_person');
-            $table->string('contact_number')->unique();
+            $table->string('contact_number') -> nullable();
             $table->time('start_time');
             $table->time('end_time');
-            $table->decimal('total_hours', 8, 2); // Define total_hours as a decimal
-            $table->string('remarks');
+            $table->decimal('total_hours', 8, 2);
+            $table->string('remarks') -> nullable();
             $table->string('machine_model')-> nullable();
             $table->string('machine_serial_number')->unique() -> nullable();
             $table->string('product_number')->unique() -> nullable();
@@ -33,12 +33,21 @@ return new class extends Migration
             $table->string('part_description') -> nullable();
             $table->string('part_usage') -> nullable();
             $table->string('action_taken');
-            $table->string('pending');
-            $table->string('status_2');
+            $table->string('pending') -> nullable();
             $table->string('engineer_assigned');
-            $table->string('tech_support');
+            $table->string('tech_support') ;
             $table->string('hr_finance');
             $table->string('evp_coo');
+            $table->boolean('new_installation')->default(false);
+            $table->boolean('under_maintenance')->default(false);
+            $table->boolean('demo_poc')->default(false);
+            $table->boolean('billable')->default(false);
+            $table->boolean('under_warranty')->default(false);
+            $table->boolean('corrective_maintenance')->default(false);
+            $table->boolean('add_on')->default(false);
+            $table->string('others')->nullable();
+            $table->boolean('is_complete')->default(false);
+            $table->string('sr_image')->nullable();
             $table->timestamps();
         });
     }

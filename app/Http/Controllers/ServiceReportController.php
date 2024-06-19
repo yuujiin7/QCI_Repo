@@ -12,6 +12,7 @@ use App\Models\User;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceReportController extends Controller
 {
@@ -48,11 +49,11 @@ class ServiceReportController extends Controller
             'customer_name' => 'required|min:2|max:255',
             'address' => 'required|min:2|max:255',
             'contact_person' => 'required|min:2|max:255',
-            'contact_number' => 'required|min:2|max:255',
+            'contact_number' => 'nullable|min:2|max:50',
             'start_time' => 'required',
             'end_time' => 'required',
             'total_hours' => 'required',
-            'remarks' => 'required|min:2|max:255',
+            'remarks' => 'nullable|min:2|max:255',
             'new_installation' => 'nullable|boolean',
             'under_maintenance' => 'nullable|boolean',
             'demo_poc' => 'nullable|boolean',
@@ -70,8 +71,7 @@ class ServiceReportController extends Controller
             'part_description' => 'nullable',
             'part_usage' => 'nullable',
             'action_taken' => 'required',
-            'pending' => 'required',
-            'status_2' => 'required',
+            'pending' => 'nullable',
             'engineer_assigned' => 'required',
             'tech_support' => 'nullable|min:2|max:255',
             'hr_finance' => 'nallable|min:2|max:255',
@@ -82,7 +82,16 @@ class ServiceReportController extends Controller
         $validated['evp_coo'] = $validated['evp_coo'] ?? 'Rommel Misa';
         $validated['tech_support'] = $validated['tech_support'] ?? 'Julius Caesar Alfaro';
         $validated['is_complete'] = $validated['is_complete'] ?? false;
+    
 
+        // compute total hours from start and end time
+        $start_time = strtotime($validated['start_time']);
+        $end_time = strtotime($validated['end_time']);
+        $total_hours = ($end_time - $start_time) / 3600;
+        $validated['total_hours'] = $total_hours;
+        // dd($validated);
+
+    
         if ($request->hasFile('sr_image')) {
             $request->validate([
                 'sr_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
@@ -107,7 +116,7 @@ class ServiceReportController extends Controller
             $validated['sr_image'] = $fileNameToStore;
         }
 
-        dd($validated);
+        // dd($validated);
         ServiceReport::create($validated);
         return redirect('/service-reports')->with('message', 'Service Report created successfully.');
     }
@@ -121,11 +130,11 @@ class ServiceReportController extends Controller
             'customer_name' => 'required|min:2|max:255',
             'address' => 'required|min:2|max:255',
             'contact_person' => 'required|min:2|max:255',
-            'contact_number' => 'required|min:2|max:255',
+            'contact_number' => 'nullable|min:2|max:50',
             'start_time' => 'required',
             'end_time' => 'required',
             'total_hours' => 'required',
-            'remarks' => 'required|min:2|max:255',
+            'remarks' => 'nullable|min:2|max:255',
             'new_installation' => 'nullable|boolean',
             'under_maintenance' => 'nullable|boolean',
             'demo_poc' => 'nullable|boolean',
@@ -143,17 +152,21 @@ class ServiceReportController extends Controller
             'part_description' => 'nullable',
             'part_usage' => 'nullable',
             'action_taken' => 'required',
-            'pending' => 'required',
-            'status_2' => 'required',
+            'pending' => 'nullable',
             'engineer_assigned' => 'required',
             'tech_support' => 'nullable|min:2|max:255',
-            'hr_finance' => 'nullable|min:2|max:255',
+            'hr_finance' => 'nallable|min:2|max:255',
             'evp_coo' => 'nullable|min:2|max:255',
         ]);
         $validated['hr_finance'] = $validated['hr_finance'] ?? 'Eileen Orence';
         $validated['evp_coo'] = $validated['evp_coo'] ?? 'Rommel Misa';
         $validated['tech_support'] = $validated['tech_support'] ?? 'Julius Caesar Alfaro';
         $validated['is_complete'] = $validated['is_complete'] ?? false;
+
+        $start_time = strtotime($validated['start_time']);
+        $end_time = strtotime($validated['end_time']);
+        $total_hours = ($end_time - $start_time) / 3600;
+        $validated['total_hours'] = $total_hours;
 
 
         if ($request->hasFile('sr_image')) {
@@ -184,6 +197,8 @@ class ServiceReportController extends Controller
         return redirect('/service-reports')->with('message', 'Service Report updated successfully.');
     }
 
+
+    
     public function destroy($id)
     {
         $service_report = ServiceReport::findOrFail($id);

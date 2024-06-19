@@ -37,21 +37,13 @@ $array = array('name' => "Service Report List");; ?>
                     <tbody>
                         @foreach($service_report as $sr)
                         <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
-                            {{-- <td class="w-4 p-4">
-                        <div class="flex items-center">
-                            <input type="checkbox"
-                                   class="checkbox-table-search w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="checkbox-table-search-1" class="sr-only" >checkbox</label>
-                        </div>
-                    </td> --}}
+                           
                             <td class="py-3 px-6">{{ $sr->sr_number }}</td>
                             <td class="py-3 px-6">{{ $sr->customer_name }}</td>
                             <td class="py-3 px-6">{{ $sr->address }}</td>
                             <td class="py-3 px-6">{{ $sr->engineer_assigned }}</td>
                             <td class="py-3 px-6">{{ date('h:i A', strtotime($sr->start_time)) }}</td>
                             <td class="py-3 px-6">{{ date('h:i A', strtotime($sr->end_time)) }}</td>
-                            {{-- <td class="py-3 px-6">{{ $sr->start_time }}</td>
-                            <td class="py-3 px-6">{{ $sr->end_time }}</td> --}}
                             <td class="py-3 px-6">{{ $sr->total_hours }}</td>
                             <td class="py-3 px-6">{{ $sr->isCompleted }}</td>
                             <td class="py-3 px-6">{{ $sr->machine_model }}</td>
@@ -67,8 +59,7 @@ $array = array('name' => "Service Report List");; ?>
                             <td class="py-3 px-6 text-center">
                                 <div class="flex justify-center space-x-2">
                                     <a href="/generate-pdf/{{ $sr->id }}" class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700" target="_blank">
-                                        <!-- make a logo eye -->
-
+                                        
                                         <svg class="w-6 h-6 text-white-800 dark:text-gray" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
                                         <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
