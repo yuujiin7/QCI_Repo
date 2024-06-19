@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::table('service_reports', function (Blueprint $table) {
             
             $table->dropColumn('isComplete');
+            $table->dropColumn('isCompleted');
+            
         });
     }
 
@@ -24,6 +26,7 @@ return new class extends Migration
     {
         Schema::table('service_reports', function (Blueprint $table) {
             $table->boolean('isComplete')->default(false);
+            $table->boolean('isCompleted')->default(false);
         });
     }
 };

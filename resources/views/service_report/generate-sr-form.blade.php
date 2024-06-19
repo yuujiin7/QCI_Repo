@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
     <title>{{ $serviceReportId }}</title>
     @vite(['resources/css/app.css','resources/js/app.js'])
 
     <style>
-        
-
         body {
             font-family: Arial, sans-serif;
         }
 
-        .container {
+        /* .container {
             margin: 5px auto;
-            
-        }
+        } */
 
         table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             border: 2px solid #000;
             padding: 5px;
             text-align: center;
@@ -35,61 +35,30 @@
             background-color: #f2f2f2;
         }
 
-        /* .check-box {
-            width: 10px;
-            height: 10px;
-            border: 2px solid #000;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .check-mark {
-            display: none;
-            color: red;
-            font-size: 30px;
-            line-height: 16px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        } */
-
-        .header {
-            display: flex;
+        /* .header {
             justify-content: space-between;
+            display: flex;
             align-items: center;
-            margin-bottom: auto;
-        }
+            justify-items: center;
+            
+        } */
 
         .logo {
             width: 10%;
             height: auto;
-            margin-top: -10px;
-            
-        }
-
-        /* .checked .check-mark {
-            display: inline-block;
-        }
-
-        .center-input {
-            text-align: center;
-        } */
-
-        .flex-row { 
-            display: flex;
-        }
-
-        .wrapper {
-            border: 1px solid #4b00ff;
-            border-right: 0;
+            text-align: left;
         }
 
         .title {
             font-family: Arial, Helvetica, sans-serif;
             color: #000000;
             font-size: 20px;
-            padding-top: -30px;
+
+            text-align: center;
+        }
+
+        .service-number {
+            text-align: right;
         }
 
         .footer {
@@ -99,24 +68,37 @@
         .footer .container {
             text-align: center;
         }
-        .text-right {
+
+        .footer .text-right {
             text-align: right;
         }
+        .header-table {
+            
+        }
+
+        
     </style>
 </head>
+
 <body>
     <div class="container">
-        <div class="header">
-            <div class="col-md-6">
-                <img class="logo" src="{{ $base64Image }}" alt="Logo">
-            </div>
-            <div class="d-flex justify-content-center">
-            <h1 class="title" style="text-align: center;">TSG Service Report</h1>
-        </div>
-            <div class="col-md-6 text-right">
-                <p>No. {{ $serviceReportNumber }}</p>
-            </div>
-        </div>
+
+        
+        <table class="header-table">
+            <thead>
+                <tr>
+                    <th colspan="3">
+                        <img class="logo" src="{{ $base64Image }}" alt="Logo">
+                    </th>
+                    <th colspan="6">
+                        <h1 class="title">TSG Service Report</h1>
+                    </th>
+                    <th colspan="3">
+                        <p class="service-number">No. {{ $serviceReportNumber }}</p>
+                    </th>
+                </tr>
+            </thead>
+        </table>
 
 
         <div class="container container-fluid">
@@ -276,4 +258,5 @@
         </div>
     </div>
 </body>
+
 </html>

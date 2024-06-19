@@ -53,7 +53,15 @@ class ServiceReportController extends Controller
             'end_time' => 'required',
             'total_hours' => 'required',
             'remarks' => 'required|min:2|max:255',
-            'status_1' => 'nullable|min:2|max:255',
+            'new_installation' => 'nullable|boolean',
+            'under_maintenance' => 'nullable|boolean',
+            'demo_poc' => 'nullable|boolean',
+            'billable' => 'nullable|boolean',
+            'under_warranty' => 'nullable|boolean',
+            'corrective_maintenance' => 'nullable|boolean',
+            'add_on' => 'nullable|boolean',
+            'others' => 'nullable',
+            'is_complete' => 'nullable|boolean',
             'machine_model' => 'nullable|min:2|max:255',
             'machine_serial_number' => 'nullable|min:2|max:255|unique:service_reports,machine_serial_number',
             'product_number' => 'nullable|min:2|max:255|unique:service_reports,product_number',
@@ -69,6 +77,11 @@ class ServiceReportController extends Controller
             'hr_finance' => 'nallable|min:2|max:255',
             'evp_coo' => 'nullable|min:2|max:255',
         ]);
+
+        $validated['hr_finance'] = $validated['hr_finance'] ?? 'Eileen Orence';
+        $validated['evp_coo'] = $validated['evp_coo'] ?? 'Rommel Misa';
+        $validated['tech_support'] = $validated['tech_support'] ?? 'Julius Caesar Alfaro';
+        $validated['is_complete'] = $validated['is_complete'] ?? false;
 
         if ($request->hasFile('sr_image')) {
             $request->validate([
