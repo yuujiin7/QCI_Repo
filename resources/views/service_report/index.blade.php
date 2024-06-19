@@ -13,14 +13,6 @@ $array = array('name' => "Service Report List");; ?>
                 <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden display dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" id="SRTable">
                     <thead class="bg-gray-800 text-white text-xs uppercase">
                         <tr>
-                            {{-- <th scope="col" class="p-4">
-                        <div class="flex items-center">
-                            <input id="checkbox-all-search" type="checkbox"
-                                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                        </div>
-                    </th> --}}
-                            {{-- <th scope="col" class="py-3 px-6"></th> --}}
                             <th scope="col" class="py-3 px-6">SR Number</th>
                             <th scope="col" class="py-3 px-6">Customer Name</th>
                             <th scope="col" class="py-3 px-6">Address</th>

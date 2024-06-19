@@ -81,6 +81,8 @@ class UserController extends Controller
                 'email' => 'required|email|unique:users,email',
                 'phone_number' => 'required|min:10|max:255',
                 'password' => 'required|confirmed|min:8|max:255',
+                'user_type' => ['required', Rule::in(['admin', 'user'])],
+                'role' => 'nullable|in:engineer,manager,admin'
             ], [
                 'first_name.required' => 'First name is required.',
                 'first_name.min' => 'First name must be at least :min characters.',
@@ -98,9 +100,13 @@ class UserController extends Controller
                 'password.confirmed' => 'Passwords do not match.',
                 'password.min' => 'Password must be at least :min characters.',
                 'password.max' => 'Password may not be greater than :max characters.',
+                'user_type.in' => 'Invalid user type.',
+                'role.in' => 'Invalid role.',
             ]);
     
             $validated['password'] = bcrypt($validated['password']);
+            $validated['user_type'] = $validated['user_type'] ?? 'user';
+            $validated['role'] = $validated['role'] ?? 'engineer';
     
             if (!isset($validated['suffix'])) {
                 $validated['suffix'] = null;

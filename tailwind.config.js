@@ -10,5 +10,7 @@ export default {
     extend: {},
   },
   plugins: [],
+  darkMode: ["class"],
+  safelist: ["dark"],
 }
 

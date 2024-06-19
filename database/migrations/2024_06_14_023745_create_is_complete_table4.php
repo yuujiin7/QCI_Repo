@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('service_reports', function (Blueprint $table) {
+            $table->boolean('is_complete')->default(false);
             
-            $table->dropColumn('isComplete');
-            $table->dropColumn('isCompleted');
             
         });
     }
@@ -25,8 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('service_reports', function (Blueprint $table) {
-            $table->boolean('isComplete')->default(false);
-            $table->boolean('isCompleted')->default(false);
+            
+            $table->dropColumn('is_complete');
+           
         });
     }
 };

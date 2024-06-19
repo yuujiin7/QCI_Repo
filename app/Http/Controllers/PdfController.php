@@ -61,6 +61,7 @@ class PdfController extends Controller
             'evpCoo' => $serviceReport->evp_coo,
             'base64Image' => $base64Image,
             
+            
 
         ];
 
