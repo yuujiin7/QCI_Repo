@@ -7,8 +7,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <title>{{ $serviceReportId }}</title>
-    @vite(['resources/css/app.css','resources/js/app.js'])
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -61,29 +59,33 @@
             text-align: right;
         }
         .header-table {
-            
+            border-style: hidden;
         }
-
+        .header-table td {
+            border-style: hidden;
+            background-color: white;
+            text-align: center;
+        }
+        
         
     </style>
 </head>
 
 <body>
     <div class="container">
-
-        
         <table class="header-table">
             <thead>
                 <tr>
-                    <th colspan="3">
+                    <td colspan="5" id="logo-img">
                         <img class="logo" src="{{ $base64Image }}" alt="Logo">
-                    </th>
-                    <th colspan="6">
+                    </td>
+                   
+                    <td colspan="4">
                         <h1 class="title">TSG Service Report</h1>
-                    </th>
-                    <th colspan="3">
+                    </td>
+                    <td colspan="1">
                         <p class="service-number">No. {{ $serviceReportNumber }}</p>
-                    </th>
+                    </td>
                 </tr>
             </thead>
         </table>

@@ -90,6 +90,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const endTimeError = document.getElementById('end_time_error');
     const totalHoursError = document.getElementById('total_hours_error');
 
+    var checkbox = document.querySelector('input[name="is_complete"]');
+    var statusText = document.getElementById('status-text');
     // Event listener for start_time input
     startTimeInput.addEventListener('input', updateTotalHours);
     // Event listener for end_time input
@@ -139,5 +141,11 @@ document.addEventListener('DOMContentLoaded', function() {
         startTimeError.style.display = 'none';
         endTimeError.style.display = 'none';
         totalHoursError.style.display = 'none';
+    }
+
+    if (checkbox.checked) {
+        statusText.textContent = 'Complete';
+    } else {
+        statusText.textContent = 'Incomplete';
     }
 });

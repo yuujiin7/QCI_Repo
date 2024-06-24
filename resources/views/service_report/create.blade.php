@@ -278,7 +278,7 @@ $array = array('title' => "Questech");
                 <div class="flex mb-4">
                     <div class="px-2 flex-1">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="sr_image">Upload file</label>
-                        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="sr_image_help" id="sr_image" type="file">
+                        <input class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="sr_image_help" id="sr_image" type="file">
                         <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="sr_image_help">Upload the softcopy of the SR</div>
                         @error('sr_image')
                         <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>

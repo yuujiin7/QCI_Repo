@@ -133,7 +133,7 @@ class ServiceReportController extends Controller
             'contact_number' => 'nullable|min:2|max:50',
             'start_time' => 'required',
             'end_time' => 'required',
-            'total_hours' => 'required',
+            // 'total_hours' => 'required',
             'remarks' => 'nullable|min:2|max:255',
             'new_installation' => 'nullable|boolean',
             'under_maintenance' => 'nullable|boolean',
@@ -145,30 +145,35 @@ class ServiceReportController extends Controller
             'others' => 'nullable',
             'is_complete' => 'nullable|boolean',
             'machine_model' => 'nullable|min:2|max:255',
-            'machine_serial_number' => 'nullable|min:2|max:255|unique:service_reports,machine_serial_number',
-            'product_number' => 'nullable|min:2|max:255|unique:service_reports,product_number',
+            'machine_serial_number' => 'nullable|min:2|max:255',
+            'product_number' => 'nullable|min:2|max:255',
             'part_number' => 'nullable',
             'part_quantity' => 'nullable',
             'part_description' => 'nullable',
             'part_usage' => 'nullable',
             'action_taken' => 'required',
             'pending' => 'nullable',
-            'engineer_assigned' => 'required',
+            'engineer_assigned' => 'min:2|max:255',
             'tech_support' => 'nullable|min:2|max:255',
-            'hr_finance' => 'nallable|min:2|max:255',
+            'hr_finance' => 'nullable|min:2|max:255',
             'evp_coo' => 'nullable|min:2|max:255',
         ]);
+        
         $validated['hr_finance'] = $validated['hr_finance'] ?? 'Eileen Orence';
         $validated['evp_coo'] = $validated['evp_coo'] ?? 'Rommel Misa';
         $validated['tech_support'] = $validated['tech_support'] ?? 'Julius Caesar Alfaro';
         $validated['is_complete'] = $validated['is_complete'] ?? false;
-
+        
+       // Calculate total hours if not provided
+    if (!isset($validated['total_hours'])) {
         $start_time = strtotime($validated['start_time']);
         $end_time = strtotime($validated['end_time']);
         $total_hours = ($end_time - $start_time) / 3600;
         $validated['total_hours'] = $total_hours;
-
-
+        $request->merge(['total_hours' => $total_hours]);
+    }
+  
+        
         if ($request->hasFile('sr_image')) {
             $request->validate([
                 'sr_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
@@ -192,6 +197,9 @@ class ServiceReportController extends Controller
             // Update form fields with image paths
             $validated['sr_image'] = $fileNameToStore;
         }
+        // make machine serial Number and product number and engineer assigned both accept the same value if it is the same
+        
+        dd($validated);
 
         $service_report->update($validated);
         return redirect('/service-reports')->with('message', 'Service Report updated successfully.');

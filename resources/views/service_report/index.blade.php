@@ -36,7 +36,7 @@ $array = array('name' => "Service Report List");; ?>
                     </thead>
                     <tbody>
                         @foreach($service_report as $sr)
-                        <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <tr class="bg-white border-b text-black hover:bg-gray-50 dark:hover:bg-gray-600">
                            
                             <td class="py-3 px-6">{{ $sr->sr_number }}</td>
                             <td class="py-3 px-6">{{ $sr->customer_name }}</td>
