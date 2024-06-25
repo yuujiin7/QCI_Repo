@@ -122,25 +122,25 @@ $array = array('title' => "Questech");
                     <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 border-b-0 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                             <div class="flex items-center ps-3">
-                                <input id="new_installation" type="checkbox" name="list-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->new_installation}}">
+                                <input id="new_installation" type="checkbox" name="new_installation" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->new_installation}}">
                                 <label for="new_installation" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">New Installation</label>
                             </div>
                         </li>
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                             <div class="flex items-center ps-3">
-                                <input id="under_maintenance" type="checkbox" name="list-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->under_maintenance}}">
+                                <input id="under_maintenance" type="checkbox" name="under_maintenance" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->under_maintenance}}">
                                 <label for="under_maintenance" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Under Maintenance Contract</label>
                             </div>
                         </li>
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                             <div class="flex items-center ps-3">
-                                <input id="demo_poc" type="checkbox" name="list-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->demo_poc}}">
+                                <input id="demo_poc" type="checkbox" name="demo_poc" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->demo_poc}}">
                                 <label for="demo_poc" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Demo/Poc</label>
                             </div>
                         </li>
                         <li class="w-full dark:border-gray-600">
                             <div class="flex items-center ps-3">
-                                <input id="billable" type="checkbox" name="list-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->event_id}}">
+                                <input id="billable" type="checkbox" name="billable" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->event_id}}">
                                 <label for="billable" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Billable</label>
                             </div>
                         </li>
@@ -148,25 +148,25 @@ $array = array('title' => "Questech");
                     <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                             <div class="flex items-center ps-3">
-                                <input id="under_warranty" type="checkbox" name="list-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->under_warranty}}">
+                                <input id="under_warranty" type="checkbox" name="under_warranty" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->under_warranty}}">
                                 <label for="under_warranty" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Under Warranty</label>
                             </div>
                         </li>
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                             <div class="flex items-center ps-3">
-                                <input id="corrective_maintenance" type="checkbox" name="list-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->corrective_maintenance}}">
+                                <input id="corrective_maintenance" type="checkbox" name="corrective_maintenance" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->corrective_maintenance}}">
                                 <label for="corrective_maintenance" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Corrective Maintenance</label>
                             </div>
                         </li>
                         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                             <div class="flex items-center ps-3">
-                                <input id="add_on" type="checkbox" name="list-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->add_on}}">
+                                <input id="add_on" type="checkbox" name="add_on" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" value="{{$service_report->add_on}}">
                                 <label for="add_on" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Add-On Value</label>
                             </div>
                         </li>
                         <li class="w-full dark:border-gray-600">
                             <div class="px-2 flex-1">
-                                <input type="text" name="remarks1" id="remarks1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Others" value="{{$service_report->remarks1}}">
+                                <input type="text" name="others" id="others" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Others" value="{{$service_report->remarks1}}">
                                 @error('remarks1')
                                 <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                                 @enderror
@@ -245,7 +245,7 @@ $array = array('title' => "Questech");
                 <div class="px-2 flex-1">
     <h3 class="mb-4 font-semibold text-gray-900 text-sm dark:text-white">Status</h3>
     <label class="inline-flex items-center cursor-pointer">
-        <input type="checkbox" class="sr-only peer" onclick="toggleCompleteStatus()" name="is_complete" {{ $service_report->is_complete ? 'checked' : '' }}>
+        <input type="checkbox" class="sr-only peer" onclick="toggleCompleteStatus()" id="is_complete" name="is_complete" {{ $service_report->is_complete ? 'checked' : '' }} value="{{ $service_report->is_complete ? 1 : 0 }}">
         <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
         <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300" id="status-text">{{ $service_report->is_complete ? 'Complete' : 'Incomplete' }}</span>
     </label>
@@ -253,6 +253,7 @@ $array = array('title' => "Questech");
     <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
     @enderror
 </div>
+
                     <div class="px-2 flex-1">
                         <label for="engineer_assigned" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mb-3">Engineer Assigned</label>
                         <p>

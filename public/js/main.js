@@ -72,12 +72,15 @@ document.getElementById('submitDelete').addEventListener('click', function(event
 // change the "complete" to "incomplete" toggle
 function toggleCompleteStatus() {
     var statusText = document.getElementById("status-text");
+    var isCompleteCheckbox = document.getElementById("is_complete");
+
     if (statusText.textContent === "Complete") {
         statusText.textContent = "Incomplete";
+        isCompleteCheckbox.value = 0;
     } else {
         statusText.textContent = "Complete";
+        isCompleteCheckbox.value = 1;
     }
-    
 }
 
 
