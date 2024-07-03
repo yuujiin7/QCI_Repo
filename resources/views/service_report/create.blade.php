@@ -21,15 +21,16 @@ $array = array('title' => "Questech");
                 @csrf
                 <div class="flex mb-4">
                     <div class="px-2 flex-1">
+                        
                         <label for="sr_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SR Number</label>
-                        <input type="text" name="sr_number" id="sr_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="SR Number" required="">
+                        <input type="text" name="sr_number" id="sr_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="SR Number" required="" value={{old('sr_number')}}>
                         @error('sr_number')
                         <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="px-2 flex-1">
                         <label for="event_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event ID</label>
-                        <input type="text" name="event_id" id="event_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Event ID">
+                        <input type="text" name="event_id" id="event_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Event ID" value={{old('event_id')}}>
                         @error('event_id')
                         <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
@@ -42,7 +43,7 @@ $array = array('title' => "Questech");
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                 </svg>
                             </div>
-                            <input datepicker type="text" name="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+                            <input datepicker type="text" name="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date" value={{old('date')}}>
                         </div>
                         @error('date')
                         <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
@@ -52,14 +53,14 @@ $array = array('title' => "Questech");
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6"></div>
                 <div class="px-2 flex-1 mb-4">
                     <label for="customer_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Customer Name</label>
-                    <input type="text" name="customer_name" id="customer_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Customer Name" required="">
+                    <input type="text" name="customer_name" id="customer_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Customer Name" required="" value={{old('customer_name')}}>
                     @error('customer_name')
                     <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="px-2 flex-1 mb-4">
                     <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
-                    <input type="text" name="address" id="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Address" required="">
+                    <input type="text" name="address" id="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Address" required="" value={{old('address')}}>
                     @error('address')
                     <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                     @enderror
@@ -67,14 +68,14 @@ $array = array('title' => "Questech");
                 <div class="flex mb-4">
                     <div class="px-2 flex-1">
                         <label for="contact_person" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Person</label>
-                        <input type="text" name="contact_person" id="contact_person" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Contact Person" required="">
+                        <input type="text" name="contact_person" id="contact_person" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Contact Person" required="" value={{old('contact_person')}}>
                         @error('contact_person')
                         <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="px-2 flex-1">
                         <label for="contact_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Number</label>
-                        <input type="tel" name="contact_number" id="contact_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="09123456789">
+                        <input type="tel" name="contact_number" id="contact_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="09123456789" value={{old('contact_number')}}>
                         @error('contact_number')
                         <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
@@ -84,28 +85,25 @@ $array = array('title' => "Questech");
                     <div class="px-2 w-1/4">
                         <label for="start_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start time:</label>
                         <div class="relative">
-                            <input type="time" id="start_time" name="start_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" min="05:00" max="18:00" value="09:00" required />
+                            <input type="time" id="start_time" name="start_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" min="05:00" max="18:00" value="{{ old('start_time', '09:00') }}" required />
+                            <p class="text-red-500 text-xs mt-2 italic p-1" id="start_time_error"></p>
                         </div>
-                        @error('start_time')
-                        <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                        @enderror
                     </div>
                     <div class="px-2 w-1/4">
                         <label for="end_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End time:</label>
                         <div class="relative">
-                            <input type="time" id="end_time" name="end_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" min="07:00" max="18:00" value="18:00" required />
+                            <input type="time" id="end_time" name="end_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" min="07:00" max="18:00" value="{{ old('end_time', '18:00') }}" required />
+                            <p class="text-red-500 text-xs mt-2 italic p-1" id="end_time_error"></p>
                         </div>
-                        @error('end_time')
-                        <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                        @enderror
                     </div>
                     <div class="px-2 flex-1">
                         <label for="total_hours" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Hours:</label>
-                        <input type="text" name="total_hours" id="total_hours" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="0.00" value="0" disabled>
-                        @error('total_hours')
-                        <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                        @enderror
+                        <label id="total_hours" class="block bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">0.00</label>
+                        <p class="text-red-500 text-xs mt-2 italic p-1" id="total_hours_error"></p>
                     </div>
+                    
+                    
+                    
                     <div class="px-2 flex-1">
                         <label for="remarks" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white xl:py-0 lg:py-0 md:py-0 sm:py-2.5">Remarks</label>
                         <input type="text" name="remarks" id="remarks" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Remarks">
@@ -241,7 +239,7 @@ $array = array('title' => "Questech");
                     <div class="px-2 flex-1">
                         <h3 class="mb-4 font-semibold text-gray-900 text-sm dark:text-white">Status</h3>
                         <label class="inline-flex items-center cursor-pointer">
-                            <input type="checkbox" value="" class="sr-only peer" onclick="toggleCompleteStatus()" name="is_complete" checked>
+                            <input id="is_complete" type="checkbox" value="" class="sr-only peer" onclick="toggleCompleteStatus()" name="is_complete">
                             <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                             <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300" id="status-text">Complete</span>
                         </label>

@@ -17,7 +17,7 @@ $array = array('title' => "Questech");
                 </ul>
             </div>
             @endif --}}
-            <form action="/service-report/{id}" method="POST" class="">
+            <form action="/service-report/{{ $service_report->id }}" method="POST" class="">
                 @method('PUT')
                 @csrf
                 <div class="flex mb-4">

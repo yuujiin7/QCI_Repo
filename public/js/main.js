@@ -72,15 +72,24 @@ document.getElementById('submitDelete').addEventListener('click', function(event
 // change the "complete" to "incomplete" toggle
 function toggleCompleteStatus() {
     var statusText = document.getElementById("status-text");
+
+    
     var isCompleteCheckbox = document.getElementById("is_complete");
 
-    if (statusText.textContent === "Complete") {
-        statusText.textContent = "Incomplete";
-        isCompleteCheckbox.value = 0;
-    } else {
+    if (isCompleteCheckbox.checked) {
         statusText.textContent = "Complete";
-        isCompleteCheckbox.value = 1;
+        // change the value of the checkbox to true or 1
+        isCompleteCheckbox.value = true;
+        isCompleteCheckbox.checked = true;
     }
+    else {
+        statusText.textContent = "Incomplete";
+        // change the value of the checkbox to false or 0
+        isCompleteCheckbox.value = false;
+        isCompleteCheckbox.checked = false;
+    }
+
+
 }
 
 
@@ -88,49 +97,58 @@ function toggleCompleteStatus() {
 document.addEventListener('DOMContentLoaded', function() {
     const startTimeInput = document.getElementById('start_time');
     const endTimeInput = document.getElementById('end_time');
-    const totalHoursInput = document.getElementById('total_hours');
+    const totalHoursLabel = document.getElementById('total_hours');
     const startTimeError = document.getElementById('start_time_error');
     const endTimeError = document.getElementById('end_time_error');
     const totalHoursError = document.getElementById('total_hours_error');
 
-    var checkbox = document.querySelector('input[name="is_complete"]');
-    var statusText = document.getElementById('status-text');
-    // Event listener for start_time input
-    startTimeInput.addEventListener('input', updateTotalHours);
-    // Event listener for end_time input
-    endTimeInput.addEventListener('input', updateTotalHours);
+    const checkbox = document.querySelector('input[name="is_complete"]');
+
+    // Event listeners for start_time and end_time inputs
+    startTimeInput.addEventListener('change', updateTotalHours);
+    endTimeInput.addEventListener('change', updateTotalHours);
 
     // Function to calculate and update total hours
     function updateTotalHours() {
         const startTime = startTimeInput.value;
         const endTime = endTimeInput.value;
 
-        console.log('Start Time:', startTime);
-        console.log('End Time:', endTime);
+        console.log('Start Time:', startTime); // Debugging log
+        console.log('End Time:', endTime); // Debugging log
+
+        // Clear previous errors
+        clearErrors();
 
         // Validate start and end times
         if (!startTime || !endTime) {
             displayError(startTimeError, "Please enter both start and end times.");
-            totalHoursInput.value = '';
-            totalHoursInput.placeholder = '0.00';
+            totalHoursLabel.textContent = '0.00';
             return;
         }
 
-        const start = new Date('1970-01-01T' + startTime + 'Z');
-        const end = new Date('1970-01-01T' + endTime + 'Z');
+        const start = parseTime(startTime);
+        const end = parseTime(endTime);
         let difference = (end - start) / 1000 / 60 / 60;
+
+        console.log('Start Date Object:', start); // Debugging log
+        console.log('End Date Object:', end); // Debugging log
+        console.log('Difference:', difference); // Debugging log
 
         // Handle cases where end time is on the next day
         if (difference < 0) {
             difference = 24 + difference;
         }
 
-        // Update total_hours input value and placeholder
-        totalHoursInput.value = difference.toFixed(2);
-        totalHoursInput.placeholder = difference.toFixed(2);
+        // Update total_hours label text content
+        totalHoursLabel.textContent = difference.toFixed(2);
+    }
 
-        // Clear any previous errors
-        clearErrors();
+    // Function to parse time in HH:MM format and return a Date object
+    function parseTime(time) {
+        const [hours, minutes] = time.split(':').map(Number);
+        const date = new Date();
+        date.setHours(hours, minutes, 0, 0);
+        return date;
     }
 
     // Function to display error message
@@ -146,9 +164,4 @@ document.addEventListener('DOMContentLoaded', function() {
         totalHoursError.style.display = 'none';
     }
 
-    if (checkbox.checked) {
-        statusText.textContent = 'Complete';
-    } else {
-        statusText.textContent = 'Incomplete';
-    }
 });
