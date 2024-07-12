@@ -5,7 +5,7 @@ $array = array('title' => "Questech");
 <x-nav :data="$array"/>
 <header class="max-w-lg mx-auto">
     <a href="#">
-        <h1 class="text-4xl font-bold text-white text-center pt-5 uppercase">EDIT TSG USER {{$tsg->first_name}} {{$tsg->last_name}}</h1>
+        <h1 class="text-4xl font-bold text-white text-center pt-5 uppercase">EDIT TSG USER {{$user->first_name}} {{$user->last_name}}</h1>
     </a>
 
 </header>
@@ -20,13 +20,13 @@ $array = array('title' => "Questech");
                 </ul>
             </div>
         @endif
-        <form action="/tsg/{{$tsg->id}}" method="POST" class="flex flex-col" enctype="multipart/form-data">
+        <form action="/tsg/{{$user->id}}" method="POST" class="flex flex-col" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="mb-4 text-center">
                 <label for="profile_image" class="block text-sm font-semibold text-gray-800 mb-2">Profile Picture</label>
                 <div class="flex justify-center items-center mb-2">
-                    <img id="profileImagePreview" src="{{ $tsg->profile_image ? asset('storage/profile_images/thumbnail/small_' . $tsg->profile_image) : 'https://api.dicebear.com/8.x/bottts/svg?seed=Felix' }}" alt="Profile Image" class="w-20 h-20 rounded-full object-cover">
+                    <img id="profileImagePreview" src="{{ $user->profile_image ? asset('storage/profile_images/thumbnail/small_' . $user->profile_image) : 'https://api.dicebear.com/8.x/bottts/svg?seed=Felix' }}" alt="Profile Image" class="w-20 h-20 rounded-full object-cover">
                 </div>
                 <input type="file" id="profile_image" name="profile_image" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" onchange="previewImage(event)">
                 @error('profile_image')
@@ -37,7 +37,7 @@ $array = array('title' => "Questech");
                 <div class="flex justify-between">
                     <div class="w-1/4">
                         <label for="first_name" class="block text-sm font-semibold text-gray-800 mb-2">First Name*</label>
-                        <input type="text" id="first_name" name="first_name" placeholder="First name" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$tsg->first_name}}>
+                        <input type="text" id="first_name" name="first_name" placeholder="First name" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->first_name}}>
                         @error('first_name')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
@@ -45,21 +45,21 @@ $array = array('title' => "Questech");
                     
                     <div class="w-1/4 ml-3">
                         <label for="middle_name" class="block text-sm font-semibold text-gray-800 mb-2">Middle Name</label>
-                        <input type="text" id="middle_name" name="middle_name" placeholder="Middle name" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$tsg->middle_name}}>
+                        <input type="text" id="middle_name" name="middle_name" placeholder="Middle name" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->middle_name}}>
                         @error('middle_name')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="w-1/4 ml-3">
                         <label for="last_name" class="block text-sm font-semibold text-gray-800 mb-2">Last Name*</label>
-                        <input type="text" id="last_name" name="last_name" placeholder="Last name" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$tsg->last_name}}>
+                        <input type="text" id="last_name" name="last_name" placeholder="Last name" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->last_name}}>
                         @error('last_name')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="w-1/4 ml-3">
                         <label for="suffix" class="block text-sm font-semibold text-gray-800 mb-2">Suffix (if any)</label>
-                        <input type="text" id="suffix" name="suffix" placeholder="Suffix" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$tsg->suffix}}>
+                        <input type="text" id="suffix" name="suffix" placeholder="Suffix" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->suffix}}>
                         @error('suffix')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
@@ -71,7 +71,7 @@ $array = array('title' => "Questech");
                 <div class="flex justify-start">
                     <div class="w-1/2">
                         <label for="emp_id" class="block text-sm font-semibold text-gray-800 mb-2">Employee ID No.*</label>
-                        <input type="text" id="emp_id" name="emp_id" placeholder="Employee ID" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$tsg->emp_id}}>
+                        <input type="text" id="emp_id" name="emp_id" placeholder="Employee ID" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->emp_id}}>
                         @error('emp_id')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
@@ -79,7 +79,7 @@ $array = array('title' => "Questech");
                     
                     <div class="w-1/4 ml-3">
                         <label for="age" class="block text-sm font-semibold text-gray-800 mb-2">Age</label>
-                        <input type="text" id="age" name="age" placeholder="Age" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$tsg->age}}>
+                        <input type="text" id="age" name="age" placeholder="Age" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->age}}>
                         @error('age')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
@@ -89,9 +89,9 @@ $array = array('title' => "Questech");
                         <label for="gender" class="block text-sm font-semibold text-gray-800 mb-2">Gender</label>
                         <select id="gender" name="gender" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300">
                             <option value="">Gender</option>
-                            <option value="Male" {{ $tsg->gender == 'Male' ? 'selected' : '' }}>Male</option>
-                            <option value="Female" {{ $tsg->gender == 'Female' ? 'selected' : '' }}>Female</option>
-                            <option value="Other" {{ $tsg->gender == 'Other' ? 'selected' : '' }}>Other</option>
+                            <option value="Male" {{ $user->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                            <option value="Female" {{ $user->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                            <option value="Other" {{ $user->gender == 'Other' ? 'selected' : '' }}>Other</option>
                         </select>
                         @error('gender')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
@@ -105,7 +105,7 @@ $array = array('title' => "Questech");
             </div>
             <div class="mb-4">
                 <label for="email" class="block text-sm font-semibold text-gray-800 mb-2">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="Email Address" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$tsg->email}}>
+                <input type="email" id="email" name="email" placeholder="Email Address" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->email}}>
                 @error('email')
                     <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                 @enderror
@@ -113,7 +113,7 @@ $array = array('title' => "Questech");
 
             <div class="mb-4">
                 <label for="phone_number" class="block text-sm font-semibold text-gray-800 mb-2">Phone Number</label>
-                <input type="tel" id="phone_number" name="phone_number" placeholder="e.g 09123456789" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$tsg->phone_number}}>
+                <input type="tel" id="phone_number" name="phone_number" placeholder="e.g 09123456789" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->phone_number}}>
                 @error('phone_number')
                     <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                 @enderror
@@ -121,7 +121,7 @@ $array = array('title' => "Questech");
 
             <div class="mb-4">
                 <label for="profile_image" class="block text-sm font-semibold text-gray-800 mb-2">TSG Image</label>
-                <input type="file" id="profile_image" name="profile_image" placeholder="e.g 09123456789" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$tsg->profile_image}}>
+                <input type="file" id="profile_image" name="profile_image" placeholder="e.g 09123456789" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->profile_image}}>
                 @error('profile_image')
                     <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                 @enderror

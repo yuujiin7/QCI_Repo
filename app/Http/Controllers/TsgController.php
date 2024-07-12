@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use App\Models\User;
 
 
 class TsgController extends Controller
@@ -15,13 +16,17 @@ class TsgController extends Controller
     public function index()
     {
         $data = Tsg::all();
-        return view('tsg.index', $data);
+        $user = User::all();
+        return view('tsg.index', ['tsgs' => $data, 'users' => $user]);
+        
     }
 
     public function show($id)
     {
-        $data = Tsg::findOrFail($id);
-        return view('tsg.edit', ['tsg' => $data]);
+        // $data = Tsg::findOrFail($id);
+        $user = User::findOrFail($id);
+        // dd($user);
+        return view('tsg.edit', ['user' => $user]);
     }
 
     public function create()
@@ -58,7 +63,8 @@ class TsgController extends Controller
 
     public function update(Request $request, $id)
 {
-    $post = Tsg::findOrFail($id);
+    // $post = Tsg::findOrFail($id);
+    $post = User::findOrFail($id);
 
     $validated = $request->validate([
         'first_name' => 'required|min:2|max:255',

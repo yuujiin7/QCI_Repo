@@ -81,6 +81,8 @@ Route::middleware('auth') -> group(function () {
 
     Route::get('/service-report/{id}', [ServiceReportController::class, 'show']);
     Route::put('/service-report/{id}', [ServiceReportController::class, 'update']);
+    
+
 
     Route::delete('/service-report/{id}', [ServiceReportController::class, 'destroy']);
 
