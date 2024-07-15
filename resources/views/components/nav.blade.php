@@ -86,6 +86,23 @@
                    </li>
              </ul>
           </li>
+          <li>
+  <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100" aria-controls="dropdown-smg" data-collapse-toggle="dropdown-smg">
+    <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-8-6h2v5h-2zm0-8h2v6h-2zm4 2h2v4h-2zm-8 2h2v2H7z"/>
+    </svg>
+    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">SMG</span>
+    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+    </svg>
+  </button>
+  <ul id="dropdown-smg" class="hidden py-2 space-y-2">
+    <li>
+      <a href="/tsg" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">MA List</a>
+    </li>
+  </ul>
+</li>
+
  
           <li>
              <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 " aria-controls="dropdown-service-reports" data-collapse-toggle="dropdown-service-reports">
@@ -106,6 +123,8 @@
                    </li>
              </ul>
           </li>
+
+          
        </ul>
     </div>
     

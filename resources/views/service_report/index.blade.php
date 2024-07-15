@@ -6,7 +6,7 @@ $array = array('name' => "Service Report List");; ?>
 
 <section>
     <div class="p-10 sm:ml-64">
-    <main class="bg-white max-w-full mx-auto p-8 my-10 rounded-lg shadow-2xl ">
+    <main class="bg-white max-w-full mx-auto p-8 my-10 rounded-lg shadow-2xl">
         <!-- <x-breadcrumbs :title="$array['name']"/> -->
         <div class="container mx-auto">
             <div class="overflow-x-auto">
@@ -36,7 +36,7 @@ $array = array('name' => "Service Report List");; ?>
                     </thead>
                     <tbody>
                         @foreach($service_report as $sr)
-                        <tr class="bg-white border-b text-black hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <tr class="bg-white border-b text-black hover:bg-gray-50">
                            
                             <td class="py-3 px-6">{{ $sr->sr_number }}</td>
                             <td class="py-3 px-6">{{ $sr->customer_name }}</td>

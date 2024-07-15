@@ -25,8 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
     $('#SRTable').DataTable({
         responsive: true,
