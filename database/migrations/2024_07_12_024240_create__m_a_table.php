@@ -8,7 +8,7 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     */
+     */    
     public function up(): void
     {
         Schema::create('maintenance_agreements', function (Blueprint $table) {
@@ -18,6 +18,18 @@ return new class extends Migration
             //account manager user id
             $table->id('account_manager_id');
             $table->string('date_history') -> array();
+            $table->string('start_date');
+            $table->string('end_date');
+            $table->string('distributior');
+            $table->string('PO_number');
+            $table->string('company_name');
+            $table->string('project_name');
+            $table->string('supp_acc_ref');
+            $table->string('service_agreement');
+            $table->string('model_description');
+            $table->string('product_number');
+            $table->string('service_level');
+            $table->string('location');
         });
     }
 
