@@ -65,6 +65,12 @@ class TsgController extends Controller
 {
     // $post = Tsg::findOrFail($id);
     $post = User::findOrFail($id);
+    $int_id = intval($id);
+     // Log the $id to verify
+     Log::info('Casting $id to integer: ' . $id);
+     // Log the incoming request data for debugging
+     Log::info('Request data: ' . json_encode($request->all()));
+
 
     $validated = $request->validate([
         'first_name' => 'required|min:2|max:255',
@@ -101,7 +107,7 @@ class TsgController extends Controller
         // Update form fields with image paths
         $validated['profile_image'] = $fileNameToStore;
     }
-
+    // dd($validated);
     $post->update($validated);
     return back()->with('message', 'TSG updated successfully.');
     }

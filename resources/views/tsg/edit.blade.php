@@ -71,7 +71,7 @@ $array = array('title' => "Questech");
                 <div class="flex justify-start">
                     <div class="w-1/2">
                         <label for="emp_id" class="block text-sm font-semibold text-gray-800 mb-2">Employee ID No.*</label>
-                        <input type="text" id="emp_id" name="emp_id" placeholder="Employee ID" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->emp_id}}>
+                        <input type="text" id="emp_id" name="emp_id" placeholder="Employee ID" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value="{{$user->emp_id}}">
                         @error('emp_id')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
@@ -79,7 +79,7 @@ $array = array('title' => "Questech");
                     
                     <div class="w-1/4 ml-3">
                         <label for="age" class="block text-sm font-semibold text-gray-800 mb-2">Age</label>
-                        <input type="text" id="age" name="age" placeholder="Age" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->age}}>
+                        <input type="text" id="age" name="age" placeholder="Age" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value="{{$user->age}}">
                         @error('age')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
@@ -105,7 +105,7 @@ $array = array('title' => "Questech");
             </div>
             <div class="mb-4">
                 <label for="email" class="block text-sm font-semibold text-gray-800 mb-2">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="Email Address" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->email}}>
+                <input type="email" id="email" name="email" placeholder="Email Address" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value="{{$user->email}}">
                 @error('email')
                     <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                 @enderror

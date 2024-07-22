@@ -32,7 +32,7 @@ $array = array('name' => "TSG User List");
                         <td class="pl-2">
                             <img src="{{ $tsg_user->profile_image ? asset('storage/profile_images/thumbnail/' . $tsg_user->profile_image) : $default_profile }}" alt="{{ $tsg_user->first_name }} {{ $tsg_user->last_name }}" class="w-8 h-8 rounded-full" />
                         </td>
-                        <td class="py-3 px-6">{{ $tsg_user->id }}</td>
+                        <td class="py-3 px-6">{{ $tsg_user->emp_id }}</td>
                         <td class="py-3 px-6">{{ $tsg_user->first_name }}</td>
                         <td class="py-3 px-6">{{ $tsg_user->last_name }}</td>
                         <td class="py-3 px-6">{{ $tsg_user->email }}</td>
