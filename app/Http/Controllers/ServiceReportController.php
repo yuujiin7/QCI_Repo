@@ -33,8 +33,6 @@ class ServiceReportController extends Controller
     public function show($id)
     {
         $data = ServiceReport::findOrFail($id);
-        
-        // dd($data);
         return view('service_report.edit', ['service_report' => $data]);  
     }
     
@@ -42,7 +40,6 @@ class ServiceReportController extends Controller
     public function create(){
 
         $users = User::all();
-
         return view('service_report.create', ['user_data' => $users]) -> with('title', 'Create Service Report');
     }
 
@@ -208,6 +205,7 @@ class ServiceReportController extends Controller
     
             // Step 4: Additional logic and updates
             // Ensure default values or calculations are done properly
+
             $validated['hr_finance'] = $validated['hr_finance'] ?? 'Eileen Orence';
             $validated['evp_coo'] = $validated['evp_coo'] ?? 'Rommel Misa';
             $validated['tech_support'] = $validated['tech_support'] ?? 'Julius Caesar Alfaro';
@@ -258,6 +256,7 @@ class ServiceReportController extends Controller
             }
     
             // Perform the update
+            // dd($validated);
             $serviceReport->update($validated);
             return redirect('/service-reports')->with('success', 'Service Report updated successfully.');
     

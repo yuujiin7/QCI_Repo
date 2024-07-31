@@ -60,8 +60,15 @@ class PdfController extends Controller
             'hrFinance' => $serviceReport->hr_finance,
             'evpCoo' => $serviceReport->evp_coo,
             'base64Image' => $base64Image,
-            
-            
+            'new_installation' => $serviceReport->new_installation,
+            'under_maintenance' => $serviceReport->under_maintenance,
+            'demo_poc' => $serviceReport->demo_poc,
+            'billable' => $serviceReport->billable,
+            'under_warranty' => $serviceReport->under_warranty,
+            'corrective_maintenance' => $serviceReport->corrective_maintenance,
+            'add_on' => $serviceReport->add_on,
+            'is_complete' => $serviceReport->is_complete,
+            'others' => $serviceReport->others,
 
         ];
 

@@ -40,10 +40,10 @@ $array = array('name' => "TSG User List");
                         <td class="py-3 px-6 text-center">
                             <div class="flex justify-center space-x-2">
                                 <a href="/tsg/{{ $tsg_user->id }}" class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700">View</a>
-                                <form action="/tsg/{{ $tsg_user->id }}" method="POST" class="inline">
+                                <form action="/tsg/{{ $tsg_user->id }}" method="POST" class="inline" id="deleteForm">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700">Delete</button>
+                                    <button id="submitDelete" class="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700">Delete</button>
                                 </form>
                             </div>
                         </td>

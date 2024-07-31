@@ -48,6 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
     });
 });
+
+// Delete confirmation dialog
 document.getElementById('submitDelete').addEventListener('click', function(event) {
     event.preventDefault(); // Prevent default form submission
     Swal.fire({
@@ -65,6 +67,19 @@ document.getElementById('submitDelete').addEventListener('click', function(event
         }
     });
 });
+
+//Under Construction dialog
+document.getElementById('underConstruction').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default form submission
+    Swal.fire({
+        title: "Under Construction",
+        text: "This feature is under construction!",
+        icon: "info",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK"
+    });
+}
+);
 
 
 // change the "complete" to "incomplete" toggle

@@ -40,12 +40,13 @@ class UserController extends Controller
         }
 
         
-        // // Check if the login view exists
-        // if (view()->exists('user.login')) {
-        //     return view('user.login');  // Show login view for guests
-        // } else {
-        //     return abort(404);  // Return 404 error if login view does not exist
-        // }
+        // Check if the login view exists
+        
+        if (view()->exists('user.login')) {
+            return view('user.login');  // Show login view for guests
+        } else {
+            return abort(404);  // Return 404 error if login view does not exist
+        }
     }
 
     # Process

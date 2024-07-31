@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ServiceReportController;
 use App\Http\Controllers\PdfController;
+Use App\Http\Controllers\MaintenanceAgreementController;
+use App\Models\MaintenanceAgreement;
 use App\Models\User;
 use Illuminate\Support\Facades\App;
+
 
 // Route::post();
 // Route::put();
@@ -75,21 +78,26 @@ Route::middleware('auth') -> group(function () {
     # Service Report
     Route::get('/service-reports', [ServiceReportController::class, 'index']) -> name('Service Reports List');
     
-
     Route::get('/create/service-report', [ServiceReportController::class, 'create']);
     Route::post('/create/service-report', [ServiceReportController::class, 'store']);
 
     Route::get('/service-report/{id}', [ServiceReportController::class, 'show']);
     Route::put('/service-report/{id}', [ServiceReportController::class, 'update']);
     
-
-
     Route::delete('/service-report/{id}', [ServiceReportController::class, 'destroy']);
 
-    
 });
 
 Route::get('/generate-pdf/{id}', [PdfController::class, 'generatePDF']);
 Route::get('/generate-sr-form/{id}', [PdfController::class, 'index']);
+
+Route::middleware('auth') -> group(function () {
+    Route::get('/ma-reports', [MaintenanceAgreementController::class, 'index']);
+    Route::get('/create/ma-report', [MaintenanceAgreementController::class, 'create']);
+    Route::post('/create/ma-report', [MaintenanceAgreementController::class, 'store']);
+    Route::get('/ma-report/{id}', [MaintenanceAgreementController::class, 'show']);
+    Route::put('/ma-report/{id}', [MaintenanceAgreementController::class, 'update']);
+    Route::delete('/ma-report/{id}', [MaintenanceAgreementController::class, 'destroy']);
+});
 
 

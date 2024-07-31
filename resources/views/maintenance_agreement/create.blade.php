@@ -17,7 +17,7 @@ $array = array('title' => "Questech");
                 </ul>
             </div>
             @endif --}}
-            <form action="/create/ma-report" method="POST" class="">
+            <form action="/create/service-report" method="POST" class="">
                 @csrf
                 <div class="flex mb-4">
                     <div class="px-2 flex-1">

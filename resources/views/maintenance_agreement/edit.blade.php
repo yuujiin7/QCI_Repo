@@ -17,7 +17,7 @@ $array = array('title' => "Questech");
                 </ul>
             </div>
             @endif --}}
-            <form action="/ma-report/{{ $maintenance_agreements->id }}" method="POST" enctype="multipart/form-data">
+            <form action="/service-report/{{ $service_report->id }}" method="POST" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <div class="flex mb-4">
