@@ -6,6 +6,7 @@ use App\Models\MaintenanceAgreement;
 use Illuminate\Http\Request;
 use App\Models\User;
 
+
 class MaintenanceAgreementController extends Controller
 {
     
@@ -13,26 +14,47 @@ class MaintenanceAgreementController extends Controller
     {
 
         $data = MaintenanceAgreement::all();
-        return view('maintenance_agreement.index', ['maintenace_agreements' => $data]) -> with('title', 'MA List');
+        return view('maintenance_agreement.index', ['maintenance_agreements' => $data]) -> with('title', 'MA List');
     }
 
     public function show($id)
     {
         $data = MaintenanceAgreement::find($id);
-       return view('maintenance_agreement.edit', ['maintenance_agreement' => $data]);
+       return view('maintenance_agreement.edit', ['maintenance_agreements' => $data]);
     }
 
     public function create()
     {   
-        $users = User::all();
-        return view('maintenance_agreement.create' , ['users' => $users]) -> with('title', 'Create MA');
+
+        return view('maintenance_agreement.create') -> with('title', 'Create MA');
     }
 
     public function store(Request $request){
 
         $validated = $request->validate([
-            
+            'serial_number' => 'required',
+            'account_manager' => 'required',
+            'account_manager_id' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'distributor' => 'required',
+            'PO_number' => 'required',
+            'company_name' => 'required',
+            'project_name' => 'required',
+            'supp_acc_ref' => 'required',
+            'service_agreement' => 'required',
+            'service_level' => 'required',
+            'model_description' => 'required',
+            'product_number' => 'required',
+            'service_level' => 'required',
+            'location' => 'required',
+            'status' => 'required',
+
         ]);
+
+
+
+
 
         $ma = MaintenanceAgreement::create($validated);
         return redirect('/ma-reports') -> with('message', 'MA created successfully');
@@ -70,7 +92,11 @@ class MaintenanceAgreementController extends Controller
         }
     }
 
-    
-
-
+    public function getMaintenanceAgreements(Request $request)
+    {
+        $data = MaintenanceAgreement::all();
+        return response()->json(['data' => $data]);
+    }
 }
+
+

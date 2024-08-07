@@ -114,7 +114,7 @@ class TsgController extends Controller
 
     public function destroy($id)
     {
-        $tsg = Tsg::findOrFail($id);
+        $tsg = User::findOrFail($id);
         $tsg->delete();
         return redirect('/tsg')->with('message', 'TSG deleted successfully.');
     }

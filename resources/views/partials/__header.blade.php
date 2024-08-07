@@ -27,6 +27,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="sweetalert2.all.min.js"></script>
     
+    
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="dark">

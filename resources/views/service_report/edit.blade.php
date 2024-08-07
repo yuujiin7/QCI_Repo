@@ -17,7 +17,7 @@ $array = array('title' => "Questech");
                 </ul>
             </div>
             @endif --}}
-            <form action="/ma-report/{{ $maintenance_agreements->id }}" method="POST" enctype="multipart/form-data">
+            <form action="/service-report/{{ $service_report->id }}" method="POST" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <div class="flex mb-4">
@@ -256,11 +256,16 @@ $array = array('title' => "Questech");
                 <div class="flex mb-4">
                 <div class="px-2 flex-1">
     <h3 class="mb-4 font-semibold text-gray-900 text-sm dark:text-white">Status</h3>
-    <label class="inline-flex items-center cursor-pointer">
+    <!-- <label class="inline-flex items-center cursor-pointer">
         <input type="checkbox" class="sr-only peer" onclick="toggleCompleteStatus()" id="is_complete" name="is_complete" {{ $service_report->is_complete ? 'checked' : '' }} value="{{ $service_report->is_complete ? 1 : 0 }}">
         <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
         <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300" id="status-text">{{ $service_report->is_complete ? 'Complete' : 'Incomplete' }}</span>
-    </label>
+    </label> -->
+    <label class="inline-flex items-center cursor-pointer">
+    <input type="checkbox" class="sr-only peer" onclick="toggleCompleteStatus()" id="is_complete" name="is_complete" {{ $service_report->is_complete ? 'checked' : '' }} value="1">
+    <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300" id="status-text">{{ $service_report->is_complete ? 'Complete' : 'Incomplete' }}</span>
+</label>
     @error('is_complete')
     <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
     @enderror

@@ -1,3 +1,4 @@
+
 // Toggle Password Visibility
 function togglePasswordVisibility(fieldId) {
     const field = document.getElementById(fieldId);
@@ -50,59 +51,46 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Delete confirmation dialog
-document.getElementById('submitDelete').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent default form submission
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Proceed with form submission
-            document.getElementById('deleteForm').submit(); // Replace 'yourFormId' with your form's ID
-        }
+// JavaScript
+document.querySelectorAll('.submitDelete').forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default form submission
+        const formId = this.getAttribute('data-form-id');
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(formId).submit(); // Submit the associated form
+            }
+        });
     });
 });
 
+
 //Under Construction dialog
-document.getElementById('underConstruction').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent default form submission
-    Swal.fire({
-        title: "Under Construction",
-        text: "This feature is under construction!",
-        icon: "info",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "OK"
-    });
-}
-);
+// document.getElementById('underConstruction').addEventListener('click', function(event) {
+//     event.preventDefault(); // Prevent default form submission
+//     Swal.fire({
+//         title: "Under Construction",
+//         text: "This feature is under construction!",
+//         icon: "info",
+//         confirmButtonColor: "#3085d6",
+//         confirmButtonText: "OK"
+//     });
+// }
+// );
 
-
-// change the "complete" to "incomplete" toggle
 function toggleCompleteStatus() {
-    var statusText = document.getElementById("status-text");
-
-    
-    var isCompleteCheckbox = document.getElementById("is_complete");
-
-    if (isCompleteCheckbox.checked) {
-        statusText.textContent = "Complete";
-        // change the value of the checkbox to true or 1
-        isCompleteCheckbox.value = true;
-        isCompleteCheckbox.checked = true;
-    }
-    else {
-        statusText.textContent = "Incomplete";
-        // change the value of the checkbox to false or 0
-        isCompleteCheckbox.value = false;
-        isCompleteCheckbox.checked = false;
-    }
-
-
+    let checkbox = document.getElementById('is_complete');
+    checkbox.value = checkbox.checked ? '1' : '0';
+    let statusText = document.getElementById('status-text');
+    statusText.textContent = checkbox.checked ? 'Complete' : 'Incomplete';
 }
 
 
@@ -178,3 +166,130 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
+
+// ---------------------------------------------------------------------------------------------------------
+function format(d) {
+    return (
+        'Serial Number: ' + d.serial_number +
+        '<br>' +
+        'Account Manager: ' + d.account_manager +
+        '<br>' +
+        'Start Date: ' + d.start_date +
+        '<br>' +
+        'End Date: ' + d.end_date +
+        '<br>' +
+        'Distributor: ' + d.distributor +
+        '<br>' +
+        'PO Number: ' + d.PO_number +
+        '<br>' +
+        'Company Name: ' + d.company_name +
+        '<br>' +
+        'Project Name: ' + d.project_name +
+        '<br>' +
+        'Supplementary Account Ref: ' + d.supp_acc_ref +
+        '<br>' +
+        'Service Agreement: ' + d.service_agreement +
+        '<br>' +
+        'Model Description: ' + d.model_description +
+        '<br>' +
+        'Product Number: ' + d.product_number +
+        '<br>' +
+        'Service Level: ' + d.service_level +
+        '<br>' +
+        'Location: ' + d.location +
+        '<br>' +
+        'Status: ' + d.status
+    );
+}
+$(document).ready(function() {
+    const table = $('#MATable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "/get-maintenance-agreements"
+        ,
+        columns: [
+            {
+                className: 'dt-control',
+                orderable: false,
+                data: null,
+                defaultContent: ''
+            },
+            { data: 'serial_number' },
+            { data: 'account_manager' },
+            { data: 'start_date' },
+            { data: 'end_date' },
+            { data: 'status' },
+            {
+                data: null,
+                orderable: false,
+                render: function(data, type, row) {
+                    return `
+                        <button class="edit-btn bg-yellow-500 text-white px-4 py-2 rounded">Edit</button>
+                        <button class="delete-btn bg-red-500 text-white px-4 py-2 rounded submitDelete" data-form-id="delete-form-${row.id}">Delete</button>
+                        <form id="delete-form-${row.id}" action="/delete-maintenance-agreement/${row.id}" method="POST" style="display:none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    `;
+                }
+            }
+        ],
+        order: [[1, 'asc']]
+
+        
+    });
+    
+    const detailRows = [];
+    
+    $('#MATable tbody').on('click', 'td.dt-control', function () {
+        var tr = $(this).closest('tr');
+        var row = table.row(tr);
+        var idx = $.inArray(tr.attr('id'), detailRows);
+
+        if (row.child.isShown()) {
+            tr.removeClass('details');
+            row.child.hide();
+            detailRows.splice(idx, 1);
+        } else {
+            tr.addClass('details');
+            row.child(format(row.data())).show();
+
+            if (idx === -1) {
+                detailRows.push(tr.attr('id'));
+            }
+        }
+    });
+
+    table.on('draw', function () {
+        $.each(detailRows, function (i, id) {
+            $('#' + id + ' td.dt-control').trigger('click');
+        });
+    });
+});
+
+$('#MATable tbody').on('click', '.edit-btn', function () {
+    var data = table.row($(this).parents('tr')).data();
+    // Open your edit modal and populate it with `data`
+    console.log('Edit:', data);
+});
+
+
+$('#MATable tbody').on('click', '.submitDelete', function(event) {
+    event.preventDefault(); // Prevent default form submission
+    const formId = this.getAttribute('data-form-id');
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById(formId).submit(); // Submit the associated form
+        }
+    });
+});
+// ---------------------------------------------------------------------------------------------------------

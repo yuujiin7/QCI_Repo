@@ -98,6 +98,7 @@ Route::middleware('auth') -> group(function () {
     Route::get('/ma-report/{id}', [MaintenanceAgreementController::class, 'show']);
     Route::put('/ma-report/{id}', [MaintenanceAgreementController::class, 'update']);
     Route::delete('/ma-report/{id}', [MaintenanceAgreementController::class, 'destroy']);
+    Route::get('get-maintenance-agreements', [MaintenanceAgreementController::class, 'getMaintenanceAgreements']);
 });
 
 
