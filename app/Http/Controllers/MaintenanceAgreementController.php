@@ -49,29 +49,39 @@ class MaintenanceAgreementController extends Controller
             'service_level' => 'required',
             'location' => 'required',
             'status' => 'required',
-
         ]);
 
 
-
-
-
-        $ma = MaintenanceAgreement::create($validated);
+        MaintenanceAgreement::create($validated);
         return redirect('/ma-reports') -> with('message', 'MA created successfully');
     }
 
     public function update(Request $request, $id)
     {
+
+        
         try {
             $validated = $request->validate([
+                'serial_number' => 'required',
+                'account_manager' => 'required',
+                'account_manager_id' => 'required',
+                'start_date' => 'required',
+                'end_date' => 'required',
+                'distributor' => 'required',
+                'PO_number' => 'required',
+                'company_name' => 'required',
+                'project_name' => 'required',
+                'supp_acc_ref' => 'required',
+                'service_agreement' => 'required',
+                'service_level' => 'required',
+                'model_description' => 'required',
+                'product_number' => 'required',
+                'service_level' => 'required',
+                'location' => 'required',
+                'status' => 'required',
                 
             ]);
-
-
-
-
-
-
+            $validated['id'] = $id;
             $data = MaintenanceAgreement::find($id);
             $data->update($request->all());
             return redirect('/ma-reports') -> with('message', 'MA updated successfully');
