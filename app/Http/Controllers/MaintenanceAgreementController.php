@@ -46,7 +46,7 @@ class MaintenanceAgreementController extends Controller
             'service_level' => 'required',
             'model_description' => 'required',
             'product_number' => 'required',
-            'service_level' => 'required',
+            'service_level_agreement' => 'required',
             'location' => 'required',
             'status' => 'required',
         ]);
