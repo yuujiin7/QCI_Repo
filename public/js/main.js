@@ -10,7 +10,7 @@ function togglePasswordVisibility(fieldId) {
 }
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     $('#TSGTable').DataTable({
         responsive: true,
         paging: true,
@@ -22,11 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
         pageLength: 10,
         order: [[0, "asc"]],
         retrieve: true,
-        
+
     });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     $('#SRTable').DataTable({
         responsive: true,
         paging: true,
@@ -41,19 +41,19 @@ document.addEventListener('DOMContentLoaded', function() {
         columnDefs: [
             {
                 targets: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
-                visible: false,        
+                visible: false,
             }
-            
+
 
         ],
-        
+
     });
 });
 
 // Delete confirmation dialog
 // JavaScript
 document.querySelectorAll('.submitDelete').forEach(button => {
-    button.addEventListener('click', function(event) {
+    button.addEventListener('click', function (event) {
         event.preventDefault(); // Prevent default form submission
         const formId = this.getAttribute('data-form-id');
         Swal.fire({
@@ -95,7 +95,7 @@ function toggleCompleteStatus() {
 
 
 // get the total hours from the start and end time from the form and change the total hours text
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const startTimeInput = document.getElementById('start_time');
     const endTimeInput = document.getElementById('end_time');
     const totalHoursLabel = document.getElementById('total_hours');
@@ -170,44 +170,66 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ---------------------------------------------------------------------------------------------------------
 function format(d) {
-    return (
-        'Serial Number: ' + d.serial_number +
-        '<br>' +
-        'Account Manager: ' + d.account_manager +
-        '<br>' +
-        'Start Date: ' + d.start_date +
-        '<br>' +
-        'End Date: ' + d.end_date +
-        '<br>' +
-        'Distributor: ' + d.distributor +
-        '<br>' +
-        'PO Number: ' + d.PO_number +
-        '<br>' +
-        'Company Name: ' + d.company_name +
-        '<br>' +
-        'Project Name: ' + d.project_name +
-        '<br>' +
-        'Supplementary Account Ref: ' + d.supp_acc_ref +
-        '<br>' +
-        'Service Agreement: ' + d.service_agreement +
-        '<br>' +
-        'Model Description: ' + d.model_description +
-        '<br>' +
-        'Product Number: ' + d.product_number +
-        '<br>' +
-        'Service Level: ' + d.service_level +
-        '<br>' +
-        'Location: ' + d.location +
-        '<br>' +
-        'Status: ' + d.status
-    );
+    let dateHistory = [];
+    
+    // Check if date_history is a string and parse it
+    if (typeof d.date_history === 'string') {
+        try {
+            const parsedDateHistory = JSON.parse(d.date_history);
+            if (Array.isArray(parsedDateHistory)) {
+                dateHistory = parsedDateHistory.map((range, index) =>
+                    `${index + 1}. ${range.start_date} to ${range.end_date}`
+                );
+            } else {
+                dateHistory = ['N/A']; // Fallback if parsed result is not an array
+            }
+        } catch (error) {
+            console.error('Error parsing date_history:', error);
+            dateHistory = ['N/A']; // Fallback in case of JSON parsing error
+        }
+    } else {
+        dateHistory = ['N/A']; // Fallback if date_history is not a string
+    }
+
+    console.log('Date History Type:', typeof d.date_history);
+    console.log('Date History Value:', d.date_history);
+
+    return `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+            <div class="space-y-2">
+                <strong class="font-bold">Serial Number:</strong> ${d.serial_number}<br>
+                <strong class="font-bold">Account Manager:</strong> ${d.account_manager}<br>
+                <strong class="font-bold">Start Date:</strong> ${d.start_date}<br>
+                <strong class="font-bold">End Date:</strong> ${d.end_date}<br>
+                <strong class="font-bold">Distributor:</strong> ${d.distributor}<br>
+                <strong class="font-bold">PO Number:</strong> ${d.PO_number}<br>
+                <strong class="font-bold">Company Name:</strong> ${d.company_name}<br>
+                <strong class="font-bold">Project Name:</strong> ${d.project_name}<br>
+                <strong class="font-bold">Supplementary Account Ref:</strong> ${d.supp_acc_ref}<br>
+                <strong class="font-bold">Service Agreement:</strong> ${d.service_agreement}<br>
+            </div>
+            <div class="space-y-2">
+                <strong class="font-bold">Model Description:</strong> ${d.model_description}<br>
+                <strong class="font-bold">Product Number:</strong> ${d.product_number}<br>
+                <strong class="font-bold">Service Level:</strong> ${d.service_level}<br>
+                <strong class="font-bold">Location:</strong> ${d.location}<br>
+                <strong class="font-bold">Date History:</strong><br>
+                <div class="">
+                    ${dateHistory.join('<br>')}<br>
+                </div>
+                <strong class="font-bold">Status:</strong> ${d.status}<br>
+            </div>
+        </div>
+    `;
 }
-$(document).ready(function() {
+
+
+
+$(document).ready(function () {
     const table = $('#MATable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "/get-maintenance-agreements"
-        ,
+        ajax: "/get-maintenance-agreements",
         columns: [
             {
                 className: 'dt-control',
@@ -223,10 +245,10 @@ $(document).ready(function() {
             {
                 data: null,
                 orderable: false,
-                render: function(data, type, row) {
+                render: function (data, type, row) {
                     return `
-                        <button class="edit-btn bg-yellow-500 text-white px-4 py-2 rounded">Edit</button>
-                        <button class="delete-btn bg-red-500 text-white px-4 py-2 rounded submitDelete" data-form-id="delete-form-${row.id}">Delete</button>
+                        <button class="renew-btn bg-yellow-500 text-white px-2 py-2 rounded">Renew</button>
+                        <button class="delete-btn bg-red-500 text-white px-2 py-2 rounded submitDelete" data-form-id="delete-form-${row.id}">Delete</button>
                         <form id="delete-form-${row.id}" action="/delete-maintenance-agreement/${row.id}" method="POST" style="display:none;">
                             @csrf
                             @method('DELETE')
@@ -236,12 +258,10 @@ $(document).ready(function() {
             }
         ],
         order: [[1, 'asc']]
-
-        
     });
-    
+
     const detailRows = [];
-    
+
     $('#MATable tbody').on('click', 'td.dt-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
@@ -266,30 +286,42 @@ $(document).ready(function() {
             $('#' + id + ' td.dt-control').trigger('click');
         });
     });
-});
 
-$('#MATable tbody').on('click', '.edit-btn', function () {
-    var data = table.row($(this).parents('tr')).data();
-    // Open your edit modal and populate it with `data`
-    console.log('Edit:', data);
-});
+    // Renew button event
+    $('#MATable tbody').on('click', '.renew-btn', function () {
+        var data = table.row($(this).parents('tr')).data();
+
+        // Pre-fill the modal fields with the current start and end dates
+        $('#start_date').val(data.start_date);
+        $('#end_date').val(data.end_date);
+
+        // Update the form action to send a PATCH request to update the agreement
+        $('#renewForm').attr('action', `/renew-maintenance-agreement/${data.id}`);
+
+        // Show the modal
+        var renewModal = new bootstrap.Modal(document.getElementById('renewModal'));
+        renewModal.show();
+    });
 
 
-$('#MATable tbody').on('click', '.submitDelete', function(event) {
-    event.preventDefault(); // Prevent default form submission
-    const formId = this.getAttribute('data-form-id');
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            document.getElementById(formId).submit(); // Submit the associated form
-        }
+    // Delete button event
+    $('#MATable tbody').on('click', '.submitDelete', function (event) {
+        event.preventDefault(); // Prevent default form submission
+        const formId = this.getAttribute('data-form-id');
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(formId).submit(); // Submit the associated form
+            }
+        });
     });
 });
+
 // ---------------------------------------------------------------------------------------------------------
