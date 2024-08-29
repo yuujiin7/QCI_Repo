@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use function Ramsey\Uuid\v1;
+use Carbon\Carbon;
 
 class MaintenanceAgreementController extends Controller
 {
@@ -61,11 +62,6 @@ class MaintenanceAgreementController extends Controller
             if (!isset($validated['date_history'])) {
                 $validated['date_history'] = $validated['start_date'] . ' - ' . $validated['end_date'];
             }
-
-
-
-
-
 
             // Set status based on end date
             if (!isset($validated['status'])) {
@@ -133,9 +129,92 @@ class MaintenanceAgreementController extends Controller
 
     public function getMaintenanceAgreements(Request $request)
     {
-        $data = MaintenanceAgreement::all();
-        return response()->json(['data' => $data]);
+        // Get the request parameters sent by DataTables
+        $searchValue = $request->input('search.value');
+        $start = $request->input('start');
+        $length = $request->input('length');
+
+        // Base query
+        $query = MaintenanceAgreement::query();
+
+        // Apply global search
+        if (!empty($searchValue)) {
+            $query->where(function ($query) use ($searchValue) {
+                $query->where('serial_number', 'like', "%{$searchValue}%")
+                    ->orWhere('account_manager', 'like', "%{$searchValue}%")
+                    ->orWhere('company_name', 'like', "%{$searchValue}%")
+                    ->orWhere('status', 'like', "%{$searchValue}%")
+                    ->orWhere('location', 'like', "%{$searchValue}%")
+                    ->orWhere('service_level', 'like', "%{$searchValue}%")
+                    ->orWhere('product_number', 'like', "%{$searchValue}%")
+                    ->orWhere('model_description', 'like', "%{$searchValue}%")
+                    ->orWhere('service_agreement', 'like', "%{$searchValue}%")
+                    ->orWhere('supp_acc_ref', 'like', "%{$searchValue}%")
+                    ->orWhere('project_name', 'like', "%{$searchValue}%")
+                    ->orWhere('company_name', 'like', "%{$searchValue}%")
+                    ->orWhere('PO_number', 'like', "%{$searchValue}%")
+                    ->orWhere('distributor', 'like', "%{$searchValue}%");
+
+            });
+        }
+
+        // Get the total number of records before filtering
+        $totalRecords = MaintenanceAgreement::count();
+
+        // Get the filtered records
+        $totalFilteredRecords = $query->count();
+
+        // Apply pagination
+        $agreements = $query->skip($start)->take($length)->get();
+
+        // Process the data to calculate remaining days and status
+        $agreements->transform(function ($agreement) {
+            try {
+                $endDate = Carbon::parse($agreement->end_date);
+                $now = Carbon::now();
+
+                Log::info('End Date:', ['end_date' => $endDate->toDateString()]);
+                Log::info('Current Date:', ['now' => $now->toDateString()]);
+
+                // Calculate remaining days
+                $remainingDays = $now->diffInDays($endDate, false); // false for negative if past date
+                //rounding off the remaining days
+                $remainingDaysRounded = round($remainingDays);
+                //make the remaining adjust if its less than 12 months use months and if less than 30 days use days
+                if ($remainingDaysRounded < 30) {
+                    $remainingDaysFinal = round($now->diffInDays($endDate, false)) . ' days';
+                } elseif ($remainingDaysRounded < 365) {
+                    $remainingDaysFinal = round($now->diffInMonths($endDate, false)) . ' months';
+                } else {
+                    $remainingDaysFinal = round($now->diffInYears($endDate, false)) . ' years';
+                }
+
+                Log::info('Remaining Days:', ['remaining_days' => $remainingDays]);
+
+                // Determine status and color
+                if ($remainingDays >= 0) {
+                    $agreement->status = "<span style='color: green;'>Active ({$remainingDaysFinal} remaining)</span>";
+                } else {
+                    $remainingDays = abs($remainingDays);
+                    $agreement->status = "<span style='color: red;'>Expired ({$remainingDaysFinal} days ago)</span>";
+                }
+            } catch (\Exception $e) {
+                Log::error('Error processing date:', ['message' => $e->getMessage()]);
+                $agreement->status = "<span style='color: red;'>Error</span>";
+            }
+
+            return $agreement;
+        });
+
+        // Return the response in the format expected by DataTables
+        return response()->json([
+            'draw' => $request->input('draw'),
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalFilteredRecords,
+            'data' => $agreements
+        ]);
     }
+
     public function renew(Request $request, $id)
     {
         try {
@@ -176,72 +255,71 @@ class MaintenanceAgreementController extends Controller
     }
 
     public function exportCsv(Request $request)
-{
-    $agreements = MaintenanceAgreement::all(); // Or use pagination if you have many records
+    {
+        $agreements = MaintenanceAgreement::all(); // Or use pagination if you have many records
 
-    $response = new StreamedResponse(function () use ($agreements) {
-        $handle = fopen('php://output', 'w');
+        $response = new StreamedResponse(function () use ($agreements) {
+            $handle = fopen('php://output', 'w');
 
-        // Add CSV headers
-        fputcsv($handle, [
-            'Serial Number',
-            'Account Manager',
-            'Start Date',
-            'End Date',
-            'Distributor',
-            'PO Number',
-            'Company Name',
-            'Project Name',
-            'Supplementary Account Ref',
-            'Service Agreement',
-            'Model Description',
-            'Product Number',
-            'Service Level',
-            'Location',
-            'Date History',
-            'Status',
-        ]);
+            // Add CSV headers
+            fputcsv($handle, [
+                'Serial Number',
+                'Account Manager',
+                'Start Date',
+                'End Date',
+                'Distributor',
+                'PO Number',
+                'Company Name',
+                'Project Name',
+                'Supplementary Account Ref',
+                'Service Agreement',
+                'Model Description',
+                'Product Number',
+                'Service Level',
+                'Location',
+                'Date History',
+                'Status',
+            ]);
 
-        foreach ($agreements as $agreement) {
-            // Convert date history to a string
-            $dateHistory = '';
-            if ($agreement->date_history) {
-                $dateHistory = implode(', ', array_map(function ($date) {
-                    return $date['start_date'] . ' - ' . $date['end_date'];
-                }, json_decode($agreement->date_history, true)));
+            foreach ($agreements as $agreement) {
+                // Convert date history to a string
+                $dateHistory = '';
+                if ($agreement->date_history) {
+                    $dateHistory = implode(', ', array_map(function ($date) {
+                        return $date['start_date'] . ' - ' . $date['end_date'];
+                    }, json_decode($agreement->date_history, true)));
+                }
+
+                fputcsv($handle, [
+                    $agreement->serial_number,
+                    $agreement->account_manager,
+                    $agreement->start_date,
+                    $agreement->end_date,
+                    $agreement->distributor,
+                    $agreement->PO_number,
+                    $agreement->company_name,
+                    $agreement->project_name,
+                    $agreement->supp_acc_ref,
+                    $agreement->service_agreement,
+                    $agreement->model_description,
+                    $agreement->product_number,
+                    $agreement->service_level,
+                    $agreement->location,
+                    $dateHistory,
+                    $agreement->status,
+                ]);
             }
 
+            fclose($handle);
+        });
 
-            fputcsv($handle, [
-                $agreement->serial_number,
-                $agreement->account_manager,
-                $agreement->start_date,
-                $agreement->end_date,
-                $agreement->distributor,
-                $agreement->PO_number,
-                $agreement->company_name,
-                $agreement->project_name,
-                $agreement->supp_acc_ref,
-                $agreement->service_agreement,
-                $agreement->model_description,
-                $agreement->product_number,
-                $agreement->service_level,
-                $agreement->location,
-                $dateHistory,
-                $agreement->status,
-            ]);
-        }
+        // Format the filename with the current date
+        $date = now()->format('Y-m-d');
+        $filename = "MA-{$date}.csv";
 
-        fclose($handle);
-    });
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', "attachment; filename=\"{$filename}\"");
 
-    // Format the filename with the current date
-    $date = now()->format('Y-m-d');
-    $filename = "MA-{$date}.csv";
-
-    $response->headers->set('Content-Type', 'text/csv');
-    $response->headers->set('Content-Disposition', "attachment; filename=\"{$filename}\"");
-
-    return $response;
-}
+        return $response;
+    }
 }

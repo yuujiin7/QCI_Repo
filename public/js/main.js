@@ -42,6 +42,11 @@ document.addEventListener('DOMContentLoaded', function () {
             {
                 targets: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
                 visible: false,
+
+            },
+            {
+                targets: -1, // The last column (Actions column)
+                orderable: false // Disable sorting on this column
             }
 
 
@@ -167,11 +172,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-
 // ---------------------------------------------------------------------------------------------------------
 function format(d) {
     let dateHistory = [];
-    
+
     // Check if date_history is a string and parse it
     if (typeof d.date_history === 'string') {
         try {
@@ -223,8 +227,6 @@ function format(d) {
     `;
 }
 
-
-
 $(document).ready(function () {
     const table = $('#MATable').DataTable({
         processing: true,
@@ -241,7 +243,9 @@ $(document).ready(function () {
             { data: 'account_manager' },
             { data: 'start_date' },
             { data: 'end_date' },
-            { data: 'status' },
+            {
+                data: 'status',
+            },
             {
                 data: null,
                 orderable: false,
