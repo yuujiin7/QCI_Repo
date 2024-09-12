@@ -20,7 +20,7 @@ $array = array('title' => "Questech");
                 </ul>
             </div>
         @endif
-        <form action="/tsg/{{$user->id}}" method="POST" class="flex flex-col" enctype="multipart/form-data">
+        <form action="/user/{{$user->id}}" method="POST" class="flex flex-col" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="mb-4 text-center">

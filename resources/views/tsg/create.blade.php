@@ -1,123 +1,128 @@
+
+
 @include('partials.__header', [$title])
 <?php
 $array = array('title' => "Questech");
-;?>
-<x-nav :data="$array"/>
+?>
+<x-nav :data="$array" />
 <header class="max-w-lg mx-auto">
-    <a href="#">
-        <h1 class="text-4xl font-bold text-white text-center pt-5">CREATE NEW TSG USER</h1>
-    </a>
-
 </header>
-<main class="bg-white max-w-lg mx-auto p-8 my-10 rounded-lg shadow-2x1">
-    <section class="mt-10">
-        @if ($errors->any())
-            <div class="alert alert-danger">
+<div class="p-10 sm:ml-64 ">
+    <main class="bg-white max-w-3xl mx-auto p-8 my-10 rounded-lg shadow-2xl">
+        <section class="mt-10">
+            {{-- @if ($errors->any())
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4">
                 <ul>
                     @foreach ($errors->all() as $error)
-                        <li class="text-red-500 text-xs mt-2 italic p-1">{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        <form action="/create/tsg" method="POST" class="flex flex-col">
-            @csrf
-            <div class="mb-4">
-                <div class="flex justify-between">
-                    <div class="w-1/4">
-                        <label for="first_name" class="block text-sm font-semibold text-gray-800 mb-2">First Name*</label>
-                        <input type="text" id="first_name" name="first_name" placeholder="First name" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{old('first_name')}}>
-                        @error('first_name')
-                            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    
-                    <div class="w-1/4 ml-3">
-                        <label for="middle_name" class="block text-sm font-semibold text-gray-800 mb-2">Middle Name</label>
-                        <input type="text" id="middle_name" name="middle_name" placeholder="Middle name" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{old('middle_name')}}>
-                        @error('middle_name')
-                            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="w-1/4 ml-3">
-                        <label for="last_name" class="block text-sm font-semibold text-gray-800 mb-2">Last Name*</label>
-                        <input type="text" id="last_name" name="last_name" placeholder="Last name" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{old('last_name')}}>
-                        @error('last_name')
-                            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="w-1/4 ml-3">
-                        <label for="suffix" class="block text-sm font-semibold text-gray-800 mb-2">Suffix (if any)</label>
-                        <input type="text" id="suffix" name="suffix" placeholder="Suffix" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{old('suffix')}}>
-                        @error('suffix')
-                            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-            <div class="mb-4">
-                
-                <div class="flex justify-start">
-                    <div class="w-1/2">
-                        <label for="emp_id" class="block text-sm font-semibold text-gray-800 mb-2">Employee ID No.*</label>
-                        <input type="text" id="emp_id" name="emp_id" placeholder="Employee ID" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{old('emp_id')}}>
-                        @error('emp_id')
-                            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    
-                    <div class="w-1/4 ml-3">
-                        <label for="age" class="block text-sm font-semibold text-gray-800 mb-2">Age</label>
-                        <input type="text" id="age" name="age" placeholder="Age" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{old('age')}}>
-                        @error('age')
-                            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    <li class="text-red-500 text-xs mt-2 italic p-1">{{ $error }}</li>
+            @endforeach
+            </ul>
+</div>
+@endif --}}
+<form action="/store" method="POST" class="">
+    @csrf
+    <div class="flex mb-4">
+        <div class="px-2 flex-1">
 
-                    <div class="w-1/4 ml-3">
-                        <label for="gender" class="block text-sm font-semibold text-gray-800 mb-2">Gender</label>
-                        <select id="gender" name="gender" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300">
-                            <option value="">Gender</option>
-                            <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
-                            <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
-                            <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>Other</option>
-                        </select>
-                        @error('gender')
-                            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    
-                </div>
-            </div>
+            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">First Name</label>
+            <input type="text" name="first_name" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Serial Number" required="" value="{{old('first_name')}}">
+            @error('first_name')
+            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="px-2 flex-1">
+            <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900">Last Name</label>
+            <input type="text" name="last_name" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Account Manager" value="{{old('last_name')}}">
+            @error('last_name')
+            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+            @enderror
+        </div>
 
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-semibold text-gray-800 mb-2">Email Address*</label>
-                <input type="email" id="email" name="email" placeholder="Email Address" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300 value={{old('email')}}">
-                @error('email')
-                    <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                @enderror
-            </div>
+    </div>
+    <div class="flex mb-4">
+    <div class="px-2 flex-1">
+            <label for="emp_id" class="block mb-2 text-sm font-medium text-gray-900">Employee ID</label>
+            <input type="text" name="emp_id" id="emp_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Account Manager" value="{{old('emp_id')}}">
+            @error('emp_id')
+            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+            @enderror
+        </div>
 
-            <div class="mb-4">
-                <label for="phone_number" class="block text-sm font-semibold text-gray-800 mb-2">Phone Number*</label>
-                <input type="tel" id="phone_number" name="phone_number" placeholder="e.g 09123456789" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300 value={{old('phone_number')}}">
-                @error('phone_number')
-                    <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                @enderror
-            </div>
-           
-            <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 text-center" type="submit">Create</button>
+        
+    </div>
+    <div class="flex flex-wrap mb-4">
+        <div class="px-2 flex-1">
 
-            <a href="/tsg" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded shadow-lg hover:shadow-xl transition duration-200 text-center mt-2">Back</a>
-            
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email Address</label>
+            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Email Address" required="" value="{{old('email')}}">
+            @error('email')
+            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="px-2 flex-1">
+            <label for="phone_number" class="block mb-2 text-sm font-medium text-gray-900">Phone Number</label>
+            <input type="tel" name="phone_number" id="phone_number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Phone Number" value="{{old('phone_number')}}">
+            @error('phone_number')
+            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+            @enderror
+        </div>
 
-        </form>
-      
+    </div>
 
-    </section>
+
+
+    <div class="px-2 flex-1 mb-4">
+        <label for="user_type" class="block mb-2 text-sm font-medium text-gray-900">User Type</label>
+        <select id="user_type" name="user_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+
+            <option>Admin</option>
+            <option>User</option>
+        </select>
+        @error('user_type')
+        <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div class="px-2 flex-1 mb-4">
+        <label for="role" class="block mb-2 text-sm font-medium text-gray-900">Role</label>
+        <select id="role" name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+
+            <option>TSG</option>
+            <option>SMG</option>
+            <option>PMG</option>
+            <option>Admin</option>
+
+        </select>
+        @error('role')
+        <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+        @enderror
+    </div>
+    <div class="flex mb-4">
+        <div class="px-2 flex-1">
+
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+            <input type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Password" required="" value="{{old('password')}}">
+            @error('password')
+            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="px-2 flex-1">
+            <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900">Confirm Password</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Confirm Password" value="{{old('password_confirmation')}}">
+            @error('password_confirmation')
+            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+    </div>
     
+    
+
+    <div class="flex justify-end">
+        <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800"> Submit </button>
+    </div>
+</form>
+</section>
 </main>
-
-
+</div>
 @include('partials.__footer')
-

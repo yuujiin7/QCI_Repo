@@ -56,9 +56,11 @@ class UserController extends Controller
             'password' => 'required',
         ]);
 
-        if(auth()->attempt($validated)){
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect('service-reports')->with('message', 'Logged in successfully');
+            return redirect()->intended('/service-reports');
         }
 
         return back()->withErrors([
@@ -73,59 +75,70 @@ class UserController extends Controller
     }
 
     # Store
-    public function store(Request $request){
+    public function store(Request $request)
+{
+    try {
+        // Validate the request data
+        $validated = $request->validate([
+            'first_name' => 'required|min:2|max:255',
+            'middle_name' => 'nullable|min:2|max:255',
+            'last_name' => 'required|min:2|max:255',
+            'suffix' => 'nullable|min:2|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone_number' => 'required|min:10|max:255',
+            'password' => 'required|confirmed|min:8|max:255',
+            'user_type' => 'required',
+            'role' => 'required',
+            'emp_id' => 'required',
+            
+        ]);
+
+        // Hash the password
+        $validated['password'] = bcrypt($validated['password']);
+        $validated['user_type'] = $validated['user_type'] ?? 'User';
+        $validated['role'] = $validated['role'] ?? 'TSG';
+        $validated['suffix'] = $validated['suffix'] ?? null;
+
+        // Register the user
+        $user = User::create($validated);
+
+        // Redirect to a secure page or dashboard
+        return redirect('/tsg')->with('message', 'User registered successfully');
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        // Catch validation errors and return to the form with errors
+        return redirect()->back()->withErrors($e->validator)->withInput();
         
-            $validated = $request->validate([
-                'first_name' => 'required|min:2|max:255',
-                'middle_name' => 'nullable|min:2|max:255',
-                'last_name' => 'required|min:2|max:255',
-                'suffix' => 'nullable|min:2|max:255',
-                'email' => 'required|email|unique:users,email',
-                'phone_number' => 'required|min:10|max:255',
-                'password' => 'required|confirmed|min:8|max:255',
-                'user_type' => 'in:tsg,admin',
-                'role' => 'in:network,server,storage,'
-            ], [
-                'first_name.required' => 'First name is required.',
-                'first_name.min' => 'First name must be at least :min characters.',
-                'first_name.max' => 'First name may not be greater than :max characters.',
-                'last_name.required' => 'Last name is required.',
-                'last_name.min' => 'Last name must be at least :min characters.',
-                'last_name.max' => 'Last name may not be greater than :max characters.',
-                'email.required' => 'Email is required.',
-                'email.email' => 'Invalid email format.',
-                'email.unique' => 'Email is already taken.',
-                'phone_number.required' => 'Phone number is required.',
-                'phone_number.min' => 'Phone number must be at least :min characters.',
-                'phone_number.max' => 'Phone number may not be greater than :max characters.',
-                'password.required' => 'Password is required.',
-                'password.confirmed' => 'Passwords do not match.',
-                'password.min' => 'Password must be at least :min characters.',
-                'password.max' => 'Password may not be greater than :max characters.',
-                'user_type.in' => 'Invalid user type.',
-                'role.in' => 'Invalid role.',
-            ]);
-    
-            $validated['password'] = bcrypt($validated['password']);
-            $validated['user_type'] = $validated['user_type'] ?? 'tsg';
-            $validated['role'] = $validated['role'] ?? 'network';
-    
-            if (!isset($validated['suffix'])) {
-                $validated['suffix'] = null;
-            }
-            
-            // Create the user
-            $user = User::create($validated);
-            
-            // Optionally, redirect the user after successful registration
-            return redirect('/login')->with('message', 'User created successfully');
-        }
-    
+    } catch (\Exception $e) {
+        // Log any unexpected error and show a generic error message
+        Log::error($e->getMessage());
+        return redirect()->back()->with('error', 'An unexpected error occurred. Please try again later.');
+    }
+}
+
+    #update
+    public function update(Request $request, $id){
+        $user = User::findOrFail($id);
+        $validated = $request->validate([
+            'first_name' => 'required|min:2|max:255',
+            'middle_name' => 'nullable|min:2|max:255',
+            'last_name' => 'required|min:2|max:255',
+            'suffix' => 'nullable|min:2|max:255',
+            'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+            'phone_number' => 'required|min:10|max:255',
+            'age' => 'required|numeric|min:1|max:120',
+
+        ]);
+        $user->update($validated);
+        return redirect('/tsg')->with('message', 'User updated successfully');
+    }
+
+
+
     
     # Logout
     public function logout(Request $request){
-        auth()->logout();
-
+        Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/login') ->with('message', 'Logged out successfully');
@@ -133,21 +146,8 @@ class UserController extends Controller
 
 
     public function show($id){
-        // $data = User::find($id);
-        // $data = ["data" => "Data from database"];
-        // data from sql
         $data = User::where('id', $id)->first();
         dd($data);
-
-        // return view('user')
-        //     ->with('data', $data)
-        //     ->with('id', $id)
-        //     ->with('first_name', 'John')
-        //     ->with('middle_name', 'Fernando')
-        //     ->with('last_name', 'Doe')
-        //     ->with('suffix', 'Jr.')
-        //     ->with('email', 'test@email.com')
-        //     ->with('phone_number', '123-456-7890');
         
     }
 

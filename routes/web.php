@@ -50,6 +50,9 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/store', [UserController::class, 'store']);
     # User
     Route::get('/user/{id}', [UserController::class, 'show']);
+
+    #update
+    Route::put('/user/{id}', [UserController::class, 'update']);
 });
 
 

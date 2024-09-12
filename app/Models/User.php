@@ -28,7 +28,6 @@ class User extends Authenticatable
         'emp_id',
         'age',
         'user_type',
-        'gender'
 
     ];
 
