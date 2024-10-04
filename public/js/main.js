@@ -1,4 +1,3 @@
-
 // Toggle Password Visibility
 function togglePasswordVisibility(fieldId) {
     const field = document.getElementById(fieldId);
@@ -8,7 +7,6 @@ function togglePasswordVisibility(fieldId) {
     }
     field.type = (field.type === "password") ? "text" : "password";
 }
-
 
 document.addEventListener('DOMContentLoaded', function () {
     $('#TSGTable').DataTable({
@@ -76,6 +74,8 @@ document.querySelectorAll('.submitDelete').forEach(button => {
         });
     });
 });
+
+
 
 
 //Under Construction dialog
@@ -253,7 +253,8 @@ $(document).ready(function () {
                     return `
                         <button class="renew-btn bg-yellow-500 text-white px-2 py-2 rounded">Renew</button>
                         <button class="delete-btn bg-red-500 text-white px-2 py-2 rounded submitDelete" data-form-id="delete-form-${row.id}">Delete</button>
-                        <form id="delete-form-${row.id}" action="/delete-maintenance-agreement/${row.id}" method="POST" style="display:none;">
+                        
+                        <form id="delete-form-${row.id}" action="/ma-report/${row.id}" method="POST" style="display:none;">
                             @csrf
                             @method('DELETE')
                         </form>
@@ -308,10 +309,37 @@ $(document).ready(function () {
     });
 
 
-    // Delete button event
-    $('#MATable tbody').on('click', '.submitDelete', function (event) {
+//     // Delete button event
+//     $('#MATable tbody').on('click', '.submitDelete', function (event) {
+//         event.preventDefault(); // Prevent default form submission
+//         const formId = this.getAttribute('data-form-id');
+//         Swal.fire({
+//             title: "Are you sure?",
+//             text: "You won't be able to revert this!",
+//             icon: "warning",
+//             showCancelButton: true,
+//             confirmButtonColor: "#3085d6",
+//             cancelButtonColor: "#d33",
+//             confirmButtonText: "Yes, delete it!"
+//         }).then((result) => {
+//             if (result.isConfirmed) {
+//                 document.getElementById(formId).submit(); // Submit the associated form
+//             }
+//         });
+//     });
+// });
+
+
+// Delete confirmation dialog using event delegation
+document.addEventListener('click', function(event) {
+    // Check if the clicked element has the 'submitDelete' class
+    if (event.target.classList.contains('submitDelete')) {
         event.preventDefault(); // Prevent default form submission
-        const formId = this.getAttribute('data-form-id');
+
+        // Get the form ID from the data attribute
+        const formId = event.target.getAttribute('data-form-id');
+
+        // Show the SweetAlert confirmation dialog
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -322,22 +350,13 @@ $(document).ready(function () {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                document.getElementById(formId).submit(); // Submit the associated form
+                // If the user confirms, submit the form
+                console.log('Form ID:', formId);
+                document.getElementById(formId).submit();
             }
         });
-    });
+    }
 });
 
 
-//open the import modal
-
-
-// ---------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-// ---------------------------------------------------------------------------------------------------------
+});

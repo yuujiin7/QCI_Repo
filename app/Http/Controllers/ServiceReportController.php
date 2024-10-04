@@ -274,6 +274,7 @@ class ServiceReportController extends Controller
     public function destroy($id)
     {
         $service_report = ServiceReport::findOrFail($id);
+        dd($service_report);
         $service_report->delete();
         return redirect('/service-reports')->with('message', 'Service Report deleted successfully.');
 

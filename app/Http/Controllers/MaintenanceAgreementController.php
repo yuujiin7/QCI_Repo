@@ -122,6 +122,7 @@ class MaintenanceAgreementController extends Controller
     {
         try {
             $data = MaintenanceAgreement::find($id);
+            dd($data);
             $data->delete();
             return redirect('/ma-reports')->with('message', 'MA deleted successfully');
         } catch (\Throwable $th) {
