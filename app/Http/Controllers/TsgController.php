@@ -15,9 +15,9 @@ class TsgController extends Controller
 {
     public function index()
     {
-        $data = Tsg::all();
+        // $data = Tsg::all();
         $user = User::all();
-        return view('tsg.index', ['tsgs' => $data, 'users' => $user]);
+        return view('tsg.index', ['users' => $user]);
         
     }
 

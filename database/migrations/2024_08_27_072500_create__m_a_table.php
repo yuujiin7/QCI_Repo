@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('maintenance_agreements', function (Blueprint $table) {
             $table->id(); // Primary key column
             $table->string('serial_number')->unique(); // Unique constraint on serial number
-            $table->string('account_manager');
-            $table->string('account_manager_id'); // Removed unique constraint if multiple records per account manager are allowed
+            $table->string('account_manager') -> nullable(); // Allow nullable account manager
+            $table->string('account_manager_id') -> nullable(); // Removed unique constraint if multiple records per account manager are allowed
             $table->json('date_history'); // JSON column for storing multiple dates
             $table->date('start_date');
             $table->date('end_date');

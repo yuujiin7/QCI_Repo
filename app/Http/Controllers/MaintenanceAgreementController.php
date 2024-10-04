@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use function Ramsey\Uuid\v1;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\MaintenanceAgreementsImport;
 
 class MaintenanceAgreementController extends Controller
 {
@@ -196,7 +198,7 @@ class MaintenanceAgreementController extends Controller
                     $agreement->status = "<span style='color: green;'>Active ({$remainingDaysFinal} remaining)</span>";
                 } else {
                     $remainingDays = abs($remainingDays);
-                    $agreement->status = "<span style='color: red;'>Expired ({$remainingDaysFinal} days ago)</span>";
+                    $agreement->status = "<span style='color: red;'>Expired ({$remainingDaysFinal} ago)</span>";
                 }
             } catch (\Exception $e) {
                 Log::error('Error processing date:', ['message' => $e->getMessage()]);
@@ -321,5 +323,45 @@ class MaintenanceAgreementController extends Controller
         $response->headers->set('Content-Disposition', "attachment; filename=\"{$filename}\"");
 
         return $response;
+    }
+
+    public function import(Request $request)
+    {
+        // $request->validate([
+        //     'file' => 'required|mimes:xlsx,csv,txt'
+        // ]);
+    
+        // try {
+        //     // Import the data
+        //     dd($request->file('file'));
+        //     Excel::import(new MaintenanceAgreementsImport, $request->file('file'));
+        //     // Return success message after the import
+        //     return redirect()->back()->with('success', 'Maintenance agreements imported successfully!');
+        // } catch (\Exception $e) {
+        //     // Log the error and return an error message
+        //     Log::error('Error importing maintenance agreements: ' . $e->getMessage());
+        //     return redirect()->back()->withErrors(['message' => 'Failed to import maintenance agreements: ' . $e->getMessage()]);
+        // }
+
+        // Validate the uploaded file
+    $request->validate([
+        'file' => 'required|mimes:xlsx,csv', // Ensure it's either an Excel or CSV file
+    ]);
+
+    // Check if the file is uploaded
+    if ($request->hasFile('file')) {
+        $file = $request->file('file');
+
+        // Try importing the file
+        try {
+            Excel::import(new MaintenanceAgreementsImport, $file);
+
+            return redirect()->back()->with('success', 'Maintenance Agreements imported successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'There was an error during import: ' . $e->getMessage());
+        }
+    }
+
+    return redirect()->back()->with('error', 'No file was uploaded.');
     }
 }

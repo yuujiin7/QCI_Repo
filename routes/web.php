@@ -102,4 +102,6 @@ Route::middleware('auth')->group(function () {
     Route::get('get-maintenance-agreements', [MaintenanceAgreementController::class, 'getMaintenanceAgreements']);
     Route::patch('/renew-maintenance-agreement/{id}', [MaintenanceAgreementController::class, 'renew']);
     route::get('/export-maintenance-agreements', [MaintenanceAgreementController::class, 'exportCsv']);
+    Route::post('/import-maintenance-agreements', [MaintenanceAgreementController::class, 'import'])->name('import.maintenance.agreements');
+
 });
