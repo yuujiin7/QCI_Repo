@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Storage;
 
 return new class extends Migration
 {
@@ -11,6 +10,14 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
+    {
+        Schema::dropIfExists('service_reports');
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::create('service_reports', function (Blueprint $table) {
             $table->id() -> first();
@@ -26,8 +33,8 @@ return new class extends Migration
             $table->decimal('total_hours', 8, 2);
             $table->string('remarks') -> nullable();
             $table->string('machine_model')-> nullable();
-            $table->string('machine_serial_number')->unique() -> nullable();
-            $table->string('product_number')->unique() -> nullable();
+            $table->string('machine_serial_number')->unique() -> nullable(); // to replace unique
+            $table->string('product_number')->unique() -> nullable(); // to replace unique
             $table->string('part_number') -> nullable();
             $table->string('part_quantity') -> nullable();
             $table->string('part_description') -> nullable();
@@ -51,14 +58,4 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('service_reports');
-        
-    }
-
 };

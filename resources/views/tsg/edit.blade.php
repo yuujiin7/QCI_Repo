@@ -23,7 +23,7 @@ $array = array('title' => "Questech");
         <form action="/user/{{$user->id}}" method="POST" class="flex flex-col" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="mb-4 text-center">
+            <!-- <div class="mb-4 text-center">
                 <label for="profile_image" class="block text-sm font-semibold text-gray-800 mb-2">Profile Picture</label>
                 <div class="flex justify-center items-center mb-2">
                     <img id="profileImagePreview" src="{{ $user->profile_image ? asset('storage/profile_images/thumbnail/small_' . $user->profile_image) : 'https://api.dicebear.com/8.x/bottts/svg?seed=Felix' }}" alt="Profile Image" class="w-20 h-20 rounded-full object-cover">
@@ -32,38 +32,27 @@ $array = array('title' => "Questech");
                 @error('profile_image')
                     <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                 @enderror
-            </div>
+            </div> -->
             <div class="mb-4">
                 <div class="flex justify-between">
-                    <div class="w-1/4">
+                    <div class="w-1/2">
                         <label for="first_name" class="block text-sm font-semibold text-gray-800 mb-2">First Name*</label>
                         <input type="text" id="first_name" name="first_name" placeholder="First name" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->first_name}}>
                         @error('first_name')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
                     </div>
-                    
-                    <div class="w-1/4 ml-3">
-                        <label for="middle_name" class="block text-sm font-semibold text-gray-800 mb-2">Middle Name</label>
-                        <input type="text" id="middle_name" name="middle_name" placeholder="Middle name" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->middle_name}}>
-                        @error('middle_name')
-                            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="w-1/4 ml-3">
+
+                    <div class="w-1/2 ml-3">
                         <label for="last_name" class="block text-sm font-semibold text-gray-800 mb-2">Last Name*</label>
                         <input type="text" id="last_name" name="last_name" placeholder="Last name" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->last_name}}>
                         @error('last_name')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
                     </div>
-                    <div class="w-1/4 ml-3">
-                        <label for="suffix" class="block text-sm font-semibold text-gray-800 mb-2">Suffix (if any)</label>
-                        <input type="text" id="suffix" name="suffix" placeholder="Suffix" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->suffix}}>
-                        @error('suffix')
-                            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    
+                    
+                    
                 </div>
             </div>
             <div class="mb-4">
@@ -76,16 +65,31 @@ $array = array('title' => "Questech");
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
                     </div>
-                    
+
                     <div class="w-1/4 ml-3">
+                        <label for="user_type" class="block text-sm font-semibold text-gray-800 mb-2">User Type</label>
+                        <input type="text" id="user_type" name="user_type" placeholder="User Type" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value="{{$user->user_type}}" disabled>
+                        @error('user_type')
+                            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="w-1/3 ml-3">
+                        <label for="role" class="block text-sm font-semibold text-gray-800 mb-2">Role</label>
+                        <input type="text" id="role" name="role" placeholder="Role" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value="{{$user->role}}" disabled>
+                        @error('role')
+                            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    
+                    <!-- <div class="w-1/4 ml-3">
                         <label for="age" class="block text-sm font-semibold text-gray-800 mb-2">Age</label>
                         <input type="text" id="age" name="age" placeholder="Age" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value="{{$user->age}}">
                         @error('age')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
-                    </div>
+                    </div> -->
 
-                    <div class="w-1/4 ml-3">
+                    <!-- <div class="w-1/4 ml-3">
                         <label for="gender" class="block text-sm font-semibold text-gray-800 mb-2">Gender</label>
                         <select id="gender" name="gender" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300">
                             <option value="">Gender</option>
@@ -96,7 +100,7 @@ $array = array('title' => "Questech");
                         @error('gender')
                             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                         @enderror
-                    </div>
+                    </div> -->
 
 
 
@@ -119,13 +123,13 @@ $array = array('title' => "Questech");
                 @enderror
             </div>
 
-            <div class="mb-4">
+            <!-- <div class="mb-4">
                 <label for="profile_image" class="block text-sm font-semibold text-gray-800 mb-2">TSG Image</label>
                 <input type="file" id="profile_image" name="profile_image" placeholder="e.g 09123456789" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" value={{$user->profile_image}}>
                 @error('profile_image')
                     <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                 @enderror
-            </div>
+            </div> -->
 
             
            

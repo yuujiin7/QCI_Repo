@@ -89,15 +89,36 @@ document.querySelectorAll('.submitDelete').forEach(button => {
 //         confirmButtonText: "OK"
 //     });
 // }
-// );
+// )
 
 function toggleCompleteStatus() {
     let checkbox = document.getElementById('is_complete');
+    // Set the value based on the checked state
     checkbox.value = checkbox.checked ? '1' : '0';
     let statusText = document.getElementById('status-text');
+    // Change the text based on the checked state
     statusText.textContent = checkbox.checked ? 'Complete' : 'Incomplete';
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    let checkbox = document.getElementById('is_complete');
+    let statusText = document.getElementById('status-text');
+    
+    // Set the checkbox checked state based on the initial value
+    checkbox.checked = checkbox.value === '1';
+    // Set the text based on the initial value
+    statusText.textContent = checkbox.checked ? 'Complete' : 'Incomplete';
+}
+);
+
+
+
+// Initialize the checkbox to be unchecked and the status text to be "Incomplete"
+document.addEventListener('DOMContentLoaded', (event) => {
+    let checkbox = document.getElementById('is_complete');
+    checkbox.checked = false; // Ensures it is unchecked by default
+    checkbox.value = '0'; // Default value for unchecked state
+});
 
 // get the total hours from the start and end time from the form and change the total hours text
 document.addEventListener('DOMContentLoaded', function () {
@@ -121,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log('Start Time:', startTime); // Debugging log
         console.log('End Time:', endTime); // Debugging log
+
 
         // Clear previous errors
         clearErrors();
@@ -235,35 +257,43 @@ $(document).ready(function () {
         columns: [
             {
                 className: 'dt-control',
-                orderable: false,
+                orderable: false, // Disable sorting for control column
                 data: null,
+                responsive: true,
                 defaultContent: ''
             },
-            { data: 'serial_number' },
-            { data: 'account_manager' },
-            { data: 'start_date' },
-            { data: 'end_date' },
-            {
-                data: 'status',
-            },
+            { data: 'serial_number', orderable: true },
+            { data: 'account_manager', orderable: true },
+            { data: 'start_date', orderable: true },
+            { data: 'end_date', orderable: true },
+            { data: 'status', orderable: true },
             {
                 data: null,
-                orderable: false,
+                orderable: false, // Disable sorting for the action buttons column
                 render: function (data, type, row) {
                     return `
                         <button class="renew-btn bg-yellow-500 text-white px-2 py-2 rounded">Renew</button>
                         <button class="delete-btn bg-red-500 text-white px-2 py-2 rounded submitDelete" data-form-id="delete-form-${row.id}">Delete</button>
-                        
                         <form id="delete-form-${row.id}" action="/ma-report/${row.id}" method="POST" style="display:none;">
-                            @csrf
-                            @method('DELETE')
+                            <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
+                            <input type="hidden" name="_method" value="DELETE">
                         </form>
                     `;
                 }
+                
             }
         ],
-        order: [[1, 'asc']]
+        order: [[1, 'asc']], // Default ordering by the 'serial_number' column
+        responsive: true
+
+
+        
     });
+    $.fn.dataTable.ext.errMode = 'throw'; // Show errors in console
+
+$('#MATable').on('order.dt', function () {
+    console.log('Table order changed');
+});
 
     const detailRows = [];
 
@@ -309,35 +339,19 @@ $(document).ready(function () {
     });
 
 
-//     // Delete button event
-//     $('#MATable tbody').on('click', '.submitDelete', function (event) {
-//         event.preventDefault(); // Prevent default form submission
-//         const formId = this.getAttribute('data-form-id');
-//         Swal.fire({
-//             title: "Are you sure?",
-//             text: "You won't be able to revert this!",
-//             icon: "warning",
-//             showCancelButton: true,
-//             confirmButtonColor: "#3085d6",
-//             cancelButtonColor: "#d33",
-//             confirmButtonText: "Yes, delete it!"
-//         }).then((result) => {
-//             if (result.isConfirmed) {
-//                 document.getElementById(formId).submit(); // Submit the associated form
-//             }
-//         });
-//     });
-// });
-
-
 // Delete confirmation dialog using event delegation
-document.addEventListener('click', function(event) {
-    // Check if the clicked element has the 'submitDelete' class
+document.addEventListener('click', function (event) {
     if (event.target.classList.contains('submitDelete')) {
         event.preventDefault(); // Prevent default form submission
 
         // Get the form ID from the data attribute
         const formId = event.target.getAttribute('data-form-id');
+        const form = document.getElementById(formId);
+
+        if (!form) {
+            console.error('Form not found:', formId);
+            return;
+        }
 
         // Show the SweetAlert confirmation dialog
         Swal.fire({
@@ -350,13 +364,13 @@ document.addEventListener('click', function(event) {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                // If the user confirms, submit the form
                 console.log('Form ID:', formId);
-                document.getElementById(formId).submit();
+                form.submit(); // Submit the associated form
             }
         });
     }
 });
+
 
 
 });

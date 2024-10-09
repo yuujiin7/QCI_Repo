@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -12,8 +11,6 @@ use Illuminate\Database\QueryException;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\Rule;
-
-
 
 
 use Illuminate\Http\Request;
@@ -77,8 +74,9 @@ class ServiceReportController extends Controller
             'pending' => 'nullable',
             'engineer_assigned' => 'min:2|max:255',
             'tech_support' => 'nullable|min:2|max:255',
-            'hr_finance' => 'nallable|min:2|max:255',
+            'hr_finance' => 'nullable|min:2|max:255',
             'evp_coo' => 'nullable|min:2|max:255',
+            'problem_details' => 'nullable',
         ]);
 
         $validated['hr_finance'] = $validated['hr_finance'] ?? 'Eileen Orence';
@@ -130,12 +128,15 @@ class ServiceReportController extends Controller
         }
 
         try {
+            dd($validated);
             ServiceReport::create($validated);
+            
             return redirect('/service-reports')->with('message', 'Service Report created successfully.');
         } catch (QueryException $exception) {
             if ($exception->errorInfo[1] == 1062) { // Duplicate entry error code
                 return back()->withErrors(['duplicate' => 'The machine serial number or product number already exists.'])->withInput();
             }
+            Log::error('Error saving service report: ' . $exception->getMessage());
             return back()->withErrors(['error' => 'An error occurred while saving the report.'])->withInput();
         }
     }
@@ -258,6 +259,7 @@ class ServiceReportController extends Controller
             // Perform the update
             // dd($validated);
             $serviceReport->update($validated);
+            Log::info('Service Report updated: ' . $serviceReport);
             return redirect('/service-reports')->with('success', 'Service Report updated successfully.');
     
         } catch (ModelNotFoundException $e) {
@@ -274,12 +276,11 @@ class ServiceReportController extends Controller
     public function destroy($id)
     {
         $service_report = ServiceReport::findOrFail($id);
-        dd($service_report);
+        // dd($service_report);
         $service_report->delete();
         return redirect('/service-reports')->with('message', 'Service Report deleted successfully.');
 
    }
-
 
 
    public function createThumbnail($path, $width, $height)

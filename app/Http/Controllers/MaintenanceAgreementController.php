@@ -117,18 +117,23 @@ class MaintenanceAgreementController extends Controller
             return redirect('/ma-reports')->with('message', 'MA update failed');
         }
     }
-
     public function destroy($id)
     {
         try {
             $data = MaintenanceAgreement::find($id);
-            dd($data);
+    
+            if (!$data) {
+                return redirect('/ma-reports')->with('message', 'MA not found');
+            }
+    
             $data->delete();
             return redirect('/ma-reports')->with('message', 'MA deleted successfully');
         } catch (\Throwable $th) {
+            Log::error('Error deleting MA:', ['error' => $th->getMessage()]);
             return redirect('/ma-reports')->with('message', 'MA delete failed');
         }
     }
+    
 
     public function getMaintenanceAgreements(Request $request)
     {
@@ -136,6 +141,29 @@ class MaintenanceAgreementController extends Controller
         $searchValue = $request->input('search.value');
         $start = $request->input('start');
         $length = $request->input('length');
+        $orderColumnIndex = $request->input('order.0.column'); // Index of the column to order by
+        $orderDirection = $request->input('order.0.dir'); // Order direction (asc or desc)
+        
+        $columns = [
+            'serial_number',
+            'account_manager',
+            'company_name',
+            'status',
+            'location',
+            'service_level',
+            'product_number',
+            'model_description',
+            'service_agreement',
+            'supp_acc_ref',
+            'project_name',
+            'company_name',
+            'PO_number',
+            'distributor',
+        ];
+
+
+        $orderColumn = $columns[$orderColumnIndex] ?? 'serial_number'; // Default to 'serial_number' if out of bounds
+
 
         // Base query
         $query = MaintenanceAgreement::query();
@@ -167,8 +195,29 @@ class MaintenanceAgreementController extends Controller
         // Get the filtered records
         $totalFilteredRecords = $query->count();
 
+         // Apply sorting based on DataTables parameters
+        $query->orderBy($orderColumn, $orderDirection);
+
         // Apply pagination
         $agreements = $query->skip($start)->take($length)->get();
+
+        // Orderable columns
+        $columns = [
+            'serial_number',
+            'account_manager',
+            'company_name',
+            'status',
+            'location',
+            'service_level',
+            'product_number',
+            'model_description',
+            'service_agreement',
+            'supp_acc_ref',
+            'project_name',
+            'company_name',
+            'PO_number',
+            'distributor',
+        ];
 
         // Process the data to calculate remaining days and status
         $agreements->transform(function ($agreement) {
@@ -258,93 +307,83 @@ class MaintenanceAgreementController extends Controller
     }
 
     public function exportCsv(Request $request)
-    {
-        $agreements = MaintenanceAgreement::all(); // Or use pagination if you have many records
+{
+    $agreements = MaintenanceAgreement::all(); // Or use pagination if you have many records
 
-        $response = new StreamedResponse(function () use ($agreements) {
-            $handle = fopen('php://output', 'w');
+    $response = new StreamedResponse(function () use ($agreements) {
+        $handle = fopen('php://output', 'w');
 
-            // Add CSV headers
-            fputcsv($handle, [
-                'Serial Number',
-                'Account Manager',
-                'Start Date',
-                'End Date',
-                'Distributor',
-                'PO Number',
-                'Company Name',
-                'Project Name',
-                'Supplementary Account Ref',
-                'Service Agreement',
-                'Model Description',
-                'Product Number',
-                'Service Level',
-                'Location',
-                'Date History',
-                'Status',
-            ]);
+        // Add CSV headers
+        fputcsv($handle, [
+            'Serial Number',
+            'Account Manager',
+            'Start Date',
+            'End Date',
+            'Distributor',
+            'PO Number',
+            'Company Name',
+            'Project Name',
+            'Supplementary Account Ref',
+            'Service Agreement',
+            'Model Description',
+            'Product Number',
+            'Service Level',
+            'Location',
+            'Date History',
+            'Status',
+        ]);
 
-            foreach ($agreements as $agreement) {
-                // Convert date history to a string
-                $dateHistory = '';
-                if ($agreement->date_history) {
+        foreach ($agreements as $agreement) {
+            // Safely handle date_history
+            $dateHistory = '';
+            if (!empty($agreement->date_history)) {
+                $decodedHistory = json_decode($agreement->date_history, true);
+
+                // Ensure it's an array before mapping
+                if (is_array($decodedHistory)) {
                     $dateHistory = implode(', ', array_map(function ($date) {
-                        return $date['start_date'] . ' - ' . $date['end_date'];
-                    }, json_decode($agreement->date_history, true)));
+                        return (isset($date['start_date']) ? $date['start_date'] : 'N/A') . ' - ' . 
+                               (isset($date['end_date']) ? $date['end_date'] : 'N/A');
+                    }, $decodedHistory));
                 }
-
-                fputcsv($handle, [
-                    $agreement->serial_number,
-                    $agreement->account_manager,
-                    $agreement->start_date,
-                    $agreement->end_date,
-                    $agreement->distributor,
-                    $agreement->PO_number,
-                    $agreement->company_name,
-                    $agreement->project_name,
-                    $agreement->supp_acc_ref,
-                    $agreement->service_agreement,
-                    $agreement->model_description,
-                    $agreement->product_number,
-                    $agreement->service_level,
-                    $agreement->location,
-                    $dateHistory,
-                    $agreement->status,
-                ]);
             }
 
-            fclose($handle);
-        });
+            fputcsv($handle, [
+                $agreement->serial_number,
+                $agreement->account_manager,
+                $agreement->start_date,
+                $agreement->end_date,
+                $agreement->distributor,
+                $agreement->PO_number,
+                $agreement->company_name,
+                $agreement->project_name,
+                $agreement->supp_acc_ref,
+                $agreement->service_agreement,
+                $agreement->model_description,
+                $agreement->product_number,
+                $agreement->service_level,
+                $agreement->location,
+                $dateHistory,
+                $agreement->status,
+            ]);
+        }
 
-        // Format the filename with the current date
-        $date = now()->format('Y-m-d');
-        $filename = "MA-{$date}.csv";
+        fclose($handle);
+    });
 
-        $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', "attachment; filename=\"{$filename}\"");
+    // Format the filename with the current date
+    $date = now()->format('Y-m-d');
+    $filename = "MA-{$date}.csv";
 
-        return $response;
-    }
+    $response->headers->set('Content-Type', 'text/csv');
+    $response->headers->set('Content-Disposition', "attachment; filename=\"{$filename}\"");
+
+    return $response;
+}
+
 
     public function import(Request $request)
     {
-        // $request->validate([
-        //     'file' => 'required|mimes:xlsx,csv,txt'
-        // ]);
-    
-        // try {
-        //     // Import the data
-        //     dd($request->file('file'));
-        //     Excel::import(new MaintenanceAgreementsImport, $request->file('file'));
-        //     // Return success message after the import
-        //     return redirect()->back()->with('success', 'Maintenance agreements imported successfully!');
-        // } catch (\Exception $e) {
-        //     // Log the error and return an error message
-        //     Log::error('Error importing maintenance agreements: ' . $e->getMessage());
-        //     return redirect()->back()->withErrors(['message' => 'Failed to import maintenance agreements: ' . $e->getMessage()]);
-        // }
-
-        // Validate the uploaded file
     $request->validate([
         'file' => 'required|mimes:xlsx,csv', // Ensure it's either an Excel or CSV file
     ]);
@@ -365,4 +404,8 @@ class MaintenanceAgreementController extends Controller
 
     return redirect()->back()->with('error', 'No file was uploaded.');
     }
+
+    
+
+    
 }

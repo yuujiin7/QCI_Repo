@@ -127,6 +127,9 @@ class UserController extends Controller
             'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
             'phone_number' => 'required|min:10|max:255',
             'age' => 'required|numeric|min:1|max:120',
+            'user_type' => 'required',
+            'role' => 'required',
+            'emp_id' => 'required',
 
         ]);
         $user->update($validated);

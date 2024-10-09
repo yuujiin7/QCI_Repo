@@ -178,7 +178,7 @@ $array = array('title' => "Questech");
                         </li>
                         <li class="w-full ">
                             <div class="px-2 flex-1">
-                                <input type="text" name="others" id="others" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Others" value="{{$service_report->remarks1}}">
+                                <input type="text" name="others" id="others" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Others" value="{{$service_report->others}}">
                                 @error('remarks1')
                                 <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
                                 @enderror
@@ -254,17 +254,18 @@ $array = array('title' => "Questech");
                     @enderror
                 </div>
                 <div class="flex mb-4">
-                <div class="px-2 flex-1">
-    <h3 class="mb-4 font-semibold text-gray-900 text-sm ">Status</h3>
-    <label class="inline-flex items-center cursor-pointer">
-    <input type="checkbox" class="sr-only peer" onclick="toggleCompleteStatus()" id="is_complete" name="is_complete" {{ $service_report->is_complete ? 'checked' : '' }} value="1">
-    <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue-600"></div>
-    <span class="ms-3 text-sm font-medium text-gray-900 " id="status-text">{{ $service_report->is_complete ? 'Complete' : 'Incomplete' }}</span>
-</label>
-    @error('is_complete')
-    <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-    @enderror
-</div>
+                    <div class="px-2 flex-1">
+                        <h3 class="mb-4 font-semibold text-gray-900 text-sm ">Status</h3>
+                        <label class="inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer" onclick="toggleCompleteStatus()" id="is_complete" name="is_complete" value="1" {{ $service_report->is_complete == 1 ? 'checked' : '' }} >
+                        <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue-600"></div>
+                        <span class="ms-3 text-sm font-medium text-gray-900 " id="status-text">{{ $service_report->is_complete ? 'Complete' : 'Incomplete' }}</span>
+                    </label>
+                        @error('is_complete')
+                        <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
 
                     <div class="px-2 flex-1">
                         <label for="engineer_assigned" class="block mb-2 text-sm font-medium text-gray-900  mb-3">Engineer Assigned</label>

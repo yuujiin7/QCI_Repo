@@ -83,6 +83,13 @@
             background-color: white;
             text-align: center;
         }
+        /* .others {
+            margin-bottom: 20px;
+        } */
+
+
+
+
     </style>
 </head>
 
@@ -174,7 +181,7 @@
                         <label class="form-check-label" for="add_on">Add-On Value</label>
                     </th>
                     <th colspan="2">
-                        <input class="form-check-input" type="text" value="{{$others}}">
+                        <label id="others" class="form-check-input" type="text" value="{{$others}}">
                         <label class="form-check-label" for="others">Others</label>
                     </th>
                 </tr>
@@ -199,6 +206,10 @@
                     <td colspan="3">{{ $partQuantity }}</td>
                     <td colspan="3">{{ $partDescription }}</td>
                     <td colspan="2">{{ $partUsage }}</td>
+                </tr>
+                <tr>
+                    <th colspan="1">Problem Details:</th>
+                    <td colspan="9">{{ $problem_details }}</td>
                 </tr>
                 <tr>
                     <th colspan="1">Action Taken:</th>
