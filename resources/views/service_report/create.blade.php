@@ -85,14 +85,14 @@ $array = array('title' => "Questech");
         <div class="px-2 w-1/4">
             <label for="start_time" class="block mb-2 text-sm font-medium text-gray-900 ">Start time:</label>
             <div class="relative">
-                <input type="time" id="start_time" name="start_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " min="05:00" max="18:00" value="{{ old('start_time', '09:00') }}" required />
+                <input type="time" id="start_time" name="start_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " min="1:00" max="24:00" value="{{ old('start_time', '09:00') }}" required />
                 <p class="text-red-500 text-xs mt-2 italic p-1" id="start_time_error"></p>
             </div>
         </div>
         <div class="px-2 w-1/4">
             <label for="end_time" class="block mb-2 text-sm font-medium text-gray-900 ">End time:</label>
             <div class="relative">
-                <input type="time" id="end_time" name="end_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " min="07:00" max="18:00" value="{{ old('end_time', '18:00') }}" required />
+                <input type="time" id="end_time" name="end_time" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " min="1:00" max="24:00" value="{{ old('end_time', '18:00') }}" required />
                 <p class="text-red-500 text-xs mt-2 italic p-1" id="end_time_error"></p>
             </div>
         </div>
@@ -113,68 +113,68 @@ $array = array('title' => "Questech");
         </div>
     </div>
     <div class="flex flex-wrap mb-4 px-2">
-    <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 border-b-0 rounded-lg sm:flex">
-        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
-            <div class="flex items-center ps-3">
-                <input type="hidden" name="new_installation" value="0">
-                <input id="new_installation" type="checkbox" value="1" name="new_installation" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                <label for="new_installation" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">New Installation</label>
-            </div>
-        </li>
-        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
-            <div class="flex items-center ps-3">
-                <input type="hidden" name="under_maintenance" value="0">
-                <input id="under_maintenance" type="checkbox" value="1" name="under_maintenance" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                <label for="under_maintenance" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Under Maintenance Contract</label>
-            </div>
-        </li>
-        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
-            <div class="flex items-center ps-3">
-                <input type="hidden" name="demo_poc" value="0">
-                <input id="demo_poc" type="checkbox" value="1" name="demo_poc" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                <label for="demo_poc" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Demo/Poc</label>
-            </div>
-        </li>
-        <li class="w-full">
-            <div class="flex items-center ps-3">
-                <input type="hidden" name="billable" value="0">
-                <input id="billable" type="checkbox" value="1" name="billable" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                <label for="billable" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Billable</label>
-            </div>
-        </li>
-    </ul>
-    <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex">
-        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
-            <div class="flex items-center ps-3">
-                <input type="hidden" name="under_warranty" value="0">
-                <input id="under_warranty" type="checkbox" value="1" name="under_warranty" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                <label for="under_warranty" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Under Warranty</label>
-            </div>
-        </li>
-        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
-            <div class="flex items-center ps-3">
-                <input type="hidden" name="corrective_maintenance" value="0">
-                <input id="corrective_maintenance" type="checkbox" value="1" name="corrective_maintenance" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                <label for="corrective_maintenance" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Corrective Maintenance</label>
-            </div>
-        </li>
-        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
-            <div class="flex items-center ps-3">
-                <input type="hidden" name="add_on" value="0">
-                <input id="add_on" type="checkbox" value="1" name="add_on" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                <label for="add_on" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Add-On Value</label>
-            </div>
-        </li>
-        <li class="w-full">
-            <div class="px-2 flex-1">
-                <input type="text" name="remarks1" id="remarks1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Others">
-                @error('remarks1')
-                <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-                @enderror
-            </div>
-        </li>
-    </ul>
-</div>
+        <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 border-b-0 rounded-lg sm:flex">
+            <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                <div class="flex items-center ps-3">
+                    <input type="hidden" name="new_installation" value="0">
+                    <input id="new_installation" type="checkbox" value="1" name="new_installation" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                    <label for="new_installation" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">New Installation</label>
+                </div>
+            </li>
+            <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                <div class="flex items-center ps-3">
+                    <input type="hidden" name="under_maintenance" value="0">
+                    <input id="under_maintenance" type="checkbox" value="1" name="under_maintenance" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                    <label for="under_maintenance" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Under Maintenance Contract</label>
+                </div>
+            </li>
+            <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                <div class="flex items-center ps-3">
+                    <input type="hidden" name="demo_poc" value="0">
+                    <input id="demo_poc" type="checkbox" value="1" name="demo_poc" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                    <label for="demo_poc" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Demo/Poc</label>
+                </div>
+            </li>
+            <li class="w-full">
+                <div class="flex items-center ps-3">
+                    <input type="hidden" name="billable" value="0">
+                    <input id="billable" type="checkbox" value="1" name="billable" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                    <label for="billable" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Billable</label>
+                </div>
+            </li>
+        </ul>
+        <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex">
+            <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                <div class="flex items-center ps-3">
+                    <input type="hidden" name="under_warranty" value="0">
+                    <input id="under_warranty" type="checkbox" value="1" name="under_warranty" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                    <label for="under_warranty" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Under Warranty</label>
+                </div>
+            </li>
+            <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                <div class="flex items-center ps-3">
+                    <input type="hidden" name="corrective_maintenance" value="0">
+                    <input id="corrective_maintenance" type="checkbox" value="1" name="corrective_maintenance" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                    <label for="corrective_maintenance" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Corrective Maintenance</label>
+                </div>
+            </li>
+            <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
+                <div class="flex items-center ps-3">
+                    <input type="hidden" name="add_on" value="0">
+                    <input id="add_on" type="checkbox" value="1" name="add_on" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
+                    <label for="add_on" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Add-On Value</label>
+                </div>
+            </li>
+            <li class="w-full">
+                <div class="px-2 flex-1">
+                    <input type="text" name="others" id="others" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Others">
+                    @error('others')
+                    <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+                    @enderror
+                </div>
+            </li>
+        </ul>
+    </div>
 
     <div class="flex flex-wrap mb-4">
         <div class="px-2 flex-1">
@@ -230,12 +230,12 @@ $array = array('title' => "Questech");
         </div>
     </div>
     <div class="px-2 flex-1">
-            <label for="problem_details" class="block mb-2 text-sm font-medium text-gray-900 ">Problem Details</label>
-            <input type="text" name="problem_details" id="problem_details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5   " placeholder="Problem details">
-            @error('problem_details')
-            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-            @enderror
-        </div>
+        <label for="problem_details" class="block mb-2 text-sm font-medium text-gray-900 ">Problem Details</label>
+        <input type="text" name="problem_details" id="problem_details" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5   " placeholder="Problem details">
+        @error('problem_details')
+        <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+        @enderror
+    </div>
     <div class="sm:col-span-2 px-2 mb-4">
         <label for="action_taken" class="block mb-2 text-sm font-medium text-gray-900 ">Action Taken</label>
         <textarea id="action_taken" rows="8" name="action_taken" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500   " placeholder="Your action taken here" value="{{ old('action_taken') }}" required></textarea>
@@ -250,20 +250,23 @@ $array = array('title' => "Questech");
         <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
         @enderror
     </div>
-    <div class="flex mb-4">
-    <div class="px-2 flex-1">
-    <h3 class="mb-4 font-semibold text-gray-900 text-sm">Status</h3>
-    <label class="inline-flex items-center cursor-pointer">
-        <input id="is_complete" type="checkbox" value="0" class="sr-only peer" onclick="toggleCompleteStatus()" name="is_complete">
-        <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-        <span class="ms-3 text-sm font-medium text-gray-900" id="status-text">Incomplete</span>
-    </label>
-    @error('is_complete')
-    <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-    @enderror
-</div>
 
-        <div class="px-2 flex-1 mb-4">
+
+
+    <div class="flex mb-4">
+        <div class="px-2 flex-1">
+            <h3 class="mb-4 font-semibold text-gray-900 text-sm">Status</h3>
+            <label class="inline-flex items-center cursor-pointer">
+                <input id="is_complete" type="checkbox" value="0" class="sr-only peer" onclick="toggleCompleteStatus()" name="is_complete">
+                <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                <span class="ms-3 text-sm font-medium text-gray-900" id="status-text">Incomplete</span>
+            </label>
+            @error('is_complete')
+            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <!-- <div class="px-2 flex-1 mb-4">
             <label for="engineer_assigned" class="block mb-2 text-sm font-medium text-gray-900 ">Engineer Assigned</label>
             <select id="engineer_assigned" name="engineer_assigned" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                 <option>Ramwell Sahagun</option>
@@ -276,73 +279,55 @@ $array = array('title' => "Questech");
             </select>
             @error('engineer_assigned')
             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-            @enderror
+            @enderror -->
 
+
+        <div class="px-2 flex-1">
+            <h3 class="mb-4 font-semibold text-gray-900 text-sm">Engineer Assigned</h3>
+            @php
+            $authenticatedUserName = auth()->user()->first_name . ' ' . auth()->user()->last_name;
+            $engineers = ['Ramwell Sahagun', 'Abner Abelardo', 'Rhodel Tejano', 'EJ Mercado', 'Luis Laborera', 'Marwin Manalastas', 'Eugene Rey Carta'];
+            foreach ($user_data as $user) {
+                if ($user->role === 'TSG' || $user->user_type === 'User') {
+                    $registeredEngineers[] = $user->first_name . ' ' . $user->last_name;
+                }
+            }
             
-            <div class="px-2 flex-1 mb-4">
-    <button id="dropdownBgHoverButton" data-dropdown-toggle="dropdownBgHover" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-        Engineer Options
-        <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-        </svg>
-    </button>
+            @endphp
 
-    <!-- Dropdown menu -->
-    <div id="dropdownBgHover" class="z-10 hidden w-48 bg-white rounded-lg shadow dark:bg-gray-700">
-        <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownBgHoverButton">
-            <li>
-                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <input id="checkbox-item-4" type="checkbox" value="Ramwell Sahagun" name="engineer_option[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                    <label for="checkbox-item-4" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Ramwell Sahagun</label>
-                </div>
-            </li>
-            <li>
-                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <input checked id="checkbox-item-5" type="checkbox" value="Abner Abelardo" name="engineer_option[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                    <label for="checkbox-item-5" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Abner Abelardo</label>
-                </div>
-            </li>
-            <li>
-                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <input id="checkbox-item-6" type="checkbox" value="Rhodel Tejano" name="engineer_option[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                    <label for="checkbox-item-6" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Rhodel Tejano</label>
-                </div>
-            </li>
+            <button id="dropdownBgHoverButton" data-dropdown-toggle="dropdownBgHover" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" type="button">
+                Select Engineer
+                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                </svg>
+            </button>
 
-            <li>
-                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <input id="checkbox-item-6" type="checkbox" value="EJ MErcado" name="engineer_option[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                    <label for="checkbox-item-6" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">EJ Mercado</label>
-                </div>
-            </li>
-
-            <li>
-                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <input id="checkbox-item-6" type="checkbox" value="Luis Laborera" name="engineer_option[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                    <label for="checkbox-item-6" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Luis Laborera</label>
-                </div>
-            </li>
-
-            <li>
-                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <input id="checkbox-item-6" type="checkbox" value="Marwin Manalastas" name="engineer_option[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                    <label for="checkbox-item-6" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Marwin Manalastas</label>
-                </div>
-            </li>
-
-            <li>
-                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                    <input id="checkbox-item-6" type="checkbox" value="Eugene Carta" name="engineer_option[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                    <label for="checkbox-item-6" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Eugene Carta</label>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
+            <!-- Dropdown menu -->
+            <div id="dropdownBgHover" class="z-10 hidden w-48 bg-white rounded-lg shadow">
+                <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownBgHoverButton">
+                    @foreach ($registeredEngineers as $engineer)
+                    <li>
+                        <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                            <input
+                                id="checkbox-{{ $loop->index }}"
+                                type="checkbox"
+                                value="{{ $engineer }}"
+                                name="engineers_assigned[]"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                                @if($engineer===$authenticatedUserName) checked @endif>
+                            <label for="checkbox-{{ $loop->index }}" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">{{ $engineer }}</label>
+                        </div>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
 
 
-            
         </div>
+
+
+
+        <!-- </div> -->
     </div>
     <div class="flex mb-4">
         <div class="px-2 flex-1">

@@ -79,8 +79,8 @@ class TsgController extends Controller
         'suffix' => 'nullable|min:2|max:255',
         'email' => 'required|email|min:2|max:255|unique:tsgs,email,' . $id,
         'phone_number' => 'required|min:10|max:255',
-        'age' => 'required|numeric|min:1|max:120',
-        'gender' => 'required',
+        // 'age' => 'required|numeric|min:1|max:120',
+        // 'gender' => 'required',
         'emp_id' => 'required|min:2|max:255|unique:tsgs,emp_id,' . $id,
     ]);
 

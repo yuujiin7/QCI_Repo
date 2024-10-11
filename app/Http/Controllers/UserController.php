@@ -117,8 +117,15 @@ class UserController extends Controller
 }
 
     #update
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $user = User::findOrFail($id);
+    
+        // Retrieve existing user type and role
+        $user_type = $user->user_type;
+        $role = $user->role;
+    
+        // Validate input
         $validated = $request->validate([
             'first_name' => 'required|min:2|max:255',
             'middle_name' => 'nullable|min:2|max:255',
@@ -126,15 +133,22 @@ class UserController extends Controller
             'suffix' => 'nullable|min:2|max:255',
             'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
             'phone_number' => 'required|min:10|max:255',
-            'age' => 'required|numeric|min:1|max:120',
-            'user_type' => 'required',
-            'role' => 'required',
+            // 'age' => 'required|numeric|min:1|max:120',
             'emp_id' => 'required',
-
         ]);
+    
+        // Merge existing user type and role into validated data
+        $validated['user_type'] = $user_type;
+        $validated['role'] = $role;
+    
+        // Update the user
+
+        // dd($validated);
         $user->update($validated);
+    
         return redirect('/tsg')->with('message', 'User updated successfully');
     }
+    
 
 
 

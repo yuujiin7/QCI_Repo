@@ -6,6 +6,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ServiceReportController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\MaintenanceAgreementController;
+use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Calculation\Web\Service;
+use Illuminate\Support\Facades\Log;
 
 
 
@@ -14,16 +17,6 @@ use App\Http\Controllers\MaintenanceAgreementController;
 // Route::patch();
 // Route::delete();
 // Route::options();
-
-// Route::get('/users', function (Request $request) {
-//     dd($request);
-//     return null;
-// });
-
-// Route::get('get-text', function () {
-//     return response('Hello World', 200)
-//         ->header('Content-Type', 'text/plain');
-// });
 
 #Common naming Routes
 //index - Show all data in the table
@@ -81,27 +74,32 @@ Route::middleware('auth')->group(function () {
     Route::get('/create/service-report', [ServiceReportController::class, 'create']);
     Route::post('/create/service-report', [ServiceReportController::class, 'store']);
 
-    Route::get('/service-report/{id}', [ServiceReportController::class, 'show']);
+    Route::get('/service-report/{id}', [ServiceReportController::class, 'show']) ->where('id', '[0-9]+'); // Restrict to numeric IDs only
     Route::put('/service-report/{id}', [ServiceReportController::class, 'update']);
 
     Route::delete('/service-report/{id}', [ServiceReportController::class, 'destroy']);
-
+    //bulk delete
+    Route::post('/delete-all', [ServiceReportController::class, 'delete'])->name('delete.service.reports');
+    
     Route::get('/generate-pdf/{id}', [PdfController::class, 'generatePDF']);
     Route::get('/generate-sr-form/{id}', [PdfController::class, 'index']);
-});
 
+    Route::get('/test',[ServiceReportController::class, 'Test']);
+});
 
 
 Route::middleware('auth')->group(function () {
     Route::get('/ma-reports', [MaintenanceAgreementController::class, 'index']);
     Route::get('/create/ma-report', [MaintenanceAgreementController::class, 'create']);
     Route::post('/create/ma-report', [MaintenanceAgreementController::class, 'store']);
-    Route::get('/ma-report/{id}', [MaintenanceAgreementController::class, 'show']);
+    Route::get('/ma-report/{id}', [MaintenanceAgreementController::class, 'show'])->where('id', '[0-9]+'); // Restrict to numeric IDs only
     Route::put('/ma-report/{id}', [MaintenanceAgreementController::class, 'update']);
     Route::delete('/ma-report/{id}', [MaintenanceAgreementController::class, 'destroy']);
-    Route::get('get-maintenance-agreements', [MaintenanceAgreementController::class, 'getMaintenanceAgreements']);
+    Route::post('/delete-all', [MaintenanceAgreementController::class, 'delete']) -> name('delete.maintenance.agreements'); // Ensure POST for bulk-delete
+    Route::get('/get-maintenance-agreements', [MaintenanceAgreementController::class, 'getMaintenanceAgreements']);
     Route::patch('/renew-maintenance-agreement/{id}', [MaintenanceAgreementController::class, 'renew']);
-    route::get('/export-maintenance-agreements', [MaintenanceAgreementController::class, 'exportCsv']);
+    Route::get('/export-maintenance-agreements', [MaintenanceAgreementController::class, 'exportCsv']);
     Route::post('/import-maintenance-agreements', [MaintenanceAgreementController::class, 'import'])->name('import.maintenance.agreements');
-
 });
+
+

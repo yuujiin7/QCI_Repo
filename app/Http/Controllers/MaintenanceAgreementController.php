@@ -23,12 +23,18 @@ class MaintenanceAgreementController extends Controller
         return view('maintenance_agreement.index', ['maintenance_agreements' => $data])->with('title', 'MA List');
     }
 
+
     public function show($id)
     {
         $data = MaintenanceAgreement::find($id);
-        return view('maintenance_agreement.edit', ['maintenance_agreements' => $data]);
+    
+        if (!$data) {
+            abort(404, 'Maintenance Agreement not found');
+        }
+    
+        return view('maintenance_agreement.edit', ['maintenance_agreements' => $data]) ->with('title', 'Edit MA');
     }
-
+    
     public function create()
     {
 
@@ -133,7 +139,46 @@ class MaintenanceAgreementController extends Controller
             return redirect('/ma-reports')->with('message', 'MA delete failed');
         }
     }
-    
+
+    public function delete(Request $request)
+{
+    try {
+        // Log raw request data
+        Log::info('Raw Request Data:', $request->all());
+
+        // Validate the request to ensure 'ids' is an array
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:maintenance_agreements,id', // Ensure each ID exists in the correct table
+        ]);
+
+        // Retrieve the IDs from the request and convert them to integers
+        $ids = array_map('intval', $request->input('ids'));
+
+        // Log validated IDs
+        Log::info('Validated IDs:', $ids);
+
+        // Check which IDs exist in the database (for debugging)
+        $existingIds = MaintenanceAgreement::whereIn('id', $ids)->pluck('id')->toArray();
+        Log::info('Existing IDs in DB:', $existingIds);
+
+        // Delete the service reports with the given IDs
+        MaintenanceAgreement::whereIn('id', $existingIds)->delete();
+
+        // Return a success response
+        return response()->json(['success' => true, 'message' => 'Selected reports have been deleted.']);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        // Log validation errors
+        Log::error('Validation error: ' . $e->getMessage());
+        return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+    } catch (\Exception $e) {
+        // Log general errors
+        Log::error('Deletion error: ' . $e->getMessage());
+        return response()->json(['success' => false, 'message' => 'An error occurred while deleting the reports.'], 500);
+    }
+}
+
+
 
     public function getMaintenanceAgreements(Request $request)
     {
@@ -224,37 +269,40 @@ class MaintenanceAgreementController extends Controller
             try {
                 $endDate = Carbon::parse($agreement->end_date);
                 $now = Carbon::now();
-
+        
                 Log::info('End Date:', ['end_date' => $endDate->toDateString()]);
                 Log::info('Current Date:', ['now' => $now->toDateString()]);
-
+        
                 // Calculate remaining days
                 $remainingDays = $now->diffInDays($endDate, false); // false for negative if past date
-                //rounding off the remaining days
                 $remainingDaysRounded = round($remainingDays);
-                //make the remaining adjust if its less than 12 months use months and if less than 30 days use days
-                if ($remainingDaysRounded < 30) {
-                    $remainingDaysFinal = round($now->diffInDays($endDate, false)) . ' days';
-                } elseif ($remainingDaysRounded < 365) {
-                    $remainingDaysFinal = round($now->diffInMonths($endDate, false)) . ' months';
-                } else {
-                    $remainingDaysFinal = round($now->diffInYears($endDate, false)) . ' years';
-                }
-
-                Log::info('Remaining Days:', ['remaining_days' => $remainingDays]);
-
-                // Determine status and color
-                if ($remainingDays >= 0) {
-                    $agreement->status = "<span style='color: green;'>Active ({$remainingDaysFinal} remaining)</span>";
-                } else {
+        
+                // Prepare the remaining time format
+                if ($remainingDaysRounded < 0) {
                     $remainingDays = abs($remainingDays);
+                    if ($remainingDays >= 365) {
+                        $remainingDaysFinal = round($remainingDays / 365) . ' year/s';
+                    } elseif ($remainingDays >= 30) {
+                        $remainingDaysFinal = round($remainingDays / 30) . ' months';
+                    } else {
+                        $remainingDaysFinal = $remainingDays . ' days';
+                    } 
                     $agreement->status = "<span style='color: red;'>Expired ({$remainingDaysFinal} ago)</span>";
+                } else {
+                    if ($remainingDaysRounded >= 365) {
+                        $remainingDaysFinal = abs(round($remainingDays / 365)) . ' year/s';
+                    } elseif ($remainingDaysRounded >= 30) {
+                        $remainingDaysFinal = abs(round($remainingDays / 30)) . ' months';
+                    } else {
+                        $remainingDaysFinal = abs($remainingDays) . ' days';
+                    }
+                    $agreement->status = "<span style='color: green;'>Active ({$remainingDaysFinal} remaining)</span>";
                 }
             } catch (\Exception $e) {
                 Log::error('Error processing date:', ['message' => $e->getMessage()]);
                 $agreement->status = "<span style='color: red;'>Error</span>";
             }
-
+        
             return $agreement;
         });
 
@@ -266,38 +314,40 @@ class MaintenanceAgreementController extends Controller
             'data' => $agreements
         ]);
     }
-
+    
     public function renew(Request $request, $id)
     {
         try {
             // Find the existing maintenance agreement
             $agreement = MaintenanceAgreement::findOrFail($id);
-
+    
             // Validate the request data
             $validated = $request->validate([
                 'start_date' => 'required|date',
                 'end_date' => 'required|date',
             ]);
-
+    
             // Decode date_history from JSON string to array
             $dateHistory = json_decode($agreement->date_history, true);
             if (!is_array($dateHistory)) {
                 $dateHistory = [];
             }
-
-            // Append previous dates to the date_history
-            $dateHistory[] = [
-                'start_date' => $agreement->start_date,
-                'end_date' => $agreement->end_date,
-            ];
-
-            // Update the maintenance agreement with new dates
+    
+            // Append the current start and end dates to the date_history if they exist
+            if (!empty($agreement->start_date) && !empty($agreement->end_date)) {
+                $dateHistory[] = [
+                    'start_date' => $agreement->start_date,
+                    'end_date' => $agreement->end_date,
+                ];
+            }
+    
+            // Update the maintenance agreement with new dates and the updated date history
             $agreement->update([
                 'start_date' => $validated['start_date'],
                 'end_date' => $validated['end_date'],
-                'date_history' => json_encode($dateHistory), // Store updated date history
+                'date_history' => json_encode($dateHistory), // Store updated date history as a JSON string
             ]);
-
+    
             return redirect('/ma-reports')->with('message', 'MA renewed successfully');
         } catch (\Throwable $th) {
             // Log the error message for debugging
@@ -305,6 +355,7 @@ class MaintenanceAgreementController extends Controller
             return redirect('/create/ma-report')->with('message', 'MA renewal failed');
         }
     }
+    
 
     public function exportCsv(Request $request)
 {
@@ -404,8 +455,5 @@ class MaintenanceAgreementController extends Controller
 
     return redirect()->back()->with('error', 'No file was uploaded.');
     }
-
-    
-
     
 }

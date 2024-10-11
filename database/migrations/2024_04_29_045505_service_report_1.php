@@ -26,8 +26,8 @@ return new class extends Migration
             $table->decimal('total_hours', 8, 2);
             $table->string('remarks') -> nullable();
             $table->string('machine_model')-> nullable();
-            $table->string('machine_serial_number')->unique() -> nullable(); // to replace unique
-            $table->string('product_number')->unique() -> nullable(); // to replace unique
+            $table->string('machine_serial_number') -> nullable(); // to replace unique
+            $table->string('product_number')->nullable(); // to replace unique
             $table->string('part_number') -> nullable();
             $table->string('part_quantity') -> nullable();
             $table->string('part_description') -> nullable();
