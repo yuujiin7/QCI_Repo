@@ -19,16 +19,16 @@ return new class extends Migration
             $table->json('date_history'); // JSON column for storing multiple dates
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('distributor'); // Corrected typo: 'distributior' to 'distributor'
-            $table->string('PO_number', 50); // Defined length of PO number if needed
-            $table->string('company_name');
-            $table->string('project_name');
-            $table->string('supp_acc_ref');
-            $table->string('service_agreement');
-            $table->string('model_description');
+            $table->string('distributor')-> nullable(); // Corrected typo: 'distributior' to 'distributor'
+            $table->string('PO_number', 50)-> nullable(); // Defined length of PO number if needed
+            $table->string('company_name') -> nullable();
+            $table->string('project_name')-> nullable();
+            $table->string('supp_acc_ref')-> nullable();
+            $table->string('service_agreement')-> nullable();
+            $table->string('model_description')-> nullable();
             $table->string('product_number')->nullable(); // Allow nullable product number
-            $table->string('service_level');
-            $table->string('location');
+            $table->string('service_level')-> nullable();
+            $table->string('location')-> nullable();
             $table->timestamps(); // Add created_at and updated_at columns
             $table->string('status')->default('active'); // Add default value for status column
         });

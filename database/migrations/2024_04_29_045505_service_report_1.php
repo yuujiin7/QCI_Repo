@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('part_description') -> nullable();
             $table->string('part_usage') -> nullable();
             $table->string('action_taken');
-            $table->string('pending') -> nullable();
+            $table->string('pending')->nullable(); // Add nullable pending column
             $table->string('engineer_assigned');
             $table->string('tech_support') ;
             $table->string('hr_finance');
@@ -48,6 +48,7 @@ return new class extends Migration
             $table->string('others')->nullable();
             $table->boolean('is_complete')->default(false);
             $table->string('sr_image')->nullable();
+            $table->string('problem_details')->nullable(); // Add nullable problem details column
             $table->timestamps();
         });
     }

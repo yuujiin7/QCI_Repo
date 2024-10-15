@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string('user_type')->default('user');
             $table->string('role')->default('engineer');
             $table->string('password');
+            $table->string('emp_id')->unique() -> nullable();
+            $table->integer('age') -> nullable() ;
+            $table->string('gender') -> nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -24,15 +24,22 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'first_name' => fake()->firstName(),
-            'middle_name' => fake()->optional()->lastName(), // 'optional' is a custom helper function that returns 'null' 50% of the time
-            'last_name' => fake()->lastName(),
-            'suffix' => fake()->optional()->suffix(), // 'optional' is a custom helper function that returns 'null' 50% of the time
-            'email' => fake()->unique()->safeEmail(),
+            'first_name' => "Eugene Rey",
+            'middle_name' => "Blanco", // 'optional' is a custom helper function that returns 'null' 50% of the time
+            'last_name' => "Carta",
+            'suffix' => null, // 'optional' is a custom helper function that returns 'null' 50% of the time
+            'email' => "eugene.carta@questech.com.ph",
             'email_verified_at' => now(),
-            'phone_number' => fake()->phoneNumber(),
-            'password' => static::$password ??= Hash::make('password'),
+            'phone_number' => "09061064605",
+            'password' => static::$password ??= Hash::make('P@ssword123!'),
             'remember_token' => Str::random(10),
+            'emp_id' => "24280",
+            'user_type' => "user",
+            'role' => "TSG",
+            'age' => 23,
+            'gender' => "Male",
+
+
         ];
     }
 

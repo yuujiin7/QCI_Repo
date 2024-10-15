@@ -15,9 +15,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
-        Tsg::factory(10)->create();
-        ServiceReport::factory(10)->create();
+        //create only 1 user
+        User::factory()->create([
+            'first_name' => "Eugene Rey",
+            'middle_name' => "Blanco",
+            'last_name' => "Carta",
+            'email' => "eugene.carta@questech.com.ph",
+            'phone_number' => "09061064605",
+            'emp_id' => "24280",
+            'user_type' => "user",
+            'role' => "TSG",
+            'age' => 23,
+            'gender' => "Male",
+            'password' => bcrypt('P@ssword123!'),
+        ]);
+        
+        // Tsg::factory(10)->create();
+        // ServiceReport::factory(10)->create();
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
