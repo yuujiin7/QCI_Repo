@@ -54,6 +54,39 @@ $array = array('name' => "Service Report List");
 @include('partials.__footer')
 
 <script>
+    // Import button function
+    const importButton = document.getElementById('importButton');
+    importButton.addEventListener('click', function() {
+        document.getElementById('importModal').classList.remove('hidden');
+    });
+
+    // Close button function
+    const closeModal = document.getElementById('closeModal');
+    closeModal.addEventListener('click', function() {
+        document.getElementById('importModal').classList.add('hidden');
+    });
+
+    // Cancel button function
+    const cancelButton = document.getElementById('cancelButton');
+    cancelButton.addEventListener('click', function() {
+        document.getElementById('importModal').classList.add('hidden');
+    });
+
+
+
+    //export button function
+    const exportCsv = document.getElementById('exportCsv');
+    exportCsv.addEventListener('click', function() {
+        window.location.href = '/export-maintenance-agreements';
+    });
+
+
+
+
+
+
+
+
     function format(d) {
         let dateHistory = [];
 
