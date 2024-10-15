@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('service_reports', function (Blueprint $table) {
             $table->id() -> first();
             $table->string('sr_number')->unique();
-            $table->string('event_id')->unique() -> nullable();
+            $table->string('event_id')->nullable();
             $table->date('date');
             $table->string('customer_name');
             $table->string('address');
