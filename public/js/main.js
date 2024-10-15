@@ -39,19 +39,14 @@ document.addEventListener('DOMContentLoaded', function () {
         columnDefs: [
             {
                 targets: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
-                visible: false,
-                searching: true,
-                searchable: true,
-
+                visible: false, // Hide the columns
+                searchable: true // Make sure these columns are searchable even if they are hidden
             },
             {
-                targets: [0, -1], // The last column (Actions column)
-                orderable: false // Disable sorting on this column
+                targets: [0, -1], // The first and the last column (Actions column)
+                orderable: false // Disable sorting on these columns
             }
-
-
         ],
-
     });
 });
 
