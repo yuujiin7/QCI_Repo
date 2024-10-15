@@ -24,8 +24,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
+
 document.addEventListener('DOMContentLoaded', function () {
-    $('#SRTable').DataTable({
+    const table = $('#SRTable').DataTable({
         responsive: true,
         paging: true,
         searching: true,
@@ -40,13 +42,23 @@ document.addEventListener('DOMContentLoaded', function () {
             {
                 targets: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
                 visible: false, // Hide the columns
-                searchable: true // Make sure these columns are searchable even if they are hidden
+                searchable: true // Allow the hidden columns to be searchable
             },
             {
                 targets: [0, -1], // The first and the last column (Actions column)
                 orderable: false // Disable sorting on these columns
             }
         ],
+    });
+
+    // Custom search function to include hidden columns
+    $('#SRTable_filter input').on('keyup', function () {
+        table.columns().every(function () {
+            this.search(this.visible() ? '' : $(this.header()).text(), false, false);
+        });
+
+        // Trigger the search
+        table.search(this.value).draw();
     });
 });
 
