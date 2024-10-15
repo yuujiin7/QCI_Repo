@@ -56,7 +56,7 @@ class MaintenanceAgreementsImport implements ToModel, WithHeadingRow
             'start_date'          => $startDate, // Start date
             'end_date'            => $endDate,   // End date
             'distributor'         => $row['distributor'] ?? 'N/A', // Column 'A'
-            'PO_number'           => $row['po_number'] ?? 'N/A', // Column 'B'
+            'PO_number'           => $row['po_#'] ?? 'N/A', // Column 'B'
             'company_name'        => $row['company_name'] ?? 'N/A', // Column 'C'
             'project_name'        => $row['project_name'] ?? 'N/A', // Column 'D'
             'supp_acc_ref'        => $row['support_account_reference'] ?? 'N/A', // Column 'E'
