@@ -13,11 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('service_reports', function (Blueprint $table) {
-             // First, drop the unique constraint if it exists
-             $table->dropUnique(['event_id']);
-            
-             // Make event_id nullable and unique
-             $table->integer('event_id')->nullable()->unique()->change();
+            $table->text('action_taken')->change();
         });
     }
 
@@ -27,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('service_reports', function (Blueprint $table) {
-            $table->string('action_taken', 255)->change(); 
+            $table->text('action_taken', 255)->change(); 
         });
     }
 };
