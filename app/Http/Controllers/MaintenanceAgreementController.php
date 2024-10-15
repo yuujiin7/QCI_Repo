@@ -206,9 +206,7 @@ class MaintenanceAgreementController extends Controller
             'distributor',
         ];
 
-
         $orderColumn = $columns[$orderColumnIndex] ?? 'serial_number'; // Default to 'serial_number' if out of bounds
-
 
         // Base query
         $query = MaintenanceAgreement::query();

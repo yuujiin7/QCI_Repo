@@ -11,6 +11,7 @@ $array = array('name' => "Service Report List");; ?>
                 <div class="flex items-center mb-6 justify-end space-x-4">
                     <a href="/create/service-report" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Create New</a>
                     <button id="deleteSelected" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700" disabled>Delete Selected</button>
+                   
 
                 </div>
                 <div class="overflow-x-auto">
@@ -62,7 +63,7 @@ $array = array('name' => "Service Report List");; ?>
                                 <td class="py-3 px-6">{{ $sr->total_hours }}</td>
                                 <td class="py-3 px-6">{{ $sr->isCompleted }}</td>
                                 <td class="py-3 px-6">{{ $sr->machine_model }}</td>
-                                <td class="py-3 px-6">{{ $sr->machine_serial }}</td>
+                                <td class="py-3 px-6">{{ $sr->machine_serial_number }}</td>
                                 <td class="py-3 px-6">{{ $sr->product_number }}</td>
                                 <td class="py-3 px-6">{{ $sr->part_number }}</td>
                                 <td class="py-3 px-6">{{ $sr->part_qty }}</td>
