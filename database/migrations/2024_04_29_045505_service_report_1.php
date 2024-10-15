@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('part_quantity') -> nullable();
             $table->string('part_description') -> nullable();
             $table->string('part_usage') -> nullable();
-            $table->string('action_taken');
+            $table->text('action_taken');
             $table->string('pending')->nullable(); // Add nullable pending column
             $table->string('engineer_assigned');
             $table->string('tech_support') ;

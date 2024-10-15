@@ -54,6 +54,7 @@ class ServiceReportController extends Controller
         $validated = $request->validate([
             'sr_number' => 'required|min:2|max:255|unique:service_reports,sr_number',
             'event_id' => 'nullable|min:2|max:255|unique:service_reports,event_id',
+            'event_id' => 'nullable|min:2|max:255',
             'date' => 'required|min:2|max:255',
             'customer_name' => 'required|min:2|max:255',
             'address' => 'required|min:2|max:255',
