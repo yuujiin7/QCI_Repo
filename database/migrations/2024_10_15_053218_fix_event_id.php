@@ -16,7 +16,7 @@ return new class extends Migration
              $table->dropUnique(['event_id']);
             
              // Make event_id nullable and unique
-             $table->integer('event_id')->nullable()->change();
+             $table->string('event_id')->nullable()->change();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('service_reports', function (Blueprint $table) {
-            $table->integer('event_id')->nullable(false)->unique()->change();
+            $table->string('event_id')->nullable(false)->unique()->change();
         });
     }
 };
