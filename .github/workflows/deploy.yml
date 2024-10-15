@@ -21,7 +21,7 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: 22
         script: |
-          cd /path/to/your/project
+          cd C:\QCI Web\QCI_Repo
           git pull origin main
           php artisan migrate --force
           php artisan config:cache
