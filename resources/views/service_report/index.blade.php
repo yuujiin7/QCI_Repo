@@ -10,7 +10,6 @@ $array = array('name' => "Service Report List");; ?>
             <div class="container mx-auto">
                 <div class="flex items-center mb-6 justify-end space-x-4">
                     <a href="/create/service-report" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Create New</a>
-                    <!-- <a href="/test" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Delete Selected</a> -->
                     <button id="deleteSelected" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700" disabled>Delete Selected</button>
 
                 </div>
