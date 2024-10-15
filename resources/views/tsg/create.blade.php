@@ -25,14 +25,14 @@ $array = array('title' => "Questech");
         <div class="px-2 flex-1">
 
             <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">First Name</label>
-            <input type="text" name="first_name" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Serial Number" required="" value="{{old('first_name')}}">
+            <input type="text" name="first_name" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="First Name" required="" value="{{old('first_name')}}">
             @error('first_name')
             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
             @enderror
         </div>
         <div class="px-2 flex-1">
             <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900">Last Name</label>
-            <input type="text" name="last_name" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Account Manager" value="{{old('last_name')}}">
+            <input type="text" name="last_name" id="last_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Last Name" value="{{old('last_name')}}">
             @error('last_name')
             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
             @enderror
@@ -42,7 +42,7 @@ $array = array('title' => "Questech");
     <div class="flex mb-4">
     <div class="px-2 flex-1">
             <label for="emp_id" class="block mb-2 text-sm font-medium text-gray-900">Employee ID</label>
-            <input type="text" name="emp_id" id="emp_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Account Manager" value="{{old('emp_id')}}">
+            <input type="text" name="emp_id" id="emp_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="Employee ID" value="{{old('emp_id')}}">
             @error('emp_id')
             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
             @enderror
