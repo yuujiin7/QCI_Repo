@@ -27,14 +27,14 @@ class MaintenanceAgreementController extends Controller
     public function show($id)
     {
         $data = MaintenanceAgreement::find($id);
-    
+
         if (!$data) {
             abort(404, 'Maintenance Agreement not found');
         }
-    
-        return view('maintenance_agreement.edit', ['maintenance_agreements' => $data]) ->with('title', 'Edit MA');
+
+        return view('maintenance_agreement.edit', ['maintenance_agreements' => $data])->with('title', 'Edit MA');
     }
-    
+
     public function create()
     {
 
@@ -127,11 +127,11 @@ class MaintenanceAgreementController extends Controller
     {
         try {
             $data = MaintenanceAgreement::find($id);
-    
+
             if (!$data) {
                 return redirect('/ma-reports')->with('message', 'MA not found');
             }
-    
+
             $data->delete();
             return redirect('/ma-reports')->with('message', 'MA deleted successfully');
         } catch (\Throwable $th) {
@@ -141,42 +141,42 @@ class MaintenanceAgreementController extends Controller
     }
 
     public function delete(Request $request)
-{
-    try {
-        // Log raw request data
-        Log::info('Raw Request Data:', $request->all());
+    {
+        try {
+            // Log raw request data
+            Log::info('Raw Request Data:', $request->all());
 
-        // Validate the request to ensure 'ids' is an array
-        $request->validate([
-            'ids' => 'required|array',
-            'ids.*' => 'exists:maintenance_agreements,id', // Ensure each ID exists in the correct table
-        ]);
+            // Validate the request to ensure 'ids' is an array
+            $request->validate([
+                'ids' => 'required|array',
+                'ids.*' => 'exists:maintenance_agreements,id', // Ensure each ID exists in the correct table
+            ]);
 
-        // Retrieve the IDs from the request and convert them to integers
-        $ids = array_map('intval', $request->input('ids'));
+            // Retrieve the IDs from the request and convert them to integers
+            $ids = array_map('intval', $request->input('ids'));
 
-        // Log validated IDs
-        Log::info('Validated IDs:', $ids);
+            // Log validated IDs
+            Log::info('Validated IDs:', $ids);
 
-        // Check which IDs exist in the database (for debugging)
-        $existingIds = MaintenanceAgreement::whereIn('id', $ids)->pluck('id')->toArray();
-        Log::info('Existing IDs in DB:', $existingIds);
+            // Check which IDs exist in the database (for debugging)
+            $existingIds = MaintenanceAgreement::whereIn('id', $ids)->pluck('id')->toArray();
+            Log::info('Existing IDs in DB:', $existingIds);
 
-        // Delete the service reports with the given IDs
-        MaintenanceAgreement::whereIn('id', $existingIds)->delete();
+            // Delete the service reports with the given IDs
+            MaintenanceAgreement::whereIn('id', $existingIds)->delete();
 
-        // Return a success response
-        return response()->json(['success' => true, 'message' => 'Selected reports have been deleted.']);
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        // Log validation errors
-        Log::error('Validation error: ' . $e->getMessage());
-        return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
-    } catch (\Exception $e) {
-        // Log general errors
-        Log::error('Deletion error: ' . $e->getMessage());
-        return response()->json(['success' => false, 'message' => 'An error occurred while deleting the reports.'], 500);
+            // Return a success response
+            return response()->json(['success' => true, 'message' => 'Selected reports have been deleted.']);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Log validation errors
+            Log::error('Validation error: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+        } catch (\Exception $e) {
+            // Log general errors
+            Log::error('Deletion error: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'An error occurred while deleting the reports.'], 500);
+        }
     }
-}
 
 
 
@@ -188,7 +188,7 @@ class MaintenanceAgreementController extends Controller
         $length = $request->input('length');
         $orderColumnIndex = $request->input('order.0.column'); // Index of the column to order by
         $orderDirection = $request->input('order.0.dir'); // Order direction (asc or desc)
-        
+
         $columns = [
             'serial_number',
             'account_manager',
@@ -229,7 +229,6 @@ class MaintenanceAgreementController extends Controller
                     ->orWhere('PO_number', 'like', "%{$searchValue}%")
                     ->orWhere('distributor', 'like', "%{$searchValue}%")
                     ->orWhere('date_history', 'like', "%{$searchValue}%");
-
             });
         }
 
@@ -239,7 +238,7 @@ class MaintenanceAgreementController extends Controller
         // Get the filtered records
         $totalFilteredRecords = $query->count();
 
-         // Apply sorting based on DataTables parameters
+        // Apply sorting based on DataTables parameters
         $query->orderBy($orderColumn, $orderDirection);
 
         // Apply pagination
@@ -268,14 +267,14 @@ class MaintenanceAgreementController extends Controller
             try {
                 $endDate = Carbon::parse($agreement->end_date);
                 $now = Carbon::now();
-        
+
                 Log::info('End Date:', ['end_date' => $endDate->toDateString()]);
                 Log::info('Current Date:', ['now' => $now->toDateString()]);
-        
+
                 // Calculate remaining days
                 $remainingDays = $now->diffInDays($endDate, false); // false for negative if past date
                 $remainingDaysRounded = round($remainingDays);
-        
+
                 // Prepare the remaining time format
                 if ($remainingDaysRounded < 0) {
                     $remainingDays = abs($remainingDays);
@@ -285,7 +284,7 @@ class MaintenanceAgreementController extends Controller
                         $remainingDaysFinal = round($remainingDays / 30) . ' months';
                     } else {
                         $remainingDaysFinal = $remainingDays . ' days';
-                    } 
+                    }
                     $agreement->status = "<span style='color: red;'>Expired ({$remainingDaysFinal} ago)</span>";
                 } else {
                     if ($remainingDaysRounded >= 365) {
@@ -301,7 +300,7 @@ class MaintenanceAgreementController extends Controller
                 Log::error('Error processing date:', ['message' => $e->getMessage()]);
                 $agreement->status = "<span style='color: red;'>Error</span>";
             }
-        
+
             return $agreement;
         });
 
@@ -313,25 +312,25 @@ class MaintenanceAgreementController extends Controller
             'data' => $agreements
         ]);
     }
-    
+
     public function renew(Request $request, $id)
     {
         try {
             // Find the existing maintenance agreement
             $agreement = MaintenanceAgreement::findOrFail($id);
-    
+
             // Validate the request data
             $validated = $request->validate([
                 'start_date' => 'required|date',
                 'end_date' => 'required|date',
             ]);
-    
+
             // Decode date_history from JSON string to array
             $dateHistory = json_decode($agreement->date_history, true);
             if (!is_array($dateHistory)) {
                 $dateHistory = [];
             }
-    
+
             // Append the current start and end dates to the date_history if they exist
             if (!empty($agreement->start_date) && !empty($agreement->end_date)) {
                 $dateHistory[] = [
@@ -339,14 +338,14 @@ class MaintenanceAgreementController extends Controller
                     'end_date' => $agreement->end_date,
                 ];
             }
-    
+
             // Update the maintenance agreement with new dates and the updated date history
             $agreement->update([
                 'start_date' => $validated['start_date'],
                 'end_date' => $validated['end_date'],
                 'date_history' => json_encode($dateHistory), // Store updated date history as a JSON string
             ]);
-    
+
             return redirect('/ma-reports')->with('message', 'MA renewed successfully');
         } catch (\Throwable $th) {
             // Log the error message for debugging
@@ -354,105 +353,144 @@ class MaintenanceAgreementController extends Controller
             return redirect('/create/ma-report')->with('message', 'MA renewal failed');
         }
     }
-    
+    // update account manager
+    public function updateAccountManager(Request $request, $id)
+    {
+        // dd($request->all());
+        try {
+            // Find the existing maintenance agreement
+            $agreement = MaintenanceAgreement::findOrFail($id);
+
+            // Validate the request data
+            $validated = $request->validate([
+                'account_manager' => 'required',
+                // 'account_manager_id' => 'nullable',
+            ]);
+
+            // Get the old account manager if it's not "N/A" or null
+            $oldAccountManager = $agreement->account_manager;
+            if ($oldAccountManager && $oldAccountManager !== 'N/A') {
+                $accountManagerHistory = $agreement->account_manager_history ?? [];
+                $accountManagerHistory[] = [
+                    'manager' => $oldAccountManager,
+                    'timestamp' => now(), // optional timestamp
+                ];
+                $agreement->account_manager_history = json_encode($accountManagerHistory);
+            }
+            
+            // Update the maintenance agreement with new account manager details
+            $agreement->update([
+                'account_manager' => $validated['account_manager'],
+                // 'account_manager_id' => $validated['account_manager_id'],
+                'account_manager_history' => $agreement->account_manager_history
+            ]);
+
+            return redirect('/ma-reports')->with('message', 'Account Manager updated successfully');
+        } catch (\Throwable $th) {
+            // Log the error message for debugging
+            Log::error('Error updating Account Manager: ' . $th->getMessage());
+            return redirect('/ma-reports')->with('message', 'Account Manager update failed');
+        }
+    }
+
+
 
     public function exportCsv(Request $request)
-{
-    $agreements = MaintenanceAgreement::all(); // Or use pagination if you have many records
+    {
+        $agreements = MaintenanceAgreement::all(); // Or use pagination if you have many records
 
-    $response = new StreamedResponse(function () use ($agreements) {
-        $handle = fopen('php://output', 'w');
+        $response = new StreamedResponse(function () use ($agreements) {
+            $handle = fopen('php://output', 'w');
 
-        // Add CSV headers
-        fputcsv($handle, [
-            'Serial Number',
-            'Account Manager',
-            'Start Date',
-            'End Date',
-            'Distributor',
-            'PO Number',
-            'Company Name',
-            'Project Name',
-            'Supplementary Account Ref',
-            'Service Agreement',
-            'Model Description',
-            'Product Number',
-            'Service Level',
-            'Location',
-            'Date History',
-            'Status',
-        ]);
+            // Add CSV headers
+            fputcsv($handle, [
+                'Serial Number',
+                'Account Manager',
+                'Start Date',
+                'End Date',
+                'Distributor',
+                'PO Number',
+                'Company Name',
+                'Project Name',
+                'Supplementary Account Ref',
+                'Service Agreement',
+                'Model Description',
+                'Product Number',
+                'Service Level',
+                'Location',
+                'Date History',
+                'Status',
+            ]);
 
-        foreach ($agreements as $agreement) {
-            // Safely handle date_history
-            $dateHistory = '';
-            if (!empty($agreement->date_history)) {
-                $decodedHistory = json_decode($agreement->date_history, true);
+            foreach ($agreements as $agreement) {
+                // Safely handle date_history
+                $dateHistory = '';
+                if (!empty($agreement->date_history)) {
+                    $decodedHistory = json_decode($agreement->date_history, true);
 
-                // Ensure it's an array before mapping
-                if (is_array($decodedHistory)) {
-                    $dateHistory = implode(', ', array_map(function ($date) {
-                        return (isset($date['start_date']) ? $date['start_date'] : 'N/A') . ' - ' . 
-                               (isset($date['end_date']) ? $date['end_date'] : 'N/A');
-                    }, $decodedHistory));
+                    // Ensure it's an array before mapping
+                    if (is_array($decodedHistory)) {
+                        $dateHistory = implode(', ', array_map(function ($date) {
+                            return (isset($date['start_date']) ? $date['start_date'] : 'N/A') . ' - ' .
+                                (isset($date['end_date']) ? $date['end_date'] : 'N/A');
+                        }, $decodedHistory));
+                    }
                 }
+
+                fputcsv($handle, [
+                    $agreement->serial_number,
+                    $agreement->account_manager,
+                    $agreement->start_date,
+                    $agreement->end_date,
+                    $agreement->distributor,
+                    $agreement->PO_number,
+                    $agreement->company_name,
+                    $agreement->project_name,
+                    $agreement->supp_acc_ref,
+                    $agreement->service_agreement,
+                    $agreement->model_description,
+                    $agreement->product_number,
+                    $agreement->service_level,
+                    $agreement->location,
+                    $dateHistory,
+                    $agreement->status,
+                ]);
             }
 
-            fputcsv($handle, [
-                $agreement->serial_number,
-                $agreement->account_manager,
-                $agreement->start_date,
-                $agreement->end_date,
-                $agreement->distributor,
-                $agreement->PO_number,
-                $agreement->company_name,
-                $agreement->project_name,
-                $agreement->supp_acc_ref,
-                $agreement->service_agreement,
-                $agreement->model_description,
-                $agreement->product_number,
-                $agreement->service_level,
-                $agreement->location,
-                $dateHistory,
-                $agreement->status,
-            ]);
-        }
+            fclose($handle);
+        });
 
-        fclose($handle);
-    });
+        // Format the filename with the current date
+        $date = now()->format('Y-m-d');
+        $filename = "MA-{$date}.csv";
 
-    // Format the filename with the current date
-    $date = now()->format('Y-m-d');
-    $filename = "MA-{$date}.csv";
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', "attachment; filename=\"{$filename}\"");
 
-    $response->headers->set('Content-Type', 'text/csv');
-    $response->headers->set('Content-Disposition', "attachment; filename=\"{$filename}\"");
-
-    return $response;
-}
+        return $response;
+    }
 
 
     public function import(Request $request)
     {
-    $request->validate([
-        'file' => 'required|mimes:xlsx,csv', // Ensure it's either an Excel or CSV file
-    ]);
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv', // Ensure it's either an Excel or CSV file
+        ]);
 
-    // Check if the file is uploaded
-    if ($request->hasFile('file')) {
-        $file = $request->file('file');
+        // Check if the file is uploaded
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
 
-        // Try importing the file
-        try {
-            Excel::import(new MaintenanceAgreementsImport, $file);
+            // Try importing the file
+            try {
+                Excel::import(new MaintenanceAgreementsImport, $file);
 
-            return redirect()->back()->with('success', 'Maintenance Agreements imported successfully.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'There was an error during import: ' . $e->getMessage());
+                return redirect()->back()->with('success', 'Maintenance Agreements imported successfully.');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'There was an error during import: ' . $e->getMessage());
+            }
         }
-    }
 
-    return redirect()->back()->with('error', 'No file was uploaded.');
+        return redirect()->back()->with('error', 'No file was uploaded.');
     }
-    
 }

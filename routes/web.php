@@ -98,6 +98,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/delete-all', [MaintenanceAgreementController::class, 'delete']) -> name('delete.maintenance.agreements'); // Ensure POST for bulk-delete
     Route::get('/get-maintenance-agreements', [MaintenanceAgreementController::class, 'getMaintenanceAgreements']);
     Route::patch('/renew-maintenance-agreement/{id}', [MaintenanceAgreementController::class, 'renew']);
+    Route::patch('/new-am-maintenance-agreement/{id}', [MaintenanceAgreementController::class, 'updateAccountManager']);
     Route::get('/export-maintenance-agreements', [MaintenanceAgreementController::class, 'exportCsv']);
     Route::post('/import-maintenance-agreements', [MaintenanceAgreementController::class, 'import'])->name('import.maintenance.agreements');
 });

@@ -1,6 +1,7 @@
 @include('partials.__header')
 @include('partials.__renew')
 @include('partials.__import')
+@include('partials.__newAM')
 
 <?php
 $array = array('name' => "Service Report List");
@@ -95,6 +96,7 @@ $array = array('name' => "Service Report List");
         if (typeof d.date_history === 'string') {
             try {
                 const parsedDateHistory = JSON.parse(d.date_history);
+                console.log(parsedDateHistory);
                 if (typeof parsedDateHistory === 'object') {
                     const coverageStart = parsedDateHistory.coverage_start || 'N/A';
                     const coverageEnd = parsedDateHistory.coverage_end || 'N/A';
@@ -119,11 +121,46 @@ $array = array('name' => "Service Report List");
             dateHistory = ['N/A']; // Fallback if date_history is not a string
         }
 
+
+        let account_manager_history = [];
+
+        // Check if account_manager_history is a string and parse it
+        if (typeof d.account_manager_history === 'string') {
+            try {
+                const parsedAccountManagerHistory = JSON.parse(d.account_manager_history);
+                console.log(parsedAccountManagerHistory);
+
+                if (Array.isArray(parsedAccountManagerHistory)) {
+                    // Iterate through each object in the array
+                    parsedAccountManagerHistory.forEach((entry, index) => {
+                        // Assuming each entry has 'manager' and 'timestamp'
+                        if (entry.manager && entry.timestamp) {
+                            account_manager_history.push(`${index + 1}: ${entry.manager}`);
+                        }
+                    });
+                } else {
+                    account_manager_history = ['N/A']; // Fallback if parsed result is not an array
+                }
+            } catch (error) {
+                console.error('Error parsing account_manager_history:', error);
+                account_manager_history = ['N/A']; // Fallback in case of JSON parsing error
+            }
+        } else {
+            account_manager_history = ['N/A']; // Fallback if account_manager_history is not a string
+        }
+
+
+
+
         return `
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
         <div class="space-y-2">
             <strong class="font-bold">Serial Number:</strong> ${d.serial_number}<br>
-            <strong class="font-bold">Account Manager:</strong> ${d.account_manager}<br>
+            <strong class="font-bold">Current Account Manager:</strong> ${d.account_manager}<br>
+            <strong class="font-bold">Account Manager History:</strong><br>
+            <div class="">
+                ${account_manager_history.join('<br>')}<br>
+            </div>
             <strong class="font-bold">Start Date:</strong> ${d.start_date}<br>
             <strong class="font-bold">End Date:</strong> ${d.end_date}<br>
             <strong class="font-bold">Distributor:</strong> ${d.distributor}<br>
@@ -201,6 +238,7 @@ $array = array('name' => "Service Report List");
                     render: function(data, type, row) {
                         return `
                         <button class="renew-btn bg-yellow-500 text-white px-2 py-2 rounded">Renew</button>
+                        <button class="new-am-btn bg-yellow-500 text-white px-2 py-2 rounded">New AM</button>
                         <button class="delete-btn bg-red-500 text-white px-2 py-2 rounded submitDelete" data-form-id="delete-form-${row.id}">Delete</button>
                         <form id="delete-form-${row.id}" action="/ma-report/${row.id}" method="POST" style="display:none;">
                             <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
@@ -289,6 +327,15 @@ $array = array('name' => "Service Report List");
             $('#renewForm').attr('action', `/renew-maintenance-agreement/${data.id}`);
             const renewModal = new bootstrap.Modal(document.getElementById('renewModal'));
             renewModal.show();
+        });
+
+        //new am button
+        $('#MATable tbody').on('click', '.new-am-btn', function() {
+            const data = table.row($(this).parents('tr')).data();
+            $('#account_manager').val(data.account_manager);
+            $('#newAMForm').attr('action', `/new-am-maintenance-agreement/${data.id}`);
+            const newAMModal = new bootstrap.Modal(document.getElementById('newAMModal'));
+            newAMModal.show();
         });
 
         $(document).on('click', '.submitDelete', function(event) {
