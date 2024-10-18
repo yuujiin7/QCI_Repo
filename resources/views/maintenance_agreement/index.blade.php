@@ -42,7 +42,7 @@ $array = array('name' => "Service Report List");
                                 <th scope="col" class="py-3 px-6">Coverage From</th>
                                 <th scope="col" class="py-3 px-6">Coverage To</th>
                                 <th scope="col" class="py-3 px-6">Status</th>
-                                <th scope="col" class="py-3 px-6">Service History</th>
+                                <!-- <th scope="col" class="py-3 px-6">Service History</th> -->
                                 <th scope="col" class="py-3 px-6">Actions</th>
                             </tr>
                         </thead>
@@ -225,17 +225,17 @@ $array = array('name' => "Service Report List");
                     data: 'status',
                     orderable: true
                 },
-                {
-                    data: {
-                        service_history: '1234567'
-                    },
-                    orderable: true,
-                    render: function(data, type, row) {
-                        return `
-                        <a href="#" class="text-blue px-2 py-2 rounded text-xs">+</a>
-                    `;
-                    }
-                },
+                // {
+                //     data: {
+                //         service_history: '1234567'
+                //     },
+                //     orderable: true,
+                //     render: function(data, type, row) {
+                //         return `
+                //         <a href="#" class="text-blue px-2 py-2 rounded text-xs">+</a>
+                //     `;
+                //     }
+                // },
                 {
                     data: null,
                     orderable: false,
