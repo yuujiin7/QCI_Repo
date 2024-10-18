@@ -42,6 +42,7 @@ $array = array('name' => "Service Report List");
                                 <th scope="col" class="py-3 px-6">Coverage From</th>
                                 <th scope="col" class="py-3 px-6">Coverage To</th>
                                 <th scope="col" class="py-3 px-6">Status</th>
+                                <th scope="col" class="py-3 px-6">Service History</th>
                                 <th scope="col" class="py-3 px-6">Actions</th>
                             </tr>
                         </thead>
@@ -75,19 +76,11 @@ $array = array('name' => "Service Report List");
     });
 
 
-
     //export button function
     const exportCsv = document.getElementById('exportCsv');
     exportCsv.addEventListener('click', function() {
         window.location.href = '/export-maintenance-agreements';
     });
-
-
-
-
-
-
-
 
     function format(d) {
         let dateHistory = [];
@@ -233,12 +226,23 @@ $array = array('name' => "Service Report List");
                     orderable: true
                 },
                 {
+                    data: {
+                        service_history: '1234567'
+                    },
+                    orderable: true,
+                    render: function(data, type, row) {
+                        return `
+                        <a href="#" class="text-blue px-2 py-2 rounded text-xs">+</a>
+                    `;
+                    }
+                },
+                {
                     data: null,
                     orderable: false,
                     render: function(data, type, row) {
                         return `
                         <button class="renew-btn bg-yellow-500 text-white px-2 py-2 rounded">Renew</button>
-                        <button class="new-am-btn bg-yellow-500 text-white px-2 py-2 rounded">New AM</button>
+                        <button class="new-am-btn bg-blue-700 text-white px-2 py-2 rounded">New AM</button>
                         <button class="delete-btn bg-red-500 text-white px-2 py-2 rounded submitDelete" data-form-id="delete-form-${row.id}">Delete</button>
                         <form id="delete-form-${row.id}" action="/ma-report/${row.id}" method="POST" style="display:none;">
                             <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">

@@ -7,7 +7,12 @@ export default {
     "./node_modules/flowbite/**/*.js",
   ],
   theme: {
-    extend: {},
+    extend: {
+
+      fontFamily: {
+        arialRounded: ['"Arial Rounded MT Bold"', 'Arial', 'sans-serif'], // Custom font family
+      },
+    },
   },
   plugins: [],
   // darkMode: ["class"],

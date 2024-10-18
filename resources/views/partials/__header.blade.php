@@ -32,6 +32,6 @@
     
 </head>
 
-<body class="dark">
+<body>
 
     <x-messages />

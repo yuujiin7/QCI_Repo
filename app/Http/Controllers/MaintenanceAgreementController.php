@@ -287,15 +287,20 @@ class MaintenanceAgreementController extends Controller
                     }
                     $agreement->status = "<span style='color: red;'>Expired ({$remainingDaysFinal} ago)</span>";
                 } else {
-                    if ($remainingDaysRounded >= 365) {
-                        $remainingDaysFinal = abs(round($remainingDays / 365)) . ' year/s';
-                    } elseif ($remainingDaysRounded >= 30) {
+                    if ($remainingDaysRounded <= 180) { // 6 months threshold for renewal
                         $remainingDaysFinal = abs(round($remainingDays / 30)) . ' months';
-                    } else {
-                        $remainingDaysFinal = abs($remainingDays) . ' days';
+                        $agreement->status = "<span style='color: orange;'>For Renewal ({$remainingDaysFinal} remaining)</span>";
+                    } elseif ($remainingDaysRounded >= 365) {
+                        $remainingDaysFinal = abs(round($remainingDays / 365)) . ' year/s';
+                        $agreement->status = "<span style='color: green;'>Active ({$remainingDaysFinal} remaining)</span>";
+                    } elseif ($remainingDaysRounded < 365) {
+                        $remainingDaysFinal = abs(round($remainingDays / 30)) . ' months';
+                        $agreement->status = "<span style='color: green;'>Active ({$remainingDaysFinal} remaining)</span>";
                     }
-                    $agreement->status = "<span style='color: green;'>Active ({$remainingDaysFinal} remaining)</span>";
                 }
+                
+
+
             } catch (\Exception $e) {
                 Log::error('Error processing date:', ['message' => $e->getMessage()]);
                 $agreement->status = "<span style='color: red;'>Error</span>";
