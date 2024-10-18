@@ -179,9 +179,11 @@ class MaintenanceAgreementController extends Controller
     }
 
 
-
     public function getMaintenanceAgreements(Request $request)
     {
+        // Base query with eager loading for service reports
+        $query = MaintenanceAgreement::with('serviceReports');
+
         // Get the request parameters sent by DataTables
         $searchValue = $request->input('search.value');
         $start = $request->input('start');
@@ -208,9 +210,6 @@ class MaintenanceAgreementController extends Controller
 
         $orderColumn = $columns[$orderColumnIndex] ?? 'serial_number'; // Default to 'serial_number' if out of bounds
 
-        // Base query
-        $query = MaintenanceAgreement::query();
-
         // Apply global search
         if (!empty($searchValue)) {
             $query->where(function ($query) use ($searchValue) {
@@ -225,7 +224,6 @@ class MaintenanceAgreementController extends Controller
                     ->orWhere('service_agreement', 'like', "%{$searchValue}%")
                     ->orWhere('supp_acc_ref', 'like', "%{$searchValue}%")
                     ->orWhere('project_name', 'like', "%{$searchValue}%")
-                    ->orWhere('company_name', 'like', "%{$searchValue}%")
                     ->orWhere('PO_number', 'like', "%{$searchValue}%")
                     ->orWhere('distributor', 'like', "%{$searchValue}%")
                     ->orWhere('date_history', 'like', "%{$searchValue}%");
@@ -244,32 +242,11 @@ class MaintenanceAgreementController extends Controller
         // Apply pagination
         $agreements = $query->skip($start)->take($length)->get();
 
-        // Orderable columns
-        $columns = [
-            'serial_number',
-            'account_manager',
-            'company_name',
-            'status',
-            'location',
-            'service_level',
-            'product_number',
-            'model_description',
-            'service_agreement',
-            'supp_acc_ref',
-            'project_name',
-            'PO_number',
-            'distributor',
-            'date_history',
-        ];
-
         // Process the data to calculate remaining days and status
         $agreements->transform(function ($agreement) {
             try {
                 $endDate = Carbon::parse($agreement->end_date);
                 $now = Carbon::now();
-
-                Log::info('End Date:', ['end_date' => $endDate->toDateString()]);
-                Log::info('Current Date:', ['now' => $now->toDateString()]);
 
                 // Calculate remaining days
                 $remainingDays = $now->diffInDays($endDate, false); // false for negative if past date
@@ -298,8 +275,9 @@ class MaintenanceAgreementController extends Controller
                         $agreement->status = "<span style='color: green;'>Active ({$remainingDaysFinal} remaining)</span>";
                     }
                 }
-                
 
+                // Include service report info in the agreement object
+                $agreement->service_reports = $agreement->serviceReports->pluck('sr_number')->toArray(); // Adjust to fetch the desired fields
 
             } catch (\Exception $e) {
                 Log::error('Error processing date:', ['message' => $e->getMessage()]);
@@ -317,6 +295,7 @@ class MaintenanceAgreementController extends Controller
             'data' => $agreements
         ]);
     }
+
 
     public function renew(Request $request, $id)
     {
@@ -382,7 +361,7 @@ class MaintenanceAgreementController extends Controller
                 ];
                 $agreement->account_manager_history = json_encode($accountManagerHistory);
             }
-            
+
             // Update the maintenance agreement with new account manager details
             $agreement->update([
                 'account_manager' => $validated['account_manager'],

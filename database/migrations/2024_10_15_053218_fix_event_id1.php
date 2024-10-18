@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('service_reports', function (Blueprint $table) {
              // First, drop the unique constraint if it exists
-             $table->dropUnique(['event_id']);
+             $table->dropColumn('event_id');
             
              // Make event_id nullable and unique
              $table->string('event_id')->nullable()->change();

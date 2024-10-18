@@ -13,6 +13,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\Rule;
 
+use App\Models\MaintenanceAgreement;
+
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,12 +34,12 @@ class ServiceReportController extends Controller
     {
         $data = ServiceReport::findOrFail($id);
 
-        if(!$data){
+        if (!$data) {
             return response()->json(['message' => 'Service Report not found.'], 404);
         }
 
 
-        return view('service_report.edit', ['service_report' => $data]) -> with('title', 'Edit Service Report');
+        return view('service_report.edit', ['service_report' => $data])->with('title', 'Edit Service Report');
     }
 
 
@@ -51,6 +53,8 @@ class ServiceReportController extends Controller
 
     public function store(Request $request)
     {
+
+        // dd($request->all());
         $validated = $request->validate([
             'sr_number' => 'required|min:2|max:255|unique:service_reports,sr_number',
             'event_id' => 'nullable|min:2|max:255|unique:service_reports,event_id',
@@ -74,7 +78,8 @@ class ServiceReportController extends Controller
             'others' => 'nullable',
             'is_complete' => 'boolean',
             'machine_model' => 'nullable|min:2|max:255',
-            'machine_serial_number' => 'nullable|min:2|max:255|unique:service_reports,machine_serial_number',
+            // 'machine_serial_number' => 'nullable|min:2|max:255|unique:service_reports,machine_serial_number',
+            'machine_serial_number' => 'nullable|min:2|max:255|exists:maintenance_agreements,serial_number',
             'product_number' => 'nullable|min:2|max:255|unique:service_reports,product_number',
             'part_number' => 'nullable',
             'part_quantity' => 'nullable',
@@ -132,10 +137,21 @@ class ServiceReportController extends Controller
             $validated['sr_image'] = $fileNameToStore;
         }
 
+
+
         // Create the service report
         try {
-            // dd($validated);
-            ServiceReport::create($validated);
+            // Create the service report
+            $serviceReport = ServiceReport::create($validated);
+
+            // Find the maintenance agreement based on the machine serial number
+            $maintenanceAgreement = MaintenanceAgreement::where('serial_number', $validated['machine_serial_number'])->first();
+
+            if ($maintenanceAgreement) {
+                // Associate the service report with the maintenance agreement
+                $serviceReport->maintenanceAgreements()->attach($maintenanceAgreement->id);
+            }
+
             return redirect('/service-reports')->with('message', 'Service Report created successfully.');
         } catch (QueryException $exception) {
             if ($exception->errorInfo[1] == 1062) {
@@ -183,18 +199,8 @@ class ServiceReportController extends Controller
                 'others' => 'nullable',
                 'is_complete' => 'boolean',
                 'machine_model' => 'nullable|min:2|max:255',
-                'machine_serial_number' => [
-                    'nullable',
-                    'min:2',
-                    'max:255',
-                    Rule::unique('service_reports')->ignore($id),
-                ],
-                'product_number' => [
-                    'nullable',
-                    'min:2',
-                    'max:255',
-                    Rule::unique('service_reports')->ignore($id),
-                ],
+                'machine_serial_number' => 'nullable|min:2|max:255|exists:maintenance_agreements,serial_number',
+                'product_number' => 'nullable|min:2|max:255',
                 'part_number' => 'nullable',
                 'part_quantity' => 'nullable|integer',
                 'part_description' => 'nullable',
@@ -268,7 +274,21 @@ class ServiceReportController extends Controller
 
             // Perform the update
             // dd($validated);
+            // Perform the update
+            // Perform the update
             $serviceReport->update($validated);
+            $maintenanceAgreement = MaintenanceAgreement::where('serial_number', $validated['machine_serial_number'])->first();
+
+            if ($maintenanceAgreement) {
+                // Check if the service report is already associated with the maintenance agreement
+                if (!$serviceReport->maintenanceAgreements()->where('maintenance_agreements.id', $maintenanceAgreement->id)->exists()) {
+                    // Associate the service report with the maintenance agreement
+                    $serviceReport->maintenanceAgreements()->attach($maintenanceAgreement->id);
+                } else {
+                    Log::info('Service report already associated with the maintenance agreement: ' . $maintenanceAgreement->id);
+                }
+            }
+
             Log::info('Service Report updated: ' . $serviceReport);
             return redirect('/service-reports')->with('success', 'Service Report updated successfully.');
         } catch (ModelNotFoundException $e) {
@@ -292,7 +312,7 @@ class ServiceReportController extends Controller
     }
 
 
-        public function delete(request $request)
+    public function delete(request $request)
     {
         // Log::info('Raw Request Data:', $request->all());
         // return response()->json(['success' => true, 'message' => 'Route and Request are correctly mapped.']);
@@ -334,7 +354,7 @@ class ServiceReportController extends Controller
         Log::info('Raw Request Data:', $request->all());
         return response()->json(['success' => true, 'message' => 'Route and Request are correctly mapped.']);
         // dd($request->all());
-        
+
     }
 
 

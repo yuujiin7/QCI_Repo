@@ -42,7 +42,7 @@ $array = array('name' => "Service Report List");
                                 <th scope="col" class="py-3 px-6">Coverage From</th>
                                 <th scope="col" class="py-3 px-6">Coverage To</th>
                                 <th scope="col" class="py-3 px-6">Status</th>
-                                <!-- <th scope="col" class="py-3 px-6">Service History</th> -->
+                                <th scope="col" class="py-3 px-6">Service History</th>
                                 <th scope="col" class="py-3 px-6">Actions</th>
                             </tr>
                         </thead>
@@ -173,6 +173,10 @@ $array = array('name' => "Service Report List");
                 ${dateHistory.join('<br>')}<br>
             </div>
             <strong class="font-bold">Status:</strong> ${d.status}<br>
+            <strong class="font-bold">Service Reports:</strong><br>
+            <a class="">
+                ${d.service_reports.map(report => `<a href="/generate-pdf/${report.id}" target="_blank" class="text-blue-600 underline ">${report.sr_number}</a>`).join(', ')}<br>
+            </a>
         </div>
     </div>
     `;
@@ -225,17 +229,19 @@ $array = array('name' => "Service Report List");
                     data: 'status',
                     orderable: true
                 },
-                // {
-                //     data: {
-                //         service_history: '1234567'
-                //     },
-                //     orderable: true,
-                //     render: function(data, type, row) {
-                //         return `
-                //         <a href="#" class="text-blue px-2 py-2 rounded text-xs">+</a>
-                //     `;
-                //     }
-                // },
+
+                {
+                    data: 'service_reports',
+                    orderable: false,
+                    render: function(data, type, row) {
+                        // Map the first three service report IDs to their sr_numbers
+                        const serviceReportsLinks = data.slice(0, 3).map(report =>
+                            `<a href="/generate-pdf/${report.id}" target="_blank" class="text-blue-600 underline ">${report.sr_number}</a>`
+                        );
+                        console.log('Service Report Numbers:', serviceReportsLinks);
+                        return serviceReportsLinks.length > 0 ? serviceReportsLinks.join(', ') : 'No Service Reports';
+                    }
+                },
                 {
                     data: null,
                     orderable: false,

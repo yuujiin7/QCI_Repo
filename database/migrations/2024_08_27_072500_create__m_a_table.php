@@ -34,6 +34,7 @@ return new class extends Migration
 
             // Add foreign key constraint customer_id
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+
         });
     }
 
