@@ -36,6 +36,7 @@ $array = array('name' => "Service Report List");
                                 </th>
                                 <th scope="col" class="py-3 px-6"> </th>
                                 <th scope="col" class="py-3 px-6">Serial Number</th>
+                                <th scope="col" class="py-3 px-6">Customer Name</th>
                                 <th scope="col" class="py-3 px-6">Account Manager</th>
                                 <th scope="col" class="py-3 px-6">Coverage From</th>
                                 <th scope="col" class="py-3 px-6">Coverage To</th>
@@ -172,6 +173,10 @@ $array = array('name' => "Service Report List");
                 },
                 {
                     data: 'serial_number',
+                    orderable: true
+                },
+                {
+                    data: 'company_name',
                     orderable: true
                 },
                 {

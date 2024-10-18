@@ -50,6 +50,10 @@ return new class extends Migration
             $table->string('sr_image')->nullable();
             $table->string('problem_details')->nullable(); // Add nullable problem details column
             $table->timestamps();
+
+            // Add foreign key constraint customer_id
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            
         });
     }
 

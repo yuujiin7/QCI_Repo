@@ -201,9 +201,9 @@ class MaintenanceAgreementController extends Controller
             'service_agreement',
             'supp_acc_ref',
             'project_name',
-            'company_name',
             'PO_number',
             'distributor',
+            'date_history',
         ];
 
         $orderColumn = $columns[$orderColumnIndex] ?? 'serial_number'; // Default to 'serial_number' if out of bounds
@@ -227,7 +227,8 @@ class MaintenanceAgreementController extends Controller
                     ->orWhere('project_name', 'like', "%{$searchValue}%")
                     ->orWhere('company_name', 'like', "%{$searchValue}%")
                     ->orWhere('PO_number', 'like', "%{$searchValue}%")
-                    ->orWhere('distributor', 'like', "%{$searchValue}%");
+                    ->orWhere('distributor', 'like', "%{$searchValue}%")
+                    ->orWhere('date_history', 'like', "%{$searchValue}%");
 
             });
         }
@@ -257,9 +258,9 @@ class MaintenanceAgreementController extends Controller
             'service_agreement',
             'supp_acc_ref',
             'project_name',
-            'company_name',
             'PO_number',
             'distributor',
+            'date_history',
         ];
 
         // Process the data to calculate remaining days and status

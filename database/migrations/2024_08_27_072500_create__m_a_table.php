@@ -31,6 +31,9 @@ return new class extends Migration
             $table->string('location')-> nullable();
             $table->timestamps(); // Add created_at and updated_at columns
             $table->string('status')->default('active'); // Add default value for status column
+
+            // Add foreign key constraint customer_id
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
         });
     }
 
