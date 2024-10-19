@@ -268,13 +268,48 @@ $array = array('title' => "Questech");
 
 
         <div class="px-2 flex-1">
-            <label for="engineer_assigned" class="block mb-2 text-sm font-medium text-gray-900  mb-3">Engineer Assigned</label>
-            <p>
-                {{$service_report->engineer_assigned}}
-            </p>
-            @error('engineer_assigned')
-            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-            @enderror
+            <h3 class="mb-4 font-semibold text-gray-900 text-sm">Engineer Assigned</h3>
+            @php
+            $authenticatedUserName = auth()->user()->first_name . ' ' . auth()->user()->last_name;
+            $engineers = ['Ramwell Sahagun', 'Abner Abelardo', 'Rhodel Tejano', 'EJ Mercado', 'Luis Laborera', 'Marwin Manalastas', 'Eugene Rey Carta'];
+            foreach ($user_data as $user) {
+                if ($user->role === 'TSG' || $user->user_type === 'User') {
+                    $registeredEngineers[] = $user->first_name . ' ' . $user->last_name;
+                }
+            }
+            
+            @endphp
+
+            <button id="dropdownBgHoverButton" data-dropdown-toggle="dropdownBgHover" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" type="button">
+                Select Engineer
+                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+                </svg>
+            </button>
+
+            <!-- Dropdown menu -->
+            <div id="dropdownBgHover" class="z-10 hidden w-48 bg-white rounded-lg shadow">
+                <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownBgHoverButton">
+                    @foreach ($registeredEngineers as $engineer)
+                    
+                    
+                    <li>
+                        <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                            <input
+                                id="checkbox-{{ $loop->index }}"
+                                type="checkbox"
+                                value="{{ $engineer }}"
+                                name="engineers_assigned[]"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                                @if($engineer===$authenticatedUserName) checked @endif>
+                            <label for="checkbox-{{ $loop->index }}" class="w-full ms-2 text-sm font-medium text-gray-900 rounded">{{ $engineer }}</label>
+                        </div>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+
+
         </div>
     </div>
     <div class="flex mb-4">

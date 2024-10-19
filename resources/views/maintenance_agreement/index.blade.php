@@ -258,7 +258,7 @@ $array = array('name' => "Service Report List");
                 [1, 'asc']
             ], // Default ordering by the 'serial_number' column
             responsive: true
-            //<button class="delete-btn bg-red-500 text-white px-2 py-2 rounded submitDelete" data-form-id="delete-form-${row.id}">Delete</button>
+                        //<button class="delete-btn bg-red-500 text-white px-2 py-2 rounded submitDelete" data-form-id="delete-form-${row.id}">Delete</button>
                         // <form id="delete-form-${row.id}" action="/ma-report/${row.id}" method="POST" style="display:none;">
                         //     <input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">
                         //     <input type="hidden" name="_method" value="DELETE">

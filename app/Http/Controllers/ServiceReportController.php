@@ -33,13 +33,16 @@ class ServiceReportController extends Controller
     public function show($id)
     {
         $data = ServiceReport::findOrFail($id);
+        $user = User::all(
+
+        );
 
         if (!$data) {
             return response()->json(['message' => 'Service Report not found.'], 404);
         }
 
 
-        return view('service_report.edit', ['service_report' => $data])->with('title', 'Edit Service Report');
+        return view('service_report.edit', ['service_report' => $data, 'user_data' => $user])->with('title', 'Edit Service Report');
     }
 
 
