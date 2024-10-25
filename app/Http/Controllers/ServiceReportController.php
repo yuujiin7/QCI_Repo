@@ -125,7 +125,7 @@ class ServiceReportController extends Controller
         // Handle image upload if needed
         if ($request->hasFile('sr_image')) {
             $request->validate([
-                'sr_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+                'sr_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,pdf|max:4096',
             ]);
 
             $filenameWithExtension = $request->file('sr_image')->getClientOriginalName();
@@ -252,7 +252,7 @@ class ServiceReportController extends Controller
             // Handle image upload if needed
             if ($request->hasFile('sr_image')) {
                 $request->validate([
-                    'sr_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:4096',
+                    'sr_image' => 'nullable|mimes:jpeg,png,jpg,gif,svg,pdf|max:4096',
                 ]);
 
                 $filenameWithExtension = $request->file('sr_image')->getClientOriginalName();

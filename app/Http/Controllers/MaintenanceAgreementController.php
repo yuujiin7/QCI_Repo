@@ -12,6 +12,8 @@ use function Ramsey\Uuid\v1;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\MaintenanceAgreementsImport;
+use App\Mail\MaintenanceAgreementNotification;
+use Illuminate\Support\Facades\Mail;
 
 class MaintenanceAgreementController extends Controller
 {
@@ -81,7 +83,19 @@ class MaintenanceAgreementController extends Controller
             //dd($validated);
 
             // Create the Maintenance Agreement
-            MaintenanceAgreement::create($validated);
+            $agreement = MaintenanceAgreement::create($validated);
+            
+            try {
+                // Determine the type of update and send the email
+             // Define logic to determine the type: renewed, expired, etc.
+                Mail::to('support@questech.com.ph')->send(new MaintenanceAgreementNotification($agreement, 'new'));
+
+            }
+            // Log and display detailed error message
+            catch (\Throwable $th) {
+                Log::error('Error sending Maintenance Agreement Notification: ' . $th->getMessage());
+            }
+            
             return redirect('/ma-reports')->with('message', 'MA created successfully');
         } catch (\Throwable $th) {
             // Log and display detailed error message
@@ -118,6 +132,9 @@ class MaintenanceAgreementController extends Controller
 
             $data = MaintenanceAgreement::find($id);
             $data->update($request->all());
+            // Determine the type of update and send the email
+            // $type = $this->determineAgreementType($agreement); // Define logic to determine the type: renewed, expired, etc.
+            // Mail::to('recipient@example.com')->send(new MaintenanceAgreementNotification($agreement, $type));
             return redirect('/ma-reports')->with('message', 'MA updated successfully');
         } catch (\Throwable $th) {
             return redirect('/ma-reports')->with('message', 'MA update failed');

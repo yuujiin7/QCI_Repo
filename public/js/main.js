@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         columnDefs: [
             {
                 searchable: true, // Allow the hidden columns to be searchable
-                targets: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+                targets: [6, 7, 8, 9, 11, 12, 13, 14, 15, 16],
                 visible: false, // Hide the columns
                 
             },

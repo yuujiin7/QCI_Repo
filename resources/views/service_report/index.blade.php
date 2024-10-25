@@ -11,7 +11,7 @@ $array = array('name' => "Service Report List");; ?>
                 <div class="flex items-center mb-6 justify-end space-x-4">
                     <a href="/create/service-report" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Create New</a>
                     <button id="deleteSelected" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700" disabled>Delete Selected</button>
-                   
+
 
                 </div>
                 <div class="overflow-x-auto">
@@ -39,6 +39,7 @@ $array = array('name' => "Service Report List");; ?>
                                 <th scope="col" class="py-3 px-6">Action Taken</th>
                                 <th scope="col" class="py-3 px-6">Pending</th>
                                 <th scope="col" class="py-3 px-6">Remarks</th>
+                                <th scope="col" class="py-3 px-6">Uploaded Softcopy</th>
                                 <th scope="col" class="py-3 px-6 text-center">Actions</th>
                             </tr>
                         </thead>
@@ -72,6 +73,24 @@ $array = array('name' => "Service Report List");; ?>
                                 <td class="py-3 px-6">{{ $sr->action_taken }}</td>
                                 <td class="py-3 px-6">{{ $sr->pending }}</td>
                                 <td class="py-3 px-6">{{ $sr->remarks }}</td>
+                                <td class="py-3 px-6">
+                                    @if($sr->sr_image)
+                                    @php
+                                    $fileExtension = pathinfo($sr->sr_image, PATHINFO_EXTENSION);
+                                    @endphp
+
+                                    @if(in_array($fileExtension, ['jpeg', 'jpg', 'png', 'gif', 'svg']))
+                                    <a href="{{ asset('storage/sr_images/' . $sr->sr_image) }}" target="_blank">
+                                        <img src="{{ asset('storage/sr_images/' . $sr->sr_image) }}" alt="Uploaded Image" class="w-12 h-12 object-cover">
+                                    </a>
+                                    @elseif($fileExtension === 'pdf')
+                                    <a href="{{ asset('storage/sr_images/' . $sr->sr_image) }}" target="_blank" class="text-blue-500 underline">View PDF</a>
+                                    @endif
+                                    @else
+                                    <span>No File Uploaded</span>
+                                    @endif
+                                </td>
+
                                 <td class="py-3 px-6 text-center">
                                     <div class="flex justify-center space-x-2">
                                         <a href="/generate-pdf/{{ $sr->id }}" class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700" target="_blank">
