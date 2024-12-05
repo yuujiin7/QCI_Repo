@@ -313,7 +313,6 @@ class ServiceReportController extends Controller
         return redirect('/service-reports')->with('message', 'Service Report deleted successfully.');
     }
 
-
     public function delete(request $request)
     {
         Log::info('Raw Request Data:', $request->all());
@@ -331,11 +330,13 @@ class ServiceReportController extends Controller
 
             // Retrieve the IDs from the request and ensure they are integers
             $ids = array_map('intval', $request->input('ids'));
-            //print the ids
-
 
             // Log validated IDs
             Log::info('Validated IDs:', $ids);
+
+             // Check which IDs exist in the database (for debugging)
+             $existingIds = ServiceReport::whereIn('id', $ids)->pluck('id')->toArray();
+             Log::info('Existing IDs in DB:', $existingIds);
 
             // Delete the service reports with the given IDs
             ServiceReport::whereIn('id', $ids)->delete();
@@ -349,7 +350,8 @@ class ServiceReportController extends Controller
             Log::error('Deletion error: ' . $e->getMessage());
             return response()->json(['success' => false, 'message' => 'An error occurred while deleting the reports.'], 500);
         }
-    }
+    } 
+
 
     public function Test(request $request)
     {
