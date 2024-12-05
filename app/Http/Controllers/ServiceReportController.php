@@ -317,7 +317,7 @@ class ServiceReportController extends Controller
 
     public function delete(request $request)
     {
-        // Log::info('Raw Request Data:', $request->all());
+        Log::info('Raw Request Data:', $request->all());
         // return response()->json(['success' => true, 'message' => 'Route and Request are correctly mapped.']);
         // dd($request);
         try {
@@ -351,6 +351,8 @@ class ServiceReportController extends Controller
             return response()->json(['success' => false, 'message' => 'An error occurred while deleting the reports.'], 500);
         }
     }
+
+    
 
     public function Test(request $request)
     {

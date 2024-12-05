@@ -251,6 +251,7 @@ $array = array('name' => "Service Report List");
                         <button class="new-am-btn bg-blue-700 text-white px-2 py-2 rounded">New AM</button>
                         
                     `;
+
                     }
                 }
             ],

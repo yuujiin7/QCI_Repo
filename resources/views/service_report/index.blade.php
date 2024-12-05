@@ -196,6 +196,10 @@ $array = array('name' => "Service Report List");; ?>
                                 ids: selectedIds,
                                 _token: csrfToken
                             },
+                            // console.log('Payload:', JSON.stringify({
+                            //     ids: selectedIds,
+                            //     _method: 'DELETE'
+                            // })),
                             success: function(response) {
                                 console.log(response);
                                 if (response.success) {
