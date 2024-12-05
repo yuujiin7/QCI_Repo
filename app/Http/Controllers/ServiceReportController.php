@@ -45,7 +45,6 @@ class ServiceReportController extends Controller
         return view('service_report.edit', ['service_report' => $data, 'user_data' => $user])->with('title', 'Edit Service Report');
     }
 
-
     public function create()
     {
 
