@@ -409,7 +409,7 @@ $array = array('name' => "Service Report List");
 
                         // use route "/delete-all" to delete multiple records
                         $.ajax({
-                            url: '/delete-all',
+                            url: '/delete-maintenance-agreements',
                             type: 'POST',
                             data: {
                                 ids: selectedIds,

@@ -182,6 +182,7 @@ $array = array('name' => "Service Report List");; ?>
                             ids: selectedIds,
                             _method: 'DELETE'
                         }));
+                        console.log('Selected IDs:', selectedIds);
                         console.log('Confirmed delete action');
 
                         loadingIndicator.style.display = 'block';
@@ -190,7 +191,7 @@ $array = array('name' => "Service Report List");; ?>
 
                         // use route "/delete-all" to delete multiple records
                         $.ajax({
-                            url: '/delete-all',
+                            url: '/delete-service-reports',
                             type: 'POST',
                             data: {
                                 ids: selectedIds,

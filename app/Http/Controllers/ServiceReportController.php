@@ -132,8 +132,16 @@ class ServiceReportController extends Controller
             $extension = $request->file('sr_image')->getClientOriginalExtension();
             $fileNameToStore = $filename . '_' . time() . '.' . $extension;
 
-            // Store the original image
+            // Store original image
             $request->file('sr_image')->storeAs('public/sr_images', $fileNameToStore);
+
+            // Create and save thumbnail
+            $thumbnailFileNameToStore = 'thumbnail_' . $fileNameToStore;
+            $thumbnailPath = 'public/sr_images/thumbnail/' . $thumbnailFileNameToStore;
+            $request->file('sr_image')->storeAs('public/sr_images/thumbnail', $thumbnailFileNameToStore);
+
+            // Assuming createThumbnail function exists to resize image
+            $this->createThumbnail(storage_path('app/' . $thumbnailPath), 150, 93);
 
             // Update form fields with image paths
             $validated['sr_image'] = $fileNameToStore;
@@ -313,44 +321,87 @@ class ServiceReportController extends Controller
         return redirect('/service-reports')->with('message', 'Service Report deleted successfully.');
     }
 
-    public function delete(request $request)
-    {
-        Log::info('Raw Request Data:', $request->all());
-        // return response()->json(['success' => true, 'message' => 'Route and Request are correctly mapped.']);
-        // dd($request);
-        try {
-            // Log raw request data
-            Log::info('Raw Request Data:', $request->all());
+    // public function delete(request $request)
+    // {
 
-            // Validate the request to ensure 'ids' is an array
-            $request->validate([
-                'ids' => 'required|array',
-                'ids.*' => 'exists:service_reports,id', // Ensure each ID exists in the database
-            ]);
+    //     Log::info('Raw Request Data:', $request->all());
+    //     // return response()->json(['success' => true, 'message' => 'Route and Request are correctly mapped.']);
+    //     // dd($request);
+    //     try {
+    //         // Log raw request data
+    //         Log::info('Raw Request Data:', $request->all());
 
-            // Retrieve the IDs from the request and ensure they are integers
-            $ids = array_map('intval', $request->input('ids'));
+    //         // Validate the request to ensure 'ids' is an array
+    //         $request->validate([
+    //             'ids' => 'required|array',
+    //             'ids.*' => 'exists:service_reports,id', // Ensure each ID exists in the database
+    //         ]);
 
-            // Log validated IDs
-            Log::info('Validated IDs:', $ids);
+    //         // Retrieve the IDs from the request and ensure they are integers
+    //         $ids = array_map('intval', $request->input('ids'));
 
-             // Check which IDs exist in the database (for debugging)
-             $existingIds = ServiceReport::whereIn('id', $ids)->pluck('id')->toArray();
-             Log::info('Existing IDs in DB:', $existingIds);
+    //         // Log validated IDs
+    //         Log::info('Validated IDs:', $ids);
 
-            // Delete the service reports with the given IDs
-            ServiceReport::whereIn('id', $ids)->delete();
+    //          // Check which IDs exist in the database (for debugging)
+    //          $existingIds = ServiceReport::whereIn('id', $ids)->pluck('id')->toArray();
+    //          Log::info('Existing IDs in DB:', $existingIds);
 
-            // Return a success response
-            return response()->json(['success' => true, 'message' => 'Selected reports have been deleted.']);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            Log::error('Validation error: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
-        } catch (\Exception $e) {
-            Log::error('Deletion error: ' . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'An error occurred while deleting the reports.'], 500);
+    //         // Delete the service reports with the given IDs
+    //         ServiceReport::whereIn('id', $ids)->delete();
+
+    //         // Return a success response
+    //         return response()->json(['success' => true, 'message' => 'Selected reports have been deleted.']);
+    //     } catch (\Illuminate\Validation\ValidationException $e) {
+    //         Log::error('Validation error: ' . $e->getMessage());
+    //         return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+    //     } catch (\Exception $e) {
+    //         Log::error('Deletion error: ' . $e->getMessage());
+    //         return response()->json(['success' => false, 'message' => 'An error occurred while deleting the reports.'], 500);
+    //     }
+    // } 
+
+    public function delete(Request $request)
+{
+    Log::info('Raw Request:', $request->all());
+
+    try {
+        // Validate the request to ensure 'ids' is an array
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:service_reports,id', // Ensure each ID exists in the database
+        ]);
+
+        // Retrieve the IDs from the request and ensure they are integers
+        $ids = array_map('intval', $request->input('ids'));
+
+        // Log validated IDs
+        Log::info('Validated ID:', $ids);
+
+        // Check which IDs exist in the database (for debugging)
+        $existingIds = ServiceReport::whereIn('id', $ids)->pluck('id')->toArray();
+        Log::info('Existing IDs in DB:', $existingIds);
+
+        // Identify any IDs that do not exist in the database
+        $invalidIds = array_diff($ids, $existingIds);
+        if (!empty($invalidIds)) {
+            Log::warning('Invalid IDs:', $invalidIds);
+            return response()->json(['success' => false, 'message' => 'Some IDs are invalid: ' . implode(', ', $invalidIds)], 422);
         }
-    } 
+
+        // Delete the service reports with the given IDs
+        ServiceReport::whereIn('id', $ids)->delete();
+
+        // Return a success response
+        return response()->json(['success' => true, 'message' => 'Selected reports have been deleted.']);
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        Log::error('Validation error: ' . $e->getMessage());
+        return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+    } catch (\Exception $e) {
+        Log::error('Deletion error: ' . $e->getMessage());
+        return response()->json(['success' => false, 'message' => 'An error occurred while deleting the reports.'], 500);
+    }
+}
 
 
     public function Test(request $request)

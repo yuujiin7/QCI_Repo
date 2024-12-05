@@ -79,7 +79,7 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/service-report/{id}', [ServiceReportController::class, 'destroy']);
     //bulk delete
-    Route::post('/delete-all', [ServiceReportController::class, 'delete'])->name('delete.service.reports');
+    Route::post('/delete-service-reports', [ServiceReportController::class, 'delete'])->name('delete.service.reports');
     
     Route::get('/generate-pdf/{id}', [PdfController::class, 'generatePDF']);
     Route::get('/generate-sr-form/{id}', [PdfController::class, 'index']);
@@ -95,7 +95,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/ma-report/{id}', [MaintenanceAgreementController::class, 'show'])->where('id', '[0-9]+'); // Restrict to numeric IDs only
     Route::put('/ma-report/{id}', [MaintenanceAgreementController::class, 'update']);
     Route::delete('/ma-report/{id}', [MaintenanceAgreementController::class, 'destroy']);
-    Route::post('/delete-all', [MaintenanceAgreementController::class, 'delete']) -> name('delete.maintenance.agreements'); // Ensure POST for bulk-delete
+    Route::post('/delete-maintenance-agreements', [MaintenanceAgreementController::class, 'delete']) -> name('delete.maintenance.agreements'); // Ensure POST for bulk-delete
     Route::get('/get-maintenance-agreements', [MaintenanceAgreementController::class, 'getMaintenanceAgreements']);
     Route::patch('/renew-maintenance-agreement/{id}', [MaintenanceAgreementController::class, 'renew']);
     Route::patch('/new-am-maintenance-agreement/{id}', [MaintenanceAgreementController::class, 'updateAccountManager']);
