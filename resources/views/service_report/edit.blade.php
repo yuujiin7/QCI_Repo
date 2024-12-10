@@ -311,22 +311,39 @@ $array = array('title' => "Questech");
 
 
         </div>
-    </div>
-    <div class="flex mb-4">
-        <div class="px-2 flex-1">
-            <label class="block mb-2 text-sm font-medium text-gray-900 " for="sr_image">Upload file</label>
-            <div class="flex justify-center items-center mb-2">
-                <img id="profileImagePreview" src="{{ $service_report->sr_image ? asset('storage/profile_images/thumbnail/small_' . $tsg->profile_image) : 'https://api.dicebear.com/9.x/icons/svg?seed=Midnight' }}" alt="Profile Image" class="w-20 h-20 rounded-full object-cover">
-            </div>
-            <input type="file" id="sr_image" name="sr_image" class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" onchange="previewImage(event)">
+    </div><div class="flex mb-4">
+    <div class="px-2 flex-1">
+        <label class="block mb-2 text-sm font-medium text-gray-900" for="sr_image">Upload file</label>
+        
+        <!-- Display the current file name if it exists -->
+        @if ($service_report->sr_image)
+            <p class="mt-2 text-sm text-gray-700">
+                Current File: 
+                <a href="{{ asset('storage/sr_images/' . $service_report->sr_image) }}" 
+                   target="_blank" 
+                   class="text-blue-500 underline">
+                   {{ $service_report->sr_image }}
+                </a>
+            </p>
+        @else
+            <p class="mt-2 text-sm text-gray-500">No file uploaded yet.</p>
+        @endif
 
-            <!-- <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none " aria-describedby="sr_image_help" id="sr_image" type="file" value={{$service_report->sr_image}} > -->
-            <div class="mt-1 text-sm text-gray-500 " id="sr_image_help">Upload the softcopy of the SR</div>
-            @error('sr_image')
-            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-            @enderror
-        </div>
+        <input 
+            type="file" 
+            id="sr_image" 
+            name="sr_image" 
+            class="bg-gray-200 rounded w-full text-gray-800 px-3 py-2 focus:outline-none focus:bg-white border-2 border-gray-300" 
+            accept="image/*,application/pdf">
+        
+        <div class="mt-1 text-sm text-gray-500" id="sr_image_help">Upload the softcopy of the SR (Image or PDF).</div>
+        
+        @error('sr_image')
+        <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
+        @enderror
     </div>
+</div>
+
     <div class="flex justify-end">
         <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 hover:bg-primary-800"> Submit </button>
     </div>

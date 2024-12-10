@@ -106,7 +106,7 @@ $array = array('title' => "Questech");
 
         <div class="px-2 flex-1">
             <label for="remarks" class="block mb-2 text-sm font-medium text-gray-900  xl:py-0 lg:py-0 md:py-0 sm:py-2.5">Remarks</label>
-            <input type="text" name="remarks" id="remarks" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5   " placeholder="Remarks">
+            <input type="text" name="remarks" id="remarks" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Remarks" />
             @error('remarks')
             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
             @enderror
@@ -251,8 +251,6 @@ $array = array('title' => "Questech");
         @enderror
     </div>
 
-
-
     <div class="flex mb-4">
         <div class="px-2 flex-1">
             <h3 class="mb-4 font-semibold text-gray-900 text-sm">Status</h3>
@@ -265,21 +263,6 @@ $array = array('title' => "Questech");
             <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
             @enderror
         </div>
-
-        <!-- <div class="px-2 flex-1 mb-4">
-            <label for="engineer_assigned" class="block mb-2 text-sm font-medium text-gray-900 ">Engineer Assigned</label>
-            <select id="engineer_assigned" name="engineer_assigned" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                <option>Ramwell Sahagun</option>
-                <option>Abner Abelardo</option>
-                <option>Rhodel Tejano</option>
-                <option>EJ Mercado</option>
-                <option>Luis Laborera</option>
-                <option>Marwin Manalastas</option>
-                <option>Eugene Carta</option>
-            </select>
-            @error('engineer_assigned')
-            <p class="text-red-500 text-xs mt-2 italic p-1">{{ $message }}</p>
-            @enderror -->
 
 
         <div class="px-2 flex-1">
